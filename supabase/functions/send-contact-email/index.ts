@@ -1,5 +1,6 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { Resend } from "https://esm.sh/resend@4.0.0";
+import { z } from "https://deno.land/x/zod@v3.22.4/mod.ts";
 
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
@@ -9,12 +10,21 @@ const corsHeaders = {
     "authorization, x-client-info, apikey, content-type",
 };
 
-interface ContactEmailRequest {
-  name: string;
-  email: string;
-  company: string;
-  message: string;
-}
+const contactSchema = z.object({
+  name: z.string().trim().min(2, "Name too short").max(100, "Name too long"),
+  email: z.string().email("Invalid email").max(255, "Email too long"),
+  company: z.string().trim().min(2, "Company name too short").max(100, "Company name too long"),
+  message: z.string().trim().min(10, "Message too short").max(2000, "Message too long"),
+});
+
+const escapeHtml = (unsafe: string): string => {
+  return unsafe
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+};
 
 const handler = async (req: Request): Promise<Response> => {
   // Handle CORS preflight requests
@@ -23,24 +33,26 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
-    const { name, email, company, message }: ContactEmailRequest = await req.json();
+    const body = await req.json();
+    const validatedData = contactSchema.parse(body);
+    const { name, email, company, message } = validatedData;
 
-    console.log("Processing contact form submission:", { name, email, company });
+    console.log("Processing contact form submission");
 
     // Send email to the business (you)
     const businessEmail = await resend.emails.send({
       from: "agent13 ai Contact Form <onboarding@resend.dev>",
       to: ["your-email@example.com"], // Replace with your actual email
-      subject: `New Contact Form Submission from ${name}`,
+      subject: `New Contact Form Submission from ${escapeHtml(name)}`,
       html: `
         <h2>New Contact Form Submission</h2>
-        <p><strong>Name:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Company:</strong> ${company}</p>
+        <p><strong>Name:</strong> ${escapeHtml(name)}</p>
+        <p><strong>Email:</strong> ${escapeHtml(email)}</p>
+        <p><strong>Company:</strong> ${escapeHtml(company)}</p>
         <p><strong>Message:</strong></p>
-        <p>${message.replace(/\n/g, '<br>')}</p>
+        <p>${escapeHtml(message).replace(/\n/g, '<br>')}</p>
         <hr>
-        <p><small>Reply to: ${email}</small></p>
+        <p><small>Reply to: ${escapeHtml(email)}</small></p>
       `,
       replyTo: email,
     });
@@ -54,12 +66,12 @@ const handler = async (req: Request): Promise<Response> => {
       subject: "We received your message!",
       html: `
         <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
-          <h1 style="color: #0BA5EC;">Thank you for contacting us, ${name}!</h1>
+          <h1 style="color: #0BA5EC;">Thank you for contacting us, ${escapeHtml(name)}!</h1>
           <p>We have received your message and will get back to you as soon as possible.</p>
           
           <div style="background: #f4f4f4; padding: 20px; border-radius: 8px; margin: 20px 0;">
             <h3 style="margin-top: 0;">Your Message:</h3>
-            <p style="white-space: pre-wrap;">${message}</p>
+            <p style="white-space: pre-wrap;">${escapeHtml(message)}</p>
           </div>
           
           <p>If you have any urgent questions, feel free to reply to this email.</p>
@@ -85,11 +97,28 @@ const handler = async (req: Request): Promise<Response> => {
       }
     );
   } catch (error: any) {
-    console.error("Error in send-contact-email function:", error);
+    console.error("Error in send-contact-email function");
+    
+    if (error instanceof z.ZodError) {
+      return new Response(
+        JSON.stringify({ 
+          success: false,
+          error: "Invalid input data" 
+        }),
+        {
+          status: 400,
+          headers: { 
+            "Content-Type": "application/json", 
+            ...corsHeaders 
+          },
+        }
+      );
+    }
+    
     return new Response(
       JSON.stringify({ 
         success: false,
-        error: error.message 
+        error: "Failed to send email. Please try again." 
       }),
       {
         status: 500,
