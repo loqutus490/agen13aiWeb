@@ -1,8 +1,14 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { Resend } from "https://esm.sh/resend@4.0.0";
 import { z } from "https://deno.land/x/zod@v3.22.4/mod.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2.80.0";
 
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
+
+const supabase = createClient(
+  Deno.env.get("SUPABASE_URL")!,
+  Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
+);
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -33,6 +39,78 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
+    // Get client IP address
+    const ip = req.headers.get("x-forwarded-for")?.split(",")[0] || 
+               req.headers.get("x-real-ip") || 
+               "unknown";
+
+    // Check rate limit
+    const { data: rateLimit, error: rateLimitError } = await supabase
+      .from("rate_limits")
+      .select("*")
+      .eq("ip_address", ip)
+      .maybeSingle();
+
+    if (rateLimitError) {
+      console.error("Rate limit check error:", rateLimitError);
+    }
+
+    const now = new Date();
+    const oneHourAgo = new Date(now.getTime() - 60 * 60 * 1000);
+
+    if (rateLimit) {
+      const windowStart = new Date(rateLimit.window_start);
+      
+      // If within the same hour window
+      if (windowStart > oneHourAgo) {
+        if (rateLimit.request_count >= 5) {
+          return new Response(
+            JSON.stringify({ 
+              success: false,
+              error: "Too many requests. Please try again later." 
+            }),
+            {
+              status: 429,
+              headers: {
+                "Content-Type": "application/json",
+                "Retry-After": "3600",
+                ...corsHeaders,
+              },
+            }
+          );
+        }
+        
+        // Increment count
+        await supabase
+          .from("rate_limits")
+          .update({ 
+            request_count: rateLimit.request_count + 1,
+            updated_at: now.toISOString()
+          })
+          .eq("ip_address", ip);
+      } else {
+        // Reset window
+        await supabase
+          .from("rate_limits")
+          .update({ 
+            request_count: 1,
+            window_start: now.toISOString(),
+            updated_at: now.toISOString()
+          })
+          .eq("ip_address", ip);
+      }
+    } else {
+      // First request from this IP
+      await supabase
+        .from("rate_limits")
+        .insert({ 
+          ip_address: ip,
+          request_count: 1,
+          window_start: now.toISOString(),
+          updated_at: now.toISOString()
+        });
+    }
+
     const body = await req.json();
     const validatedData = contactSchema.parse(body);
     const { name, email, company, message } = validatedData;
