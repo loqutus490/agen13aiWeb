@@ -1,8 +1,17 @@
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { Sparkles } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { Sparkles, LogOut, User } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Navbar = () => {
+  const { user, signOut, loading } = useAuth();
+  const navigate = useNavigate();
+
+  const handleSignOut = async () => {
+    await signOut();
+    navigate("/");
+  };
+
   return (
     <nav className="fixed top-0 w-full z-50 bg-background/60 backdrop-blur-xl border-b border-primary/10 shadow-tech">
       <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-primary/5 pointer-events-none" />
@@ -47,6 +56,45 @@ const Navbar = () => {
         </div>
 
         <div className="flex items-center gap-3">
+          {!loading && (
+            <>
+              {user ? (
+                <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20">
+                    <User className="w-4 h-4 text-primary" />
+                    <span className="text-sm font-medium text-foreground">{user.email}</span>
+                  </div>
+                  <Button 
+                    size="sm" 
+                    variant="outline"
+                    onClick={handleSignOut}
+                    className="gap-2 border-primary/20 hover:bg-primary/10"
+                  >
+                    <LogOut className="w-4 h-4" />
+                    Sign Out
+                  </Button>
+                </div>
+              ) : (
+                <>
+                  <Link to="/login">
+                    <Button 
+                      size="sm" 
+                      variant="outline"
+                      className="border-primary/20 hover:bg-primary/10"
+                    >
+                      Sign In
+                    </Button>
+                  </Link>
+                  <Link to="/signup">
+                    <Button size="sm" className="bg-primary hover:bg-primary-dark shadow-glow hover:shadow-tech-lg transition-all relative overflow-hidden group">
+                      <span className="relative z-10">Sign Up</span>
+                      <div className="absolute inset-0 bg-gradient-to-r from-primary-glow to-primary opacity-0 group-hover:opacity-100 transition-opacity" />
+                    </Button>
+                  </Link>
+                </>
+              )}
+            </>
+          )}
           <Link to="/contact">
             <Button size="sm" className="bg-primary hover:bg-primary-dark shadow-glow hover:shadow-tech-lg transition-all relative overflow-hidden group">
               <span className="relative z-10">Contact Us</span>
