@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Sparkles, Youtube, Facebook } from "lucide-react";
+import { Sparkles, Youtube, Facebook, Instagram } from "lucide-react";
 
 const Footer = () => {
   return (
@@ -32,6 +32,15 @@ const Footer = () => {
               >
                 <Facebook className="w-4 h-4" />
                 Follow on Facebook
+              </a>
+              <a 
+                href="https://www.instagram.com/agent13_ai/?utm_source=ig_web_button_share_sheet" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
+              >
+                <Instagram className="w-4 h-4" />
+                Follow on Instagram
               </a>
             </div>
           </div>
