@@ -15,8 +15,16 @@ const Home = () => {
       <Navbar />
       
       {/* Hero Section */}
-      <section className="pt-32 pb-20 px-4" style={{ background: 'var(--gradient-hero)' }}>
-        <div className="container mx-auto text-center max-w-4xl">
+      <section className="pt-32 pb-20 px-4 relative overflow-hidden" style={{ background: 'var(--gradient-hero)' }}>
+        {/* Animated Grid Background */}
+        <div className="absolute inset-0 grid-background opacity-40" />
+        <div className="absolute inset-0 grid-background-dots opacity-20" />
+        
+        {/* Glow Effects */}
+        <div className="absolute top-20 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-3xl glow-pulse" />
+        <div className="absolute bottom-20 right-1/4 w-96 h-96 bg-primary-glow/20 rounded-full blur-3xl glow-pulse" style={{ animationDelay: '1.5s' }} />
+        
+        <div className="container mx-auto text-center max-w-4xl relative z-10">
           <Badge className="mb-6 bg-primary/10 text-primary border-primary/20 backdrop-blur-sm">
             <Cpu className="w-4 h-4 mr-1 inline animate-pulse" />
             AI Business Solutions
