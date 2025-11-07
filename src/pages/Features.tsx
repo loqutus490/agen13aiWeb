@@ -72,7 +72,7 @@ const Features = () => {
         <div className="container mx-auto max-w-6xl">
           <div className="grid md:grid-cols-2 gap-8">
             {features.map((feature) => (
-              <Card key={feature.title} className="p-8 hover:shadow-glow transition-all duration-300 border-primary/10 bg-card/50 backdrop-blur-sm group">
+              <Card key={feature.title} className="p-8 hover:shadow-glow transition-all duration-300 border-primary/10 bg-card/50 backdrop-blur-sm group scan-line-effect holographic-border">
                 <div className="flex items-start gap-4 mb-4">
                   <div className="p-3 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-all">
                     <feature.icon className="w-6 h-6 text-primary group-hover:scale-110 transition-transform" />

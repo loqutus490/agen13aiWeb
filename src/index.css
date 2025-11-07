@@ -153,4 +153,93 @@ All colors MUST be HSL.
       opacity: 1;
     }
   }
+
+  .scan-line-effect {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .scan-line-effect::before {
+    content: '';
+    position: absolute;
+    top: -100%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      hsl(var(--primary) / 0.1) 45%,
+      hsl(var(--primary) / 0.3) 50%,
+      hsl(var(--primary) / 0.1) 55%,
+      transparent 100%
+    );
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  .scan-line-effect:hover::before {
+    animation: scan-line 2s ease-in-out infinite;
+    opacity: 1;
+  }
+
+  @keyframes scan-line {
+    0% {
+      top: -100%;
+    }
+    50% {
+      top: 100%;
+    }
+    100% {
+      top: 100%;
+    }
+  }
+
+  .holographic-border {
+    position: relative;
+  }
+
+  .holographic-border::after {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(
+      45deg,
+      hsl(var(--primary)),
+      hsl(var(--primary-glow)),
+      hsl(var(--primary)),
+      hsl(var(--primary-glow))
+    );
+    background-size: 200% 200%;
+    -webkit-mask: 
+      linear-gradient(#fff 0 0) content-box, 
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  .holographic-border:hover::after {
+    animation: border-glow 3s linear infinite;
+    opacity: 0.6;
+  }
+
+  @keyframes border-glow {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
 }

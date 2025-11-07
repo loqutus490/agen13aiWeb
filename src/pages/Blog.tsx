@@ -25,7 +25,7 @@ const Blog = () => {
 
       <section className="py-20 px-4">
         <div className="container mx-auto max-w-4xl text-center">
-          <div className="bg-muted/30 rounded-lg p-12">
+          <div className="bg-muted/30 rounded-lg p-12 scan-line-effect holographic-border">
             <Youtube className="w-16 h-16 text-primary mx-auto mb-6" />
             <h2 className="text-2xl font-bold mb-4">Coming Soon</h2>
             <p className="text-muted-foreground mb-6">

@@ -77,7 +77,7 @@ const Home = () => {
                 ))}
               </ul>
             </div>
-            <Card className="p-8 shadow-xl">
+            <Card className="p-8 shadow-xl scan-line-effect holographic-border">
               <Badge className="mb-4 bg-primary/10 text-primary border-primary/20 backdrop-blur-sm">The Solution</Badge>
               <h3 className="text-2xl font-bold mb-6">AI-Powered Business Transformation</h3>
               <div className="space-y-6">
@@ -164,7 +164,7 @@ const Home = () => {
                 description: "Reduce costs while improving quality"
               }
             ].map((feature) => (
-              <Card key={feature.title} className="p-6 hover:shadow-glow transition-all duration-300 border-primary/10 bg-card/50 backdrop-blur-sm group">
+              <Card key={feature.title} className="p-6 hover:shadow-glow transition-all duration-300 border-primary/10 bg-card/50 backdrop-blur-sm group scan-line-effect holographic-border">
                 <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-all">
                   <feature.icon className="w-6 h-6 text-primary group-hover:scale-110 transition-transform" />
                 </div>
@@ -188,7 +188,7 @@ const Home = () => {
           </div>
 
           <div className="max-w-3xl mx-auto">
-            <Card className="p-12 text-center">
+            <Card className="p-12 text-center scan-line-effect holographic-border">
               <Youtube className="w-16 h-16 text-primary mx-auto mb-6" />
               <h3 className="text-2xl font-bold mb-4">agent13 ai on YouTube</h3>
               <p className="text-muted-foreground mb-8">
