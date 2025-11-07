@@ -20,12 +20,28 @@ const Navbar = () => {
             Features
             <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-primary-glow transition-all group-hover:w-full" />
           </Link>
+          <Link to="/services" className="text-sm font-medium text-muted-foreground hover:text-primary transition-all relative group">
+            Services
+            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-primary-glow transition-all group-hover:w-full" />
+          </Link>
+          <Link to="/case-studies" className="text-sm font-medium text-muted-foreground hover:text-primary transition-all relative group">
+            Case Studies
+            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-primary-glow transition-all group-hover:w-full" />
+          </Link>
+          <Link to="/resources" className="text-sm font-medium text-muted-foreground hover:text-primary transition-all relative group">
+            Resources
+            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-primary-glow transition-all group-hover:w-full" />
+          </Link>
           <Link to="/blog" className="text-sm font-medium text-muted-foreground hover:text-primary transition-all relative group">
             Blog
             <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-primary-glow transition-all group-hover:w-full" />
           </Link>
           <Link to="/about" className="text-sm font-medium text-muted-foreground hover:text-primary transition-all relative group">
             About
+            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-primary-glow transition-all group-hover:w-full" />
+          </Link>
+          <Link to="/faq" className="text-sm font-medium text-muted-foreground hover:text-primary transition-all relative group">
+            FAQ
             <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-primary-glow transition-all group-hover:w-full" />
           </Link>
         </div>
