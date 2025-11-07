@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Sparkles, Youtube } from "lucide-react";
+import { Sparkles, Youtube, Facebook } from "lucide-react";
 
 const Footer = () => {
   return (
@@ -14,15 +14,26 @@ const Footer = () => {
             <p className="text-sm text-muted-foreground">
               AI-powered tools for modern e-commerce sellers.
             </p>
-            <a 
-              href="https://youtube.com/@agent13ai" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
-            >
-              <Youtube className="w-4 h-4" />
-              Follow on YouTube
-            </a>
+            <div className="flex flex-col gap-2">
+              <a 
+                href="https://youtube.com/@agent13ai" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
+              >
+                <Youtube className="w-4 h-4" />
+                Follow on YouTube
+              </a>
+              <a 
+                href="https://facebook.com/agent13ai" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
+              >
+                <Facebook className="w-4 h-4" />
+                Follow on Facebook
+              </a>
+            </div>
           </div>
 
           <div>
