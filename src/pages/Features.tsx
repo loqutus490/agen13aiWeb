@@ -5,59 +5,47 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { 
-  Sparkles, Zap, Target, TrendingUp, Shield, 
-  Globe, Palette, Clock, ArrowRight 
+  Sparkles, Zap, Target, TrendingUp, 
+  RefreshCw, CheckCircle
 } from "lucide-react";
 
 const Features = () => {
   const features = [
     {
-      icon: Sparkles,
-      title: "AI-Powered Generation",
-      description: "Leverages advanced language models trained on millions of successful product listings to create compelling, conversion-optimized descriptions.",
-      benefits: ["Human-quality content", "Context-aware writing", "Continuous learning"]
-    },
-    {
       icon: Zap,
-      title: "Lightning Fast",
-      description: "Generate complete, polished product descriptions in under 10 seconds. No more writer's block or hours spent crafting the perfect copy.",
-      benefits: ["10 second generation", "Batch processing", "Instant previews"]
+      title: "Process Automation",
+      description: "Eliminate repetitive tasks and free up valuable time for strategic work. Automate data entry, scheduling, and routine workflows.",
+      benefits: ["Save 10-20 hours per week", "Reduce human error", "Focus on growth activities"]
     },
     {
       icon: Target,
-      title: "Platform-Optimized",
-      description: "Tailored templates and formatting for Amazon, eBay, Shopify, and other major e-commerce platforms. Each description follows platform best practices.",
-      benefits: ["Amazon optimization", "eBay formatting", "Multi-platform support"]
+      title: "Customer Analytics",
+      description: "Understand your customers better with AI-powered insights. Analyze behavior patterns, predict needs, and identify opportunities.",
+      benefits: ["Behavior analysis", "Predictive insights", "Audience segmentation"]
     },
     {
       icon: TrendingUp,
-      title: "SEO Optimization",
-      description: "Built-in keyword research and placement ensures your products rank higher in search results, driving more organic traffic to your listings.",
-      benefits: ["Keyword integration", "Search ranking boost", "Competitor analysis"]
+      title: "Revenue Optimization",
+      description: "Data-driven strategies to increase sales and profit margins. Get dynamic pricing recommendations and sales forecasting.",
+      benefits: ["Pricing optimization", "Sales forecasting", "Inventory management"]
     },
     {
-      icon: Palette,
-      title: "Custom Brand Voice",
-      description: "Train the AI to match your unique brand voice and tone. Maintain consistency across all your product listings automatically.",
-      benefits: ["Brand tone training", "Consistent messaging", "Voice customization"]
+      icon: Sparkles,
+      title: "Content Creation",
+      description: "Generate marketing content, emails, and social media posts instantly. Maintain consistent brand voice across all channels.",
+      benefits: ["Marketing copy", "Email automation", "Social media content"]
     },
     {
-      icon: Globe,
-      title: "Multi-Language Support",
-      description: "Generate descriptions in multiple languages to reach global markets. Perfect for international sellers expanding their reach.",
-      benefits: ["20+ languages", "Native translations", "Cultural adaptation"]
+      icon: RefreshCw,
+      title: "24/7 AI Assistants",
+      description: "AI-powered chatbots and assistants that work around the clock. Automate customer support and handle multiple conversations.",
+      benefits: ["Instant responses", "Multiple conversations", "Improved satisfaction"]
     },
     {
-      icon: Shield,
-      title: "Quality Assurance",
-      description: "AI-powered grammar checking, plagiarism detection, and readability scoring ensure every description meets professional standards.",
-      benefits: ["Grammar checking", "Plagiarism detection", "Readability scores"]
-    },
-    {
-      icon: Clock,
-      title: "Version History",
-      description: "Save and compare multiple versions of your descriptions. Roll back to previous versions or A/B test different approaches.",
-      benefits: ["Unlimited versions", "Easy comparison", "A/B testing support"]
+      icon: CheckCircle,
+      title: "Cost Reduction",
+      description: "Reduce operational costs while improving quality and efficiency. Lower labor costs and minimize errors through automation.",
+      benefits: ["Lower labor costs", "Reduce software expenses", "Minimize errors"]
     }
   ];
 
@@ -71,11 +59,11 @@ const Features = () => {
             Features
           </Badge>
           <h1 className="text-5xl md:text-6xl font-bold mb-6 tracking-tight">
-            Everything You Need to
-            <span className="block text-primary">Sell More Products</span>
+            AI Solutions for
+            <span className="block text-primary">Small Business Growth</span>
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Powerful AI features designed specifically for e-commerce sellers who want to scale their business efficiently.
+            Practical AI applications that drive productivity and profitability for your business.
           </p>
         </div>
       </section>
@@ -113,15 +101,15 @@ const Features = () => {
       <section className="py-20 px-4 bg-muted/30">
         <div className="container mx-auto max-w-4xl text-center">
           <h2 className="text-4xl font-bold mb-6">
-            Ready to Experience All Features?
+            Ready to Transform Your Business?
           </h2>
           <p className="text-xl text-muted-foreground mb-8">
-            Start your free trial today. No credit card required.
+            Let's discuss how AI can drive real results for your business.
           </p>
-          <Link to="/signup">
+          <Link to="/contact">
             <Button size="lg" className="bg-primary hover:bg-primary/90 text-lg px-8">
-              Start Free Trial
-              <ArrowRight className="ml-2 w-5 h-5" />
+              Get in Touch
+              <Sparkles className="ml-2 w-5 h-5" />
             </Button>
           </Link>
         </div>

@@ -4,7 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
 import { 
   Sparkles, Zap, Target, TrendingUp, 
-  Check, ArrowRight, Play, Star
+  CheckCircle, Youtube, RefreshCw
 } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -18,30 +18,33 @@ const Home = () => {
       <section className="pt-32 pb-20 px-4" style={{ background: 'var(--gradient-hero)' }}>
         <div className="container mx-auto text-center max-w-4xl">
           <Badge className="mb-6 bg-primary/10 text-primary border-primary/20">
-            🚀 Introducing ProdScript AI
+            <Sparkles className="w-4 h-4 mr-1 inline" />
+            AI Business Solutions
           </Badge>
           <h1 className="text-5xl md:text-7xl font-bold mb-6 tracking-tight">
-            Perfect Product Descriptions
-            <span className="block text-primary">In Seconds</span>
+            Empower Your Small Business
+            <span className="block text-primary">with AI Solutions</span>
           </h1>
           <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-            AI-powered description generator for Amazon & eBay sellers. 
-            Create compelling, SEO-optimized listings that convert.
+            Unlock productivity and profitability with cutting-edge AI technology. 
+            Transform how you work, compete, and grow.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/signup">
+            <Link to="/contact">
               <Button size="lg" className="bg-primary hover:bg-primary/90 text-lg px-8 shadow-lg hover:shadow-xl transition-all">
-                Start Free Trial
-                <ArrowRight className="ml-2 w-5 h-5" />
+                Get Started
+                <Sparkles className="ml-2 w-5 h-5" />
               </Button>
             </Link>
-            <Button size="lg" variant="outline" className="text-lg px-8">
-              <Play className="mr-2 w-5 h-5" />
-              Watch Demo
-            </Button>
+            <a href="https://youtube.com/@agent13ai" target="_blank" rel="noopener noreferrer">
+              <Button size="lg" variant="outline" className="text-lg px-8">
+                <Youtube className="mr-2 w-5 h-5" />
+                Watch Videos
+              </Button>
+            </a>
           </div>
           <p className="text-sm text-muted-foreground mt-4">
-            No credit card required • 5 free descriptions to start
+            Learn how AI can transform your business today
           </p>
         </div>
       </section>
@@ -51,15 +54,12 @@ const Home = () => {
         <div className="container mx-auto max-w-6xl">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
+              <Badge className="mb-4 bg-destructive/10 text-destructive border-destructive/20">The Challenge</Badge>
               <h2 className="text-4xl font-bold mb-6">
-                Stop Wasting Hours on Product Descriptions
+                Small Businesses Struggling to Keep Up?
               </h2>
-              <p className="text-lg text-muted-foreground mb-6">
-                As an online seller, you know the struggle: writing unique, compelling descriptions 
-                for dozens or hundreds of products eats up valuable time you could spend growing your business.
-              </p>
               <ul className="space-y-4">
-                {["Writer's block for every listing", "Inconsistent brand voice", "Poor SEO performance", "Time-consuming revisions"].map((item) => (
+                {["Manual processes eating valuable time", "Competing with larger companies", "Limited budget for enterprise software", "Difficulty scaling operations"].map((item) => (
                   <li key={item} className="flex items-start gap-3">
                     <div className="w-6 h-6 rounded-full bg-destructive/10 flex items-center justify-center flex-shrink-0 mt-0.5">
                       <span className="text-destructive text-sm">✕</span>
@@ -70,31 +70,33 @@ const Home = () => {
               </ul>
             </div>
             <Card className="p-8 shadow-xl">
+              <Badge className="mb-4 bg-primary/10 text-primary border-primary/20">The Solution</Badge>
+              <h3 className="text-2xl font-bold mb-6">AI-Powered Business Transformation</h3>
               <div className="space-y-6">
                 <div className="flex items-start gap-3">
                   <Sparkles className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
                   <div>
-                    <h3 className="font-semibold mb-2">AI-Powered Solution</h3>
+                    <h3 className="font-semibold mb-2">Automate Tasks</h3>
                     <p className="text-sm text-muted-foreground">
-                      Generate professional descriptions in seconds with our advanced AI
+                      Save hours daily by automating repetitive processes
                     </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <Target className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
                   <div>
-                    <h3 className="font-semibold mb-2">Platform-Optimized</h3>
+                    <h3 className="font-semibold mb-2">Enterprise-Grade AI</h3>
                     <p className="text-sm text-muted-foreground">
-                      Tailored for Amazon, eBay, and major marketplaces
+                      Access powerful AI tools at small business prices
                     </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <TrendingUp className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
                   <div>
-                    <h3 className="font-semibold mb-2">SEO-Friendly</h3>
+                    <h3 className="font-semibold mb-2">Scale Efficiently</h3>
                     <p className="text-sm text-muted-foreground">
-                      Built-in optimization for better search rankings
+                      Grow operations without proportional cost increases
                     </p>
                   </div>
                 </div>
@@ -108,9 +110,10 @@ const Home = () => {
       <section className="py-20 px-4">
         <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4">Powerful Features</h2>
+            <Badge className="mb-4 bg-primary/10 text-primary border-primary/20">AI Solutions</Badge>
+            <h2 className="text-4xl font-bold mb-4">How AI Transforms Your Business</h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Everything you need to create compelling product descriptions that drive sales
+              Practical AI applications that drive real results for small businesses
             </p>
           </div>
           
@@ -118,33 +121,33 @@ const Home = () => {
             {[
               {
                 icon: Zap,
-                title: "Lightning Fast",
-                description: "Generate complete descriptions in under 10 seconds"
+                title: "Process Automation",
+                description: "Eliminate repetitive tasks and focus on growth"
               },
               {
                 icon: Target,
-                title: "Platform-Specific",
-                description: "Optimized templates for Amazon, eBay, and more"
+                title: "Customer Insights",
+                description: "AI-powered analytics to understand customers better"
               },
               {
                 icon: TrendingUp,
-                title: "SEO Optimized",
-                description: "Built-in keyword optimization for better rankings"
+                title: "Revenue Growth",
+                description: "Data-driven strategies to increase sales"
               },
               {
                 icon: Sparkles,
-                title: "AI-Powered",
-                description: "Advanced language models for human-quality content"
+                title: "Content Creation",
+                description: "Generate marketing copy and content instantly"
               },
               {
-                icon: Check,
-                title: "Unlimited Use",
-                description: "No restrictions on the Pro plan"
+                icon: RefreshCw,
+                title: "24/7 Availability",
+                description: "AI assistants that work around the clock"
               },
               {
-                icon: Star,
-                title: "Brand Voice",
-                description: "Consistent tone across all your listings"
+                icon: CheckCircle,
+                title: "Cost Efficiency",
+                description: "Reduce costs while improving quality"
               }
             ].map((feature) => (
               <Card key={feature.title} className="p-6 hover:shadow-lg transition-shadow">
@@ -157,75 +160,35 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Pricing */}
+      {/* YouTube/Blog Section */}
       <section className="py-20 px-4 bg-muted/30">
-        <div className="container mx-auto max-w-4xl">
+        <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4">Simple, Transparent Pricing</h2>
-            <p className="text-lg text-muted-foreground">
-              Start free, upgrade when you're ready
+            <Badge className="mb-4 bg-primary/10 text-primary border-primary/20">Learn More</Badge>
+            <h2 className="text-4xl font-bold mb-4">Stay Updated with AI Insights</h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Follow our YouTube channel for the latest AI news and business tips
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8">
-            <Card className="p-8 border-2">
-              <h3 className="text-2xl font-bold mb-2">Free Trial</h3>
-              <div className="mb-6">
-                <span className="text-4xl font-bold">$0</span>
-              </div>
-              <ul className="space-y-3 mb-8">
-                <li className="flex items-center gap-2">
-                  <Check className="w-5 h-5 text-primary" />
-                  <span>5 free descriptions</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <Check className="w-5 h-5 text-primary" />
-                  <span>All features included</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <Check className="w-5 h-5 text-primary" />
-                  <span>No credit card required</span>
-                </li>
-              </ul>
-              <Link to="/signup">
-                <Button variant="outline" className="w-full">
-                  Start Free Trial
+          <div className="max-w-3xl mx-auto">
+            <Card className="p-12 text-center">
+              <Youtube className="w-16 h-16 text-primary mx-auto mb-6" />
+              <h3 className="text-2xl font-bold mb-4">agent13 ai on YouTube</h3>
+              <p className="text-muted-foreground mb-8">
+                Get weekly updates on AI innovations, practical tutorials, and strategies to grow your 
+                small business using artificial intelligence.
+              </p>
+              <a 
+                href="https://youtube.com/@agent13ai" 
+                target="_blank" 
+                rel="noopener noreferrer"
+              >
+                <Button size="lg" className="bg-primary hover:bg-primary/90">
+                  <Youtube className="mr-2 w-5 h-5" />
+                  Subscribe Now
                 </Button>
-              </Link>
-            </Card>
-
-            <Card className="p-8 border-2 border-primary shadow-xl relative overflow-hidden">
-              <div className="absolute top-4 right-4">
-                <Badge className="bg-primary text-primary-foreground">Popular</Badge>
-              </div>
-              <h3 className="text-2xl font-bold mb-2">Pro</h3>
-              <div className="mb-6">
-                <span className="text-4xl font-bold">$19</span>
-                <span className="text-muted-foreground">/month</span>
-              </div>
-              <ul className="space-y-3 mb-8">
-                <li className="flex items-center gap-2">
-                  <Check className="w-5 h-5 text-primary" />
-                  <span className="font-semibold">Unlimited descriptions</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <Check className="w-5 h-5 text-primary" />
-                  <span>Priority support</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <Check className="w-5 h-5 text-primary" />
-                  <span>Advanced SEO optimization</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <Check className="w-5 h-5 text-primary" />
-                  <span>Custom brand voice</span>
-                </li>
-              </ul>
-              <Link to="/signup">
-                <Button className="w-full bg-primary hover:bg-primary/90">
-                  Get Started
-                </Button>
-              </Link>
+              </a>
             </Card>
           </div>
         </div>
@@ -235,15 +198,15 @@ const Home = () => {
       <section className="py-20 px-4">
         <div className="container mx-auto max-w-4xl text-center">
           <h2 className="text-4xl font-bold mb-6">
-            Ready to Transform Your Product Listings?
+            Ready to Transform Your Business with AI?
           </h2>
           <p className="text-xl text-muted-foreground mb-8">
-            Join sellers who are saving hours every week with ProdScript AI
+            Let's discuss how AI can drive productivity and profitability for your business
           </p>
-          <Link to="/signup">
+          <Link to="/contact">
             <Button size="lg" className="bg-primary hover:bg-primary/90 text-lg px-8">
-              Start Your Free Trial
-              <ArrowRight className="ml-2 w-5 h-5" />
+              Get in Touch
+              <Sparkles className="ml-2 w-5 h-5" />
             </Button>
           </Link>
         </div>

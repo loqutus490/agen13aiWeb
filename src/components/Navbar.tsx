@@ -15,9 +15,6 @@ const Navbar = () => {
           <Link to="/features" className="text-sm font-medium hover:text-primary transition-colors">
             Features
           </Link>
-          <Link to="/pricing" className="text-sm font-medium hover:text-primary transition-colors">
-            Pricing
-          </Link>
           <Link to="/blog" className="text-sm font-medium hover:text-primary transition-colors">
             Blog
           </Link>
@@ -27,14 +24,9 @@ const Navbar = () => {
         </div>
 
         <div className="flex items-center gap-3">
-          <Link to="/login">
-            <Button variant="ghost" size="sm">
-              Sign In
-            </Button>
-          </Link>
-          <Link to="/signup">
+          <Link to="/contact">
             <Button size="sm" className="bg-primary hover:bg-primary/90">
-              Start Free
+              Contact Us
             </Button>
           </Link>
         </div>
