@@ -6,19 +6,19 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { 
   Sparkles, Zap, Target, TrendingUp, 
-  RefreshCw, CheckCircle
+  RefreshCw, CheckCircle, Workflow, BrainCircuit, Cpu, CircuitBoard, Network, Bot
 } from "lucide-react";
 
 const Features = () => {
   const features = [
     {
-      icon: Zap,
+      icon: Workflow,
       title: "Process Automation",
       description: "Eliminate repetitive tasks and free up valuable time for strategic work. Automate data entry, scheduling, and routine workflows.",
       benefits: ["Save 10-20 hours per week", "Reduce human error", "Focus on growth activities"]
     },
     {
-      icon: Target,
+      icon: BrainCircuit,
       title: "Customer Analytics",
       description: "Understand your customers better with AI-powered insights. Analyze behavior patterns, predict needs, and identify opportunities.",
       benefits: ["Behavior analysis", "Predictive insights", "Audience segmentation"]
@@ -30,19 +30,19 @@ const Features = () => {
       benefits: ["Pricing optimization", "Sales forecasting", "Inventory management"]
     },
     {
-      icon: Sparkles,
+      icon: Cpu,
       title: "Content Creation",
       description: "Generate marketing content, emails, and social media posts instantly. Maintain consistent brand voice across all channels.",
       benefits: ["Marketing copy", "Email automation", "Social media content"]
     },
     {
-      icon: RefreshCw,
+      icon: Bot,
       title: "24/7 AI Assistants",
       description: "AI-powered chatbots and assistants that work around the clock. Automate customer support and handle multiple conversations.",
       benefits: ["Instant responses", "Multiple conversations", "Improved satisfaction"]
     },
     {
-      icon: CheckCircle,
+      icon: CircuitBoard,
       title: "Cost Reduction",
       description: "Reduce operational costs while improving quality and efficiency. Lower labor costs and minimize errors through automation.",
       benefits: ["Lower labor costs", "Reduce software expenses", "Minimize errors"]
@@ -72,10 +72,10 @@ const Features = () => {
         <div className="container mx-auto max-w-6xl">
           <div className="grid md:grid-cols-2 gap-8">
             {features.map((feature) => (
-              <Card key={feature.title} className="p-8 hover:shadow-xl transition-shadow">
+              <Card key={feature.title} className="p-8 hover:shadow-glow transition-all duration-300 border-primary/10 bg-card/50 backdrop-blur-sm group">
                 <div className="flex items-start gap-4 mb-4">
-                  <div className="p-3 bg-primary/10 rounded-lg">
-                    <feature.icon className="w-6 h-6 text-primary" />
+                  <div className="p-3 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-all">
+                    <feature.icon className="w-6 h-6 text-primary group-hover:scale-110 transition-transform" />
                   </div>
                   <div className="flex-1">
                     <h3 className="text-2xl font-semibold mb-2">{feature.title}</h3>

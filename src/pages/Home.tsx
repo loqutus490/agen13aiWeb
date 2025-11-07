@@ -4,7 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
 import { 
   Sparkles, Zap, Target, TrendingUp, 
-  CheckCircle, Youtube, RefreshCw
+  CheckCircle, Youtube, RefreshCw, Cpu, BrainCircuit, Workflow
 } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -17,8 +17,8 @@ const Home = () => {
       {/* Hero Section */}
       <section className="pt-32 pb-20 px-4" style={{ background: 'var(--gradient-hero)' }}>
         <div className="container mx-auto text-center max-w-4xl">
-          <Badge className="mb-6 bg-primary/10 text-primary border-primary/20">
-            <Sparkles className="w-4 h-4 mr-1 inline" />
+          <Badge className="mb-6 bg-primary/10 text-primary border-primary/20 backdrop-blur-sm">
+            <Cpu className="w-4 h-4 mr-1 inline animate-pulse" />
             AI Business Solutions
           </Badge>
           <h1 className="text-5xl md:text-7xl font-bold mb-6 tracking-tight">
@@ -70,11 +70,13 @@ const Home = () => {
               </ul>
             </div>
             <Card className="p-8 shadow-xl">
-              <Badge className="mb-4 bg-primary/10 text-primary border-primary/20">The Solution</Badge>
+              <Badge className="mb-4 bg-primary/10 text-primary border-primary/20 backdrop-blur-sm">The Solution</Badge>
               <h3 className="text-2xl font-bold mb-6">AI-Powered Business Transformation</h3>
               <div className="space-y-6">
                 <div className="flex items-start gap-3">
-                  <Sparkles className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
+                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                    <Sparkles className="w-5 h-5 text-primary" />
+                  </div>
                   <div>
                     <h3 className="font-semibold mb-2">Automate Tasks</h3>
                     <p className="text-sm text-muted-foreground">
@@ -83,7 +85,9 @@ const Home = () => {
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
-                  <Target className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
+                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                    <BrainCircuit className="w-5 h-5 text-primary" />
+                  </div>
                   <div>
                     <h3 className="font-semibold mb-2">Enterprise-Grade AI</h3>
                     <p className="text-sm text-muted-foreground">
@@ -92,7 +96,9 @@ const Home = () => {
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
-                  <TrendingUp className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
+                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                    <TrendingUp className="w-5 h-5 text-primary" />
+                  </div>
                   <div>
                     <h3 className="font-semibold mb-2">Scale Efficiently</h3>
                     <p className="text-sm text-muted-foreground">
@@ -120,12 +126,12 @@ const Home = () => {
           <div className="grid md:grid-cols-3 gap-8">
             {[
               {
-                icon: Zap,
+                icon: Workflow,
                 title: "Process Automation",
                 description: "Eliminate repetitive tasks and focus on growth"
               },
               {
-                icon: Target,
+                icon: BrainCircuit,
                 title: "Customer Insights",
                 description: "AI-powered analytics to understand customers better"
               },
@@ -150,8 +156,10 @@ const Home = () => {
                 description: "Reduce costs while improving quality"
               }
             ].map((feature) => (
-              <Card key={feature.title} className="p-6 hover:shadow-lg transition-shadow">
-                <feature.icon className="w-10 h-10 text-primary mb-4" />
+              <Card key={feature.title} className="p-6 hover:shadow-glow transition-all duration-300 border-primary/10 bg-card/50 backdrop-blur-sm group">
+                <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-all">
+                  <feature.icon className="w-6 h-6 text-primary group-hover:scale-110 transition-transform" />
+                </div>
                 <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
                 <p className="text-muted-foreground">{feature.description}</p>
               </Card>
