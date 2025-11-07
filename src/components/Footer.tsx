@@ -25,7 +25,7 @@ const Footer = () => {
                 Follow on YouTube
               </a>
               <a 
-                href="https://facebook.com/agent13ai" 
+                href="https://www.facebook.com/people/Agent13-ai/61583475990300/" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
