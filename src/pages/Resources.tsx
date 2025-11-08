@@ -49,10 +49,10 @@ const Resources = () => {
       icon: TrendingUp,
       title: "ROI Calculator for AI Projects",
       description: "Calculate the potential return on investment before implementing AI solutions.",
-      type: "Excel Template",
+      type: "PDF Download",
       size: "1.2 MB",
-      downloadUrl: "/guides/roi-calculator.xlsx",
-      fileName: "ROI-Calculator.xlsx"
+      downloadUrl: "/guides/roi-calculator.pdf",
+      fileName: "ROI-Calculator.pdf"
     }
   ];
 
