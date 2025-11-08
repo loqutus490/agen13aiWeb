@@ -15,28 +15,36 @@ const Resources = () => {
       title: "AI Readiness Checklist",
       description: "Assess if your business is ready to implement AI solutions with this comprehensive checklist.",
       type: "PDF Download",
-      size: "2.1 MB"
+      size: "2.1 MB",
+      downloadUrl: "/guides/ai-readiness-checklist.pdf",
+      fileName: "AI-Readiness-Checklist.pdf"
     },
     {
       icon: BookOpen,
       title: "Small Business AI Implementation Guide",
       description: "Step-by-step guide to planning and executing your first AI project successfully.",
       type: "PDF Download",
-      size: "3.5 MB"
+      size: "3.5 MB",
+      downloadUrl: "/guides/ai-implementation-guide.pdf",
+      fileName: "AI-Implementation-Guide.pdf"
     },
     {
       icon: CheckSquare,
       title: "Process Automation Template",
       description: "Identify which tasks in your business are prime candidates for AI automation.",
       type: "Excel Template",
-      size: "0.8 MB"
+      size: "0.8 MB",
+      downloadUrl: "/guides/process-automation-template.xlsx",
+      fileName: "Process-Automation-Template.xlsx"
     },
     {
       icon: TrendingUp,
       title: "ROI Calculator for AI Projects",
       description: "Calculate the potential return on investment before implementing AI solutions.",
       type: "Excel Template",
-      size: "1.2 MB"
+      size: "1.2 MB",
+      downloadUrl: "/guides/roi-calculator.xlsx",
+      fileName: "ROI-Calculator.xlsx"
     }
   ];
 
@@ -142,9 +150,11 @@ const Resources = () => {
                       <div className="text-sm text-muted-foreground">
                         {guide.type} • {guide.size}
                       </div>
-                      <Button size="sm" className="bg-primary hover:bg-primary-dark">
-                        <Download className="w-4 h-4 mr-2" />
-                        Download
+                      <Button size="sm" className="bg-primary hover:bg-primary-dark" asChild>
+                        <a href={guide.downloadUrl} download={guide.fileName}>
+                          <Download className="w-4 h-4 mr-2" />
+                          Download
+                        </a>
                       </Button>
                     </div>
                   </div>
