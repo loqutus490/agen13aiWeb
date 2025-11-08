@@ -1,13 +1,15 @@
 import { Button } from "@/components/ui/button";
 import { Link, useNavigate } from "react-router-dom";
-import { Sparkles, LogOut, User } from "lucide-react";
+import { Sparkles, LogOut, User, Shield } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
+import { useAdmin } from "@/hooks/useAdmin";
 const Navbar = () => {
   const {
     user,
     signOut,
     loading
   } = useAuth();
+  const { isAdmin } = useAdmin();
   const navigate = useNavigate();
   const handleSignOut = async () => {
     await signOut();
@@ -46,6 +48,13 @@ const Navbar = () => {
             <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-primary-glow transition-all group-hover:w-full" />
           </Link>
           
+          {isAdmin && (
+            <Link to="/admin" className="text-sm font-medium text-primary hover:text-primary-dark transition-all relative group flex items-center gap-1">
+              <Shield className="w-4 h-4" />
+              Admin
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-primary-glow transition-all group-hover:w-full" />
+            </Link>
+          )}
           
         </div>
 
