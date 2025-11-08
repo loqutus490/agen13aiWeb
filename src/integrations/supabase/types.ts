@@ -14,6 +14,36 @@ export type Database = {
   }
   public: {
     Tables: {
+      download_leads: {
+        Row: {
+          created_at: string
+          downloaded_resource: string
+          email: string
+          first_name: string
+          id: string
+          last_name: string
+          phone_number: string
+        }
+        Insert: {
+          created_at?: string
+          downloaded_resource: string
+          email: string
+          first_name: string
+          id?: string
+          last_name: string
+          phone_number: string
+        }
+        Update: {
+          created_at?: string
+          downloaded_resource?: string
+          email?: string
+          first_name?: string
+          id?: string
+          last_name?: string
+          phone_number?: string
+        }
+        Relationships: []
+      }
       rate_limits: {
         Row: {
           ip_address: string

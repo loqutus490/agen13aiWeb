@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Badge } from "@/components/ui/badge";
@@ -7,8 +8,15 @@ import {
   FileText, Video, Download, BookOpen, 
   CheckSquare, TrendingUp, Youtube, ExternalLink 
 } from "lucide-react";
+import { DownloadLeadForm } from "@/components/DownloadLeadForm";
 
 const Resources = () => {
+  const [selectedGuide, setSelectedGuide] = useState<{
+    title: string;
+    fileName: string;
+    downloadUrl: string;
+  } | null>(null);
+
   const guides = [
     {
       icon: FileText,
@@ -150,11 +158,17 @@ const Resources = () => {
                       <div className="text-sm text-muted-foreground">
                         {guide.type} • {guide.size}
                       </div>
-                      <Button size="sm" className="bg-primary hover:bg-primary-dark" asChild>
-                        <a href={guide.downloadUrl} download={guide.fileName}>
-                          <Download className="w-4 h-4 mr-2" />
-                          Download
-                        </a>
+                      <Button 
+                        size="sm" 
+                        className="bg-primary hover:bg-primary-dark"
+                        onClick={() => setSelectedGuide({
+                          title: guide.title,
+                          fileName: guide.fileName,
+                          downloadUrl: guide.downloadUrl,
+                        })}
+                      >
+                        <Download className="w-4 h-4 mr-2" />
+                        Download
                       </Button>
                     </div>
                   </div>
@@ -236,6 +250,16 @@ const Resources = () => {
       </section>
 
       <Footer />
+
+      {selectedGuide && (
+        <DownloadLeadForm
+          isOpen={!!selectedGuide}
+          onClose={() => setSelectedGuide(null)}
+          resourceTitle={selectedGuide.title}
+          resourceFileName={selectedGuide.fileName}
+          downloadUrl={selectedGuide.downloadUrl}
+        />
+      )}
     </div>
   );
 };
