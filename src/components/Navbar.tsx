@@ -35,6 +35,10 @@ const Navbar = () => {
             Services
             <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-primary-glow transition-all group-hover:w-full" />
           </Link>
+          <Link to="/ai-tools" className="text-sm font-medium text-muted-foreground hover:text-primary transition-all relative group">
+            AI Tools
+            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-primary-glow transition-all group-hover:w-full" />
+          </Link>
           <Link to="/case-studies" className="text-sm font-medium text-muted-foreground hover:text-primary transition-all relative group">
             Case Studies
             <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-primary-glow transition-all group-hover:w-full" />

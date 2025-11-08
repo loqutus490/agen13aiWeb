@@ -21,6 +21,7 @@ import FAQ from "./pages/FAQ";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
 import AdminDashboard from "./pages/AdminDashboard";
+import AITools from "./pages/AITools";
 
 const queryClient = new QueryClient();
 
@@ -42,6 +43,7 @@ const App = () => (
             <Route path="/case-studies" element={<CaseStudies />} />
             <Route path="/services" element={<Services />} />
             <Route path="/resources" element={<Resources />} />
+            <Route path="/ai-tools" element={<AITools />} />
             <Route path="/faq" element={<FAQ />} />
             <Route path="/privacy" element={<PrivacyPolicy />} />
             <Route path="/terms" element={<TermsOfService />} />
