@@ -40,10 +40,10 @@ const Resources = () => {
       icon: CheckSquare,
       title: "Process Automation Template",
       description: "Identify which tasks in your business are prime candidates for AI automation.",
-      type: "Excel Template",
+      type: "PDF Download",
       size: "0.8 MB",
-      downloadUrl: "/guides/process-automation-template.xlsx",
-      fileName: "Process-Automation-Template.xlsx"
+      downloadUrl: "/guides/process-automation-template.pdf",
+      fileName: "Process-Automation-Template.pdf"
     },
     {
       icon: TrendingUp,
