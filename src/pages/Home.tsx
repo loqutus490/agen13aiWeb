@@ -30,7 +30,7 @@ const Home = () => {
             AI Business Solutions
           </Badge>
           <h1 className="text-5xl md:text-7xl font-bold mb-6 tracking-tight">
-            Empower Your Small Business
+            Empower Your Business
             <span className="block text-primary">with AI Solutions</span>
           </h1>
           <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
