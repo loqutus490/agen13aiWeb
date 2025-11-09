@@ -18,7 +18,7 @@ const AITools = () => {
         "Multiple tone options",
         "Instant results"
       ],
-      link: "#", // TODO: Replace with actual URL
+      link: "https://prodscript.ai/",
       linkText: "Launch Tool"
     },
     // Add more tools here in the future
