@@ -1,56 +1,68 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Calendar, ArrowLeft, User } from "lucide-react";
-import { getBlogPostBySlug } from "@/data/blogPosts";
+
+interface BlogPost {
+  id: string;
+  slug: string;
+  title: string;
+  content: string;
+  date: string;
+  category: string;
+  author: string | null;
+}
 
 const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
-  const post = slug ? getBlogPostBySlug(slug) : undefined;
+  const [post, setPost] = useState<BlogPost | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!post) {
-      navigate("/blog");
+    if (slug) {
+      fetchPost(slug);
     }
-  }, [post, navigate]);
+  }, [slug]);
+
+  const fetchPost = async (postSlug: string) => {
+    try {
+      const { data, error } = await supabase
+        .from('blog_posts')
+        .select('*')
+        .eq('slug', postSlug)
+        .eq('published', true)
+        .single();
+      
+      if (error) throw error;
+      setPost(data);
+    } catch (error) {
+      console.error('Error fetching post:', error);
+      navigate("/blog");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen">
+        <Navbar />
+        <div className="pt-32 pb-20 px-4 text-center">
+          <p className="text-muted-foreground">Loading...</p>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
 
   if (!post) {
     return null;
   }
-
-  // Simple markdown-like content parsing
-  const formatContent = (content: string) => {
-    const lines = content.trim().split('\n');
-    return lines.map((line, index) => {
-      // Headings
-      if (line.startsWith('# ')) {
-        return <h1 key={index} className="text-4xl font-bold mb-6 mt-8">{line.substring(2)}</h1>;
-      }
-      if (line.startsWith('## ')) {
-        return <h2 key={index} className="text-3xl font-bold mb-4 mt-8">{line.substring(3)}</h2>;
-      }
-      if (line.startsWith('### ')) {
-        return <h3 key={index} className="text-2xl font-bold mb-3 mt-6">{line.substring(4)}</h3>;
-      }
-      
-      // Lists
-      if (line.startsWith('- ')) {
-        return <li key={index} className="ml-6 mb-2 list-disc">{line.substring(2)}</li>;
-      }
-      
-      // Empty lines
-      if (line.trim() === '') {
-        return <div key={index} className="h-4" />;
-      }
-      
-      // Regular paragraphs
-      return <p key={index} className="text-lg text-muted-foreground mb-4 leading-relaxed">{line}</p>;
-    });
-  };
 
   return (
     <div className="min-h-screen">
@@ -94,9 +106,7 @@ const BlogPost = () => {
             )}
           </div>
 
-          <div className="prose prose-lg max-w-none">
-            {formatContent(post.content)}
-          </div>
+          <div className="prose prose-lg max-w-none" dangerouslySetInnerHTML={{ __html: post.content }} />
 
           <div className="mt-12 pt-8 border-t">
             <Button onClick={() => navigate("/blog")} variant="outline">

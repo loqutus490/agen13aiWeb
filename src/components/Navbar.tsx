@@ -52,13 +52,17 @@ const Navbar = () => {
             <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-primary-glow transition-all group-hover:w-full" />
           </Link>
           
-          {isAdmin && (
+          {isAdmin && (<>
             <Link to="/admin" className="text-sm font-medium text-primary hover:text-primary-dark transition-all relative group flex items-center gap-1">
               <Shield className="w-4 h-4" />
               Admin
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-primary-glow transition-all group-hover:w-full" />
             </Link>
-          )}
+            <Link to="/blog-management" className="text-sm font-medium text-primary hover:text-primary-dark transition-all relative group">
+              Manage Blog
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-primary-glow transition-all group-hover:w-full" />
+            </Link>
+          </>)}
           
         </div>
 
