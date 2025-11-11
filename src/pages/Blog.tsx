@@ -1,36 +1,11 @@
+import { Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Youtube, Calendar, ArrowRight } from "lucide-react";
-
-const blogPosts = [
-  {
-    id: 1,
-    title: "How AI is Revolutionizing E-commerce Product Descriptions",
-    excerpt: "Discover how AI-powered tools are transforming the way online businesses create compelling product descriptions that convert browsers into buyers.",
-    date: "2025-01-15",
-    category: "AI Insights",
-    link: "#"
-  },
-  {
-    id: 2,
-    title: "5 Ways to Automate Your Business with AI",
-    excerpt: "Learn practical strategies to implement AI automation in your business operations, from customer service to inventory management.",
-    date: "2025-01-10",
-    category: "Business Tips",
-    link: "#"
-  },
-  {
-    id: 3,
-    title: "The Future of AI in Small Business",
-    excerpt: "Explore upcoming AI trends and technologies that will shape how small businesses operate and compete in the digital marketplace.",
-    date: "2025-01-05",
-    category: "Future Tech",
-    link: "#"
-  }
-];
+import { blogPosts } from "@/data/blogPosts";
 
 const Blog = () => {
   return (
@@ -73,9 +48,11 @@ const Blog = () => {
                 </CardHeader>
                 <CardContent>
                   <p className="text-muted-foreground mb-4">{post.excerpt}</p>
-                  <Button variant="ghost" className="group p-0 h-auto">
-                    Read More
-                    <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                  <Button variant="ghost" className="group p-0 h-auto" asChild>
+                    <Link to={`/blog/${post.slug}`}>
+                      Read More
+                      <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                    </Link>
                   </Button>
                 </CardContent>
               </Card>
