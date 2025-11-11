@@ -25,7 +25,7 @@ const Home = () => {
         <div className="absolute bottom-20 right-1/4 w-96 h-96 bg-primary-glow/20 rounded-full blur-3xl glow-pulse" style={{ animationDelay: '1.5s' }} />
         
         <div className="container mx-auto text-center max-w-4xl relative z-10">
-          <Badge className="mb-6 bg-primary/10 text-primary border-primary/20 backdrop-blur-sm">
+          <Badge className="mb-6 bg-primary/10 text-primary border-primary/20 backdrop-blur-sm text-sm">
             <Cpu className="w-4 h-4 mr-1 inline animate-pulse" />
             AI Business Solutions
           </Badge>
