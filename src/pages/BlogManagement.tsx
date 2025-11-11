@@ -10,10 +10,12 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
+import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import RichTextEditor from "@/components/RichTextEditor";
-import { Pencil, Trash2, Plus } from "lucide-react";
+import { TagInput } from "@/components/TagInput";
+import { Pencil, Trash2, Plus, Tag } from "lucide-react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -35,6 +37,7 @@ interface BlogPost {
   category: string;
   author: string | null;
   published: boolean;
+  tags: string[];
 }
 
 const BlogManagement = () => {
@@ -58,6 +61,7 @@ const BlogManagement = () => {
     category: "",
     author: "agent13 ai Team",
     published: false,
+    tags: [] as string[],
   });
 
   useEffect(() => {
@@ -168,6 +172,7 @@ const BlogManagement = () => {
       category: "",
       author: "agent13 ai Team",
       published: false,
+      tags: [],
     });
     setEditingPost(null);
     setIsCreating(false);
@@ -184,6 +189,7 @@ const BlogManagement = () => {
       category: post.category,
       author: post.author || "agent13 ai Team",
       published: post.published,
+      tags: post.tags || [],
     });
     setIsCreating(true);
   };
@@ -286,6 +292,14 @@ const BlogManagement = () => {
                   </div>
 
                   <div>
+                    <TagInput
+                      tags={formData.tags}
+                      onChange={(tags) => setFormData({ ...formData, tags })}
+                      placeholder="Add tags (e.g., AI, Marketing, Automation)"
+                    />
+                  </div>
+
+                  <div>
                     <Label>Content</Label>
                     <RichTextEditor
                       content={formData.content}
@@ -321,12 +335,22 @@ const BlogManagement = () => {
               <Card key={post.id}>
                 <CardHeader>
                   <div className="flex justify-between items-start">
-                    <div>
+                    <div className="flex-1">
                       <CardTitle>{post.title}</CardTitle>
                       <CardDescription>
                         {post.category} • {new Date(post.date).toLocaleDateString()} • 
                         {post.published ? " Published" : " Draft"}
                       </CardDescription>
+                      {post.tags && post.tags.length > 0 && (
+                        <div className="flex flex-wrap gap-1 mt-2">
+                          {post.tags.map((tag) => (
+                            <Badge key={tag} variant="outline" className="text-xs">
+                              <Tag className="w-3 h-3 mr-1" />
+                              {tag}
+                            </Badge>
+                          ))}
+                        </div>
+                      )}
                     </div>
                     <div className="flex gap-2">
                       <Button variant="ghost" size="sm" onClick={() => startEdit(post)}>

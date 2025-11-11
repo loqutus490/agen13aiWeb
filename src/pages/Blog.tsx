@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import Navbar from "@/components/Navbar";
@@ -6,7 +6,7 @@ import Footer from "@/components/Footer";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Youtube, Calendar, ArrowRight } from "lucide-react";
+import { Youtube, Calendar, ArrowRight, Tag, X } from "lucide-react";
 
 interface BlogPost {
   id: string;
@@ -15,11 +15,17 @@ interface BlogPost {
   excerpt: string;
   date: string;
   category: string;
+  tags: string[];
 }
 
 const Blog = () => {
+  const location = useLocation();
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
+  const [selectedTag, setSelectedTag] = useState<string | null>(
+    location.state?.selectedTag || null
+  );
+  const [allTags, setAllTags] = useState<string[]>([]);
 
   useEffect(() => {
     fetchPosts();
@@ -29,18 +35,29 @@ const Blog = () => {
     try {
       const { data, error } = await supabase
         .from('blog_posts')
-        .select('id, slug, title, excerpt, date, category')
+        .select('id, slug, title, excerpt, date, category, tags')
         .eq('published', true)
         .order('date', { ascending: false});
       
       if (error) throw error;
       setPosts(data || []);
+      
+      // Extract all unique tags
+      const tagsSet = new Set<string>();
+      data?.forEach(post => {
+        post.tags?.forEach((tag: string) => tagsSet.add(tag));
+      });
+      setAllTags(Array.from(tagsSet).sort());
     } catch (error) {
       console.error('Error fetching posts:', error);
     } finally {
       setLoading(false);
     }
   };
+
+  const filteredPosts = selectedTag
+    ? posts.filter(post => post.tags?.includes(selectedTag))
+    : posts;
 
   return (
     <div className="min-h-screen">
@@ -63,17 +80,56 @@ const Blog = () => {
 
       <section className="py-20 px-4">
         <div className="container mx-auto max-w-6xl">
+          {/* Tag Filter */}
+          {allTags.length > 0 && (
+            <div className="mb-8">
+              <h3 className="text-sm font-semibold text-muted-foreground mb-3 flex items-center gap-2">
+                <Tag className="w-4 h-4" />
+                Filter by Tag
+              </h3>
+              <div className="flex flex-wrap gap-2">
+                {selectedTag && (
+                  <Badge
+                    variant="default"
+                    className="cursor-pointer hover:bg-primary/80 transition-colors"
+                    onClick={() => setSelectedTag(null)}
+                  >
+                    All Posts
+                    <X className="w-3 h-3 ml-1" />
+                  </Badge>
+                )}
+                {allTags.map((tag) => (
+                  <Badge
+                    key={tag}
+                    variant={selectedTag === tag ? "default" : "outline"}
+                    className="cursor-pointer hover:bg-accent transition-colors"
+                    onClick={() => setSelectedTag(tag)}
+                  >
+                    {tag}
+                  </Badge>
+                ))}
+              </div>
+              {selectedTag && (
+                <p className="text-sm text-muted-foreground mt-3">
+                  Showing posts tagged with "{selectedTag}" ({filteredPosts.length} {filteredPosts.length === 1 ? 'post' : 'posts'})
+                </p>
+              )}
+            </div>
+          )}
+
           {loading ? (
             <div className="text-center py-12">
               <p className="text-muted-foreground">Loading posts...</p>
             </div>
-          ) : posts.length === 0 ? (
+          ) : filteredPosts.length === 0 ? (
             <div className="text-center py-12">
-              <p className="text-muted-foreground">No blog posts yet. Check back soon!</p>
+              <p className="text-muted-foreground">
+                {selectedTag ? `No posts found with tag "${selectedTag}"` : "No blog posts yet. Check back soon!"}
+              </p>
             </div>
           ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-              {posts.map((post) => (
+              {filteredPosts.map((post) => (
                 <Card key={post.id} className="hover:shadow-lg transition-shadow">
                   <CardHeader>
                     <Badge className="w-fit mb-2 bg-primary/10 text-primary border-primary/20">
@@ -91,6 +147,24 @@ const Blog = () => {
                   </CardHeader>
                   <CardContent>
                     <p className="text-muted-foreground mb-4">{post.excerpt}</p>
+                    {post.tags && post.tags.length > 0 && (
+                      <div className="flex flex-wrap gap-1 mb-4">
+                        {post.tags.map((tag) => (
+                          <Badge
+                            key={tag}
+                            variant="secondary"
+                            className="text-xs cursor-pointer hover:bg-secondary/80"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              setSelectedTag(tag);
+                            }}
+                          >
+                            <Tag className="w-3 h-3 mr-1" />
+                            {tag}
+                          </Badge>
+                        ))}
+                      </div>
+                    )}
                     <Button variant="ghost" className="group p-0 h-auto" asChild>
                       <Link to={`/blog/${post.slug}`}>
                         Read More

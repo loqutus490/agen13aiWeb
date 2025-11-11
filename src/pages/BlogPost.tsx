@@ -1,11 +1,11 @@
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Calendar, ArrowLeft, User } from "lucide-react";
+import { Calendar, ArrowLeft, User, Tag } from "lucide-react";
 
 interface BlogPost {
   id: string;
@@ -15,6 +15,7 @@ interface BlogPost {
   date: string;
   category: string;
   author: string | null;
+  tags: string[];
 }
 
 const BlogPost = () => {
@@ -105,6 +106,27 @@ const BlogPost = () => {
               </div>
             )}
           </div>
+
+          {post.tags && post.tags.length > 0 && (
+            <div className="mb-8 pb-8 border-b">
+              <h3 className="text-sm font-semibold text-muted-foreground mb-3 flex items-center gap-2">
+                <Tag className="w-4 h-4" />
+                Tags
+              </h3>
+              <div className="flex flex-wrap gap-2">
+                {post.tags.map((tag) => (
+                  <Link key={tag} to="/blog" state={{ selectedTag: tag }}>
+                    <Badge
+                      variant="secondary"
+                      className="cursor-pointer hover:bg-secondary/80 transition-colors"
+                    >
+                      {tag}
+                    </Badge>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
 
           <div className="prose prose-lg max-w-none" dangerouslySetInnerHTML={{ __html: post.content }} />
 
