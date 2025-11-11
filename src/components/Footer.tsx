@@ -12,7 +12,7 @@ const Footer = () => {
               <span className="font-bold">agent13 ai</span>
             </div>
             <p className="text-sm text-muted-foreground">
-              AI-powered tools for modern e-commerce sellers.
+              AI-powered tools for modern business.
             </p>
             <div className="flex flex-col gap-2">
               <a 
