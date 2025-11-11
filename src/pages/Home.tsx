@@ -64,7 +64,7 @@ const Home = () => {
             <div>
               <Badge className="mb-4 bg-destructive/10 text-destructive border-destructive/20">The Challenge</Badge>
               <h2 className="text-4xl font-bold mb-6">
-                Small Businesses Struggling to Keep Up?
+                Struggling to Keep Up?
               </h2>
               <ul className="space-y-4">
                 {["Manual processes eating valuable time", "Competing with larger companies", "Limited budget for enterprise software", "Difficulty scaling operations"].map((item) => (
@@ -99,7 +99,7 @@ const Home = () => {
                   <div>
                     <h3 className="font-semibold mb-2">Enterprise-Grade AI</h3>
                     <p className="text-sm text-muted-foreground">
-                      Access powerful AI tools at small business prices
+                      Access powerful AI tools at affordable prices
                     </p>
                   </div>
                 </div>
@@ -127,7 +127,7 @@ const Home = () => {
             <Badge className="mb-4 bg-primary/10 text-primary border-primary/20">AI Solutions</Badge>
             <h2 className="text-4xl font-bold mb-4">How AI Transforms Your Business</h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Practical AI applications that drive real results for small businesses
+              Practical AI applications that drive real results for businesses
             </p>
           </div>
           
@@ -193,7 +193,7 @@ const Home = () => {
               <h3 className="text-2xl font-bold mb-4">agent13 ai on YouTube</h3>
               <p className="text-muted-foreground mb-8">
                 Get weekly updates on AI innovations, practical tutorials, and strategies to grow your 
-                small business using artificial intelligence.
+                business using artificial intelligence.
               </p>
               <a 
                 href="https://youtube.com/@agent13ai" 

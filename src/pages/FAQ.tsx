@@ -18,8 +18,8 @@ const FAQ = () => {
       category: "Getting Started",
       questions: [
         {
-          q: "Is AI too expensive for my small business?",
-          a: "Not at all! AI solutions have become increasingly affordable, with many options starting at just a few hundred dollars per month. Most small businesses see ROI within 3-6 months through time savings and increased efficiency. We offer solutions scaled to your budget and can start with high-impact, low-cost implementations."
+          q: "Is AI too expensive for my business?",
+          a: "Not at all! AI solutions have become increasingly affordable, with many options starting at just a few hundred dollars per month. Most businesses see ROI within 3-6 months through time savings and increased efficiency. We offer solutions scaled to your budget and can start with high-impact, low-cost implementations."
         },
         {
           q: "Do I need technical knowledge to use AI?",
@@ -118,7 +118,7 @@ const FAQ = () => {
             <span className="block text-primary">Answered</span>
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Everything you need to know about implementing AI in your small business.
+            Everything you need to know about implementing AI in your business.
           </p>
         </div>
       </section>

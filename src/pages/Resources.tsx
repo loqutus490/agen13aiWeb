@@ -29,7 +29,7 @@ const Resources = () => {
     },
     {
       icon: BookOpen,
-      title: "Small Business AI Implementation Guide",
+      title: "AI Implementation Guide for Business",
       description: "Step-by-step guide to planning and executing your first AI project successfully.",
       type: "PDF Download",
       size: "3.5 MB",
@@ -101,7 +101,7 @@ const Resources = () => {
       readTime: "15 min read"
     },
     {
-      title: "AI Tools Every Small Business Should Know About",
+      title: "Essential AI Tools Every Business Should Know About",
       category: "Technology",
       readTime: "6 min read"
     },
@@ -126,7 +126,7 @@ const Resources = () => {
           </Badge>
           <h1 className="text-5xl md:text-6xl font-bold mb-6 tracking-tight">
             Learn Everything About
-            <span className="block text-primary">AI for Small Business</span>
+            <span className="block text-primary">AI for Business</span>
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
             Free guides, templates, tutorials, and articles to help you succeed with AI implementation.

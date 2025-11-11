@@ -69,7 +69,7 @@ const CaseStudies = () => {
             <span className="block text-primary">Real Businesses</span>
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            See how small businesses transformed their operations and boosted profitability with AI solutions.
+            See how businesses transformed their operations and boosted profitability with AI solutions.
           </p>
         </div>
       </section>

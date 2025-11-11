@@ -60,7 +60,7 @@ const Features = () => {
           </Badge>
           <h1 className="text-5xl md:text-6xl font-bold mb-6 tracking-tight">
             AI Solutions for
-            <span className="block text-primary">Small Business Growth</span>
+            <span className="block text-primary">Business Growth</span>
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
             Practical AI applications that drive productivity and profitability for your business.

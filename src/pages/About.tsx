@@ -14,11 +14,11 @@ const About = () => {
             About Us
           </Badge>
           <h1 className="text-5xl md:text-6xl font-bold mb-6 tracking-tight">
-            Helping Small Businesses
+            Helping Businesses
             <span className="block text-primary">Thrive with AI</span>
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Making enterprise-grade AI accessible to small businesses
+            Making enterprise-grade AI accessible to businesses of all sizes
           </p>
         </div>
       </section>
@@ -31,7 +31,7 @@ const About = () => {
               Our Mission
             </h2>
             <p className="text-lg text-muted-foreground">
-              At agent13 ai, we believe artificial intelligence should empower every small business, 
+              At agent13 ai, we believe artificial intelligence should empower every business, 
               not just large corporations. We're dedicated to making cutting-edge AI technology accessible, 
               affordable, and practical for businesses of all sizes. Our goal is to help you work smarter, 
               compete better, and grow faster.
@@ -41,7 +41,7 @@ const About = () => {
           <div className="bg-card rounded-lg p-8 border border-border/40">
             <h2 className="text-3xl font-bold mb-4">What We Do</h2>
             <p className="text-lg text-muted-foreground mb-4">
-              We help small businesses harness the power of AI to automate tasks, gain insights, and 
+              We help businesses harness the power of AI to automate tasks, gain insights, and 
               create content. From process automation to customer analytics, from content generation 
               to predictive insights - we provide practical AI solutions that drive real results.
             </p>
@@ -68,7 +68,7 @@ const About = () => {
             <h2 className="text-3xl font-bold mb-4">Join Our Community</h2>
             <p className="text-lg text-muted-foreground mb-6">
               Subscribe to our YouTube channel for weekly AI insights, business strategies, and practical 
-              tutorials. Learn how other small businesses are leveraging AI to grow and stay ahead of the 
+              tutorials. Learn how businesses are leveraging AI to grow and stay ahead of the 
               latest AI trends and innovations.
             </p>
             <a 

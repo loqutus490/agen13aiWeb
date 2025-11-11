@@ -111,7 +111,7 @@ const Services = () => {
           </Badge>
           <h1 className="text-5xl md:text-6xl font-bold mb-6 tracking-tight">
             AI Solutions Designed for
-            <span className="block text-primary">Small Business Growth</span>
+            <span className="block text-primary">Business Growth</span>
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
             Practical, affordable AI services that deliver measurable results for your business.
