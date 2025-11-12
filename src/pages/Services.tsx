@@ -125,19 +125,21 @@ const Services = () => {
             {services.map((service, index) => (
               <Card 
                 key={index} 
-                className={`p-8 hover:shadow-glow transition-all duration-300 border-primary/10 bg-card/50 backdrop-blur-sm scan-line-effect holographic-border flex flex-col ${
+                className={`p-8 hover:shadow-glow transition-all duration-300 border-primary/10 bg-card/50 backdrop-blur-sm scan-line-effect holographic-border flex flex-col relative overflow-hidden group ${
                   service.popular ? 'ring-2 ring-primary' : ''
                 }`}
               >
-                {service.popular && (
-                  <Badge className="mb-4 bg-primary text-primary-foreground w-fit">
-                    Most Popular
-                  </Badge>
-                )}
-                
-                <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
-                  <service.icon className="w-6 h-6 text-primary" />
-                </div>
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary-glow/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                <div className="relative z-10 flex flex-col h-full">
+                  {service.popular && (
+                    <Badge className="mb-4 bg-gradient-to-r from-primary to-primary-glow text-primary-foreground w-fit">
+                      Most Popular
+                    </Badge>
+                  )}
+                  
+                  <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-primary/10 to-primary-glow/20 flex items-center justify-center mb-4">
+                    <service.icon className="w-6 h-6 text-primary" />
+                  </div>
                 
                 <h3 className="text-2xl font-bold mb-3">{service.title}</h3>
                 <p className="text-muted-foreground mb-6 flex-grow">{service.description}</p>
@@ -160,6 +162,7 @@ const Services = () => {
                     </Button>
                   </Link>
                 </div>
+                </div>
               </Card>
             ))}
           </div>
@@ -168,8 +171,10 @@ const Services = () => {
 
       <section className="py-20 px-4 bg-muted/30">
         <div className="container mx-auto max-w-4xl">
-          <Card className="p-12 text-center border-primary/10 bg-card/50 backdrop-blur-sm scan-line-effect holographic-border">
-            <h2 className="text-3xl font-bold mb-4">Not Sure Which Service is Right for You?</h2>
+          <Card className="p-12 text-center border-primary/10 bg-card/50 backdrop-blur-sm scan-line-effect holographic-border relative overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-t from-primary/8 via-primary-glow/3 to-transparent pointer-events-none" />
+            <div className="relative z-10">
+              <h2 className="text-3xl font-bold mb-4">Not Sure Which Service is Right for You?</h2>
             <p className="text-xl text-muted-foreground mb-8">
               Book a free 30-minute consultation to discuss your business needs and find the perfect AI solution.
             </p>
@@ -180,6 +185,7 @@ const Services = () => {
                 <div className="absolute inset-0 bg-gradient-to-r from-primary-glow to-primary opacity-0 group-hover:opacity-100 transition-opacity" />
               </Button>
             </Link>
+            </div>
           </Card>
         </div>
       </section>

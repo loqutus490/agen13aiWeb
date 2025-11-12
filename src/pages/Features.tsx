@@ -72,11 +72,13 @@ const Features = () => {
         <div className="container mx-auto max-w-6xl">
           <div className="grid md:grid-cols-2 gap-8">
             {features.map((feature) => (
-              <Card key={feature.title} className="p-8 hover:shadow-glow transition-all duration-300 border-primary/10 bg-card/50 backdrop-blur-sm group scan-line-effect holographic-border">
-                <div className="flex items-start gap-4 mb-4">
-                  <div className="p-3 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-all">
-                    <feature.icon className="w-6 h-6 text-primary group-hover:scale-110 transition-transform" />
-                  </div>
+              <Card key={feature.title} className="p-8 hover:shadow-glow transition-all duration-300 border-primary/10 bg-card/50 backdrop-blur-sm group scan-line-effect holographic-border relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary-glow/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                <div className="relative z-10">
+                  <div className="flex items-start gap-4 mb-4">
+                    <div className="p-3 bg-gradient-to-br from-primary/10 to-primary-glow/20 rounded-lg group-hover:from-primary/20 group-hover:to-primary-glow/30 transition-all">
+                      <feature.icon className="w-6 h-6 text-primary group-hover:scale-110 transition-transform" />
+                    </div>
                   <div className="flex-1">
                     <h3 className="text-2xl font-semibold mb-2">{feature.title}</h3>
                   </div>
@@ -92,6 +94,7 @@ const Features = () => {
                     </li>
                   ))}
                 </ul>
+                </div>
               </Card>
             ))}
           </div>
