@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Sparkles, Youtube, Facebook, Instagram } from "lucide-react";
+import { Youtube, Facebook, Instagram } from "lucide-react";
 
 const Footer = () => {
   return (
@@ -7,10 +7,14 @@ const Footer = () => {
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="space-y-4">
-            <div className="flex items-center gap-2">
-              <Sparkles className="w-5 h-5 text-primary" />
+            <Link to="/" className="flex items-center gap-3 group">
+              <img 
+                src="/logo.png" 
+                alt="agent13 ai logo" 
+                className="h-8 w-auto transition-transform group-hover:scale-110"
+              />
               <span className="font-bold">agent13 ai</span>
-            </div>
+            </Link>
             <p className="text-sm text-muted-foreground">
               AI-powered tools for modern business.
             </p>
