@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Link, useNavigate } from "react-router-dom";
-import { Sparkles, LogOut, User, Shield } from "lucide-react";
+import { LogOut, User, Shield } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useAdmin } from "@/hooks/useAdmin";
 const Navbar = () => {
@@ -18,9 +18,13 @@ const Navbar = () => {
   return <nav className="fixed top-0 w-full z-50 bg-background/60 backdrop-blur-xl border-b border-primary/10 shadow-tech">
       <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-primary/5 pointer-events-none" />
       <div className="container mx-auto px-4 h-16 flex items-center justify-between relative">
-        <Link to="/" className="flex items-center gap-2 group">
+        <Link to="/" className="flex items-center gap-3 group">
           <div className="relative">
-            <Sparkles className="w-6 h-6 text-primary transition-transform group-hover:scale-110" />
+            <img 
+              src="/logo.png" 
+              alt="agent13 ai logo" 
+              className="h-8 w-auto transition-transform group-hover:scale-110"
+            />
             <div className="absolute inset-0 blur-md bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity" />
           </div>
           <span className="text-xl font-bold bg-gradient-to-r from-foreground to-primary bg-clip-text text-transparent">agent13 ai</span>
