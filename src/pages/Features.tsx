@@ -53,8 +53,9 @@ const Features = () => {
     <div className="min-h-screen">
       <Navbar />
       
-      <section className="pt-32 pb-20 px-4" style={{ background: 'var(--gradient-hero)' }}>
-        <div className="container mx-auto text-center max-w-4xl">
+      <section className="pt-32 pb-20 px-4 relative overflow-hidden animated-gradient-bg">
+        <div className="absolute inset-0 grid-background-dots opacity-20" />
+        <div className="container mx-auto text-center max-w-4xl relative z-10">
           <Badge className="mb-6 bg-primary/10 text-primary border-primary/20">
             Features
           </Badge>

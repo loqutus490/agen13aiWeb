@@ -15,7 +15,7 @@ const Home = () => {
       <Navbar />
       
       {/* Hero Section */}
-      <section className="pt-32 pb-20 px-4 relative overflow-hidden" style={{ background: 'var(--gradient-hero)' }}>
+      <section className="pt-32 pb-20 px-4 relative overflow-hidden animated-gradient-bg">
         {/* Animated Grid Background */}
         <div className="absolute inset-0 grid-background opacity-40" />
         <div className="absolute inset-0 grid-background-dots opacity-20" />

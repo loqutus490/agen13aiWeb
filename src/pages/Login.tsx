@@ -79,7 +79,7 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4" style={{ background: 'var(--gradient-hero)' }}>
+    <div className="min-h-screen flex items-center justify-center px-4 animated-gradient-bg">
       <Card className="w-full max-w-md p-8">
         <div className="text-center mb-8">
           <Link to="/" className="inline-flex items-center gap-2 mb-4">

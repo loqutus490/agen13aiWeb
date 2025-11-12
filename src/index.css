@@ -141,6 +141,28 @@ All colors MUST be HSL.
     }
   }
 
+  @keyframes gradient-shift {
+    0%, 100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+
+  .animated-gradient-bg {
+    background: linear-gradient(
+      135deg,
+      hsl(0 0% 10%),
+      hsl(175 30% 12%),
+      hsl(0 0% 8%),
+      hsl(175 35% 15%),
+      hsl(0 0% 10%)
+    );
+    background-size: 400% 400%;
+    animation: gradient-shift 15s ease infinite;
+  }
+
   .glow-pulse {
     animation: glow-pulse 3s ease-in-out infinite;
   }

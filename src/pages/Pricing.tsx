@@ -11,7 +11,7 @@ const Pricing = () => {
     <div className="min-h-screen">
       <Navbar />
       
-      <section className="pt-32 pb-20 px-4" style={{ background: 'var(--gradient-hero)' }}>
+      <section className="pt-32 pb-20 px-4 animated-gradient-bg">
         <div className="container mx-auto text-center max-w-4xl">
           <Badge className="mb-6 bg-primary/10 text-primary border-primary/20">
             Pricing
