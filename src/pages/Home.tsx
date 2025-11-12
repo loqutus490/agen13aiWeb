@@ -62,7 +62,7 @@ const Home = () => {
         <div className="container mx-auto max-w-6xl">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
-              <Badge className="mb-4 bg-destructive/10 text-destructive border-destructive/20">The Challenge</Badge>
+              <Badge className="mb-4 bg-destructive/10 text-destructive border-destructive/20 text-base font-semibold">The Challenge</Badge>
               <h2 className="text-4xl font-bold mb-6">
                 Struggling to Keep Up?
               </h2>
