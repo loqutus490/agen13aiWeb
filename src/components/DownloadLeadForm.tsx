@@ -109,6 +109,15 @@ export const DownloadLeadForm = ({
       link.click();
       document.body.removeChild(link);
 
+      // Push conversion event to GTM dataLayer
+      (window as any).dataLayer = (window as any).dataLayer || [];
+      (window as any).dataLayer.push({
+        event: 'download_lead_submission',
+        form_name: 'Download Lead Form',
+        resource_title: resourceTitle,
+        lead_email: data.email
+      });
+      
       toast({
         title: "Success!",
         description: "Your download will begin shortly. Check your email for a confirmation.",

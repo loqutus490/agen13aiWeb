@@ -66,6 +66,16 @@ const Contact = () => {
       }
 
       setIsSuccess(true);
+      
+      // Push conversion event to GTM dataLayer
+      (window as any).dataLayer = (window as any).dataLayer || [];
+      (window as any).dataLayer.push({
+        event: 'contact_form_submission',
+        form_name: 'Contact Form',
+        contact_email: data.email,
+        company_name: data.company
+      });
+      
       toast({
         title: "Message sent successfully!",
         description: "We'll get back to you as soon as possible.",
