@@ -156,7 +156,19 @@ const Services = () => {
                 <div className="mt-auto">
                   <div className="text-2xl font-bold text-primary mb-4">{service.pricing}</div>
                   <Link to="/contact">
-                    <Button className="w-full bg-primary hover:bg-primary-dark transition-all">
+                    <Button 
+                      className="w-full bg-primary hover:bg-primary-dark transition-all"
+                      onClick={() => {
+                        (window as any).dataLayer = (window as any).dataLayer || [];
+                        (window as any).dataLayer.push({
+                          event: 'cta_click',
+                          cta_name: `Get Started - ${service.title}`,
+                          cta_location: 'services_card',
+                          service_type: service.title,
+                          destination: '/contact'
+                        });
+                      }}
+                    >
                       Get Started
                       <ArrowRight className="ml-2 w-4 h-4" />
                     </Button>

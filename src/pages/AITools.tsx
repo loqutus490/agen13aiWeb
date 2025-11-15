@@ -144,7 +144,20 @@ const AITools = () => {
                   <ArrowRight className="ml-2 w-4 h-4" />
                 </Link>
               </Button>
-              <Button asChild size="lg" variant="outline">
+              <Button 
+                asChild 
+                size="lg" 
+                variant="outline"
+                onClick={() => {
+                  (window as any).dataLayer = (window as any).dataLayer || [];
+                  (window as any).dataLayer.push({
+                    event: 'cta_click',
+                    cta_name: 'View Services',
+                    cta_location: 'ai_tools_cta',
+                    destination: '/services'
+                  });
+                }}
+              >
                 <Link to="/services">
                   View Services
                 </Link>

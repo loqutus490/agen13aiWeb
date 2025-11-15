@@ -109,7 +109,19 @@ const Pricing = () => {
                 </li>
               </ul>
               <Link to="/signup">
-                <Button className="w-full bg-primary hover:bg-primary/90" size="lg">
+                <Button 
+                  className="w-full bg-primary hover:bg-primary/90" 
+                  size="lg"
+                  onClick={() => {
+                    (window as any).dataLayer = (window as any).dataLayer || [];
+                    (window as any).dataLayer.push({
+                      event: 'cta_click',
+                      cta_name: 'Get Started - Pro Plan',
+                      cta_location: 'pricing_pro_card',
+                      destination: '/signup'
+                    });
+                  }}
+                >
                   Get Started
                   <ArrowRight className="ml-2 w-5 h-5" />
                 </Button>

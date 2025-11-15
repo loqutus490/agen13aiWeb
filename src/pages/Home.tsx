@@ -39,13 +39,38 @@ const Home = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link to="/contact">
-              <Button size="lg" className="bg-primary hover:bg-primary/90 text-lg px-8 shadow-lg hover:shadow-xl transition-all">
+              <Button 
+                size="lg" 
+                className="bg-primary hover:bg-primary/90 text-lg px-8 shadow-lg hover:shadow-xl transition-all"
+                onClick={() => {
+                  (window as any).dataLayer = (window as any).dataLayer || [];
+                  (window as any).dataLayer.push({
+                    event: 'cta_click',
+                    cta_name: 'Get Started - Hero',
+                    cta_location: 'home_hero',
+                    destination: '/contact'
+                  });
+                }}
+              >
                 Get Started
                 <Sparkles className="ml-2 w-5 h-5" />
               </Button>
             </Link>
             <a href="https://youtube.com/@agent13ai" target="_blank" rel="noopener noreferrer">
-              <Button size="lg" variant="outline" className="text-lg px-8">
+              <Button 
+                size="lg" 
+                variant="outline" 
+                className="text-lg px-8"
+                onClick={() => {
+                  (window as any).dataLayer = (window as any).dataLayer || [];
+                  (window as any).dataLayer.push({
+                    event: 'cta_click',
+                    cta_name: 'Watch Videos',
+                    cta_location: 'home_hero',
+                    destination: 'https://youtube.com/@agent13ai'
+                  });
+                }}
+              >
                 <Youtube className="mr-2 w-5 h-5" />
                 Watch Videos
               </Button>

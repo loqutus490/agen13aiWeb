@@ -127,7 +127,19 @@ const CaseStudies = () => {
             Let's discuss how AI can transform your business operations
           </p>
           <Link to="/contact">
-            <Button size="lg" className="bg-primary hover:bg-primary-dark shadow-glow hover:shadow-tech-lg transition-all relative overflow-hidden group">
+            <Button 
+              size="lg" 
+              className="bg-primary hover:bg-primary-dark shadow-glow hover:shadow-tech-lg transition-all relative overflow-hidden group"
+              onClick={() => {
+                (window as any).dataLayer = (window as any).dataLayer || [];
+                (window as any).dataLayer.push({
+                  event: 'cta_click',
+                  cta_name: 'Get Started Today',
+                  cta_location: 'case_studies_cta',
+                  destination: '/contact'
+                });
+              }}
+            >
               <span className="relative z-10">Get Started Today</span>
               <ArrowRight className="ml-2 w-5 h-5 relative z-10" />
               <div className="absolute inset-0 bg-gradient-to-r from-primary-glow to-primary opacity-0 group-hover:opacity-100 transition-opacity" />
