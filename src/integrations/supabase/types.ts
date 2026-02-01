@@ -24,6 +24,7 @@ export type Database = {
           date: string
           excerpt: string
           id: string
+          image_url: string | null
           published: boolean
           slug: string
           tags: string[] | null
@@ -39,6 +40,7 @@ export type Database = {
           date?: string
           excerpt: string
           id?: string
+          image_url?: string | null
           published?: boolean
           slug: string
           tags?: string[] | null
@@ -54,6 +56,7 @@ export type Database = {
           date?: string
           excerpt?: string
           id?: string
+          image_url?: string | null
           published?: boolean
           slug?: string
           tags?: string[] | null

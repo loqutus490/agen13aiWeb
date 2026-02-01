@@ -16,6 +16,7 @@ interface BlogPost {
   category: string;
   author: string | null;
   tags: string[];
+  image_url: string | null;
 }
 
 const BlogPost = () => {
@@ -106,6 +107,16 @@ const BlogPost = () => {
               </div>
             )}
           </div>
+
+          {post.image_url && (
+            <div className="mb-8">
+              <img 
+                src={post.image_url} 
+                alt={post.title}
+                className="w-full h-auto rounded-lg shadow-lg object-cover max-h-[500px]"
+              />
+            </div>
+          )}
 
           {post.tags && post.tags.length > 0 && (
             <div className="mb-8 pb-8 border-b">

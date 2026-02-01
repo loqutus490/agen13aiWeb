@@ -25,6 +25,7 @@ const blogPostSchema = z.object({
   tags: z.array(z.string()).optional().default([]),
   published: z.boolean().optional().default(false),
   date: z.string().optional(), // ISO date string
+  image_url: z.string().url("Must be a valid URL").optional().nullable(),
 });
 
 const handler = async (req: Request): Promise<Response> => {
@@ -96,6 +97,7 @@ const handler = async (req: Request): Promise<Response> => {
           published: validatedData.published,
           date: validatedData.date || new Date().toISOString().split("T")[0],
           updated_at: new Date().toISOString(),
+          image_url: validatedData.image_url || null,
         })
         .eq("slug", validatedData.slug)
         .select()
@@ -138,6 +140,7 @@ const handler = async (req: Request): Promise<Response> => {
         tags: validatedData.tags,
         published: validatedData.published,
         date: validatedData.date || new Date().toISOString().split("T")[0],
+        image_url: validatedData.image_url || null,
       })
       .select()
       .single();
