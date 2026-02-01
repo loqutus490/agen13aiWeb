@@ -15,7 +15,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { useToast } from "@/hooks/use-toast";
 import RichTextEditor from "@/components/RichTextEditor";
 import { TagInput } from "@/components/TagInput";
-import { Pencil, Trash2, Plus, Tag } from "lucide-react";
+import { BlogImageUpload } from "@/components/BlogImageUpload";
+import { Pencil, Trash2, Plus, Tag, Image as ImageIcon } from "lucide-react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -38,6 +39,7 @@ interface BlogPost {
   author: string | null;
   published: boolean;
   tags: string[];
+  image_url: string | null;
 }
 
 const BlogManagement = () => {
@@ -62,6 +64,7 @@ const BlogManagement = () => {
     author: "agent13 ai Team",
     published: false,
     tags: [] as string[],
+    image_url: "",
   });
 
   useEffect(() => {
@@ -173,6 +176,7 @@ const BlogManagement = () => {
       author: "agent13 ai Team",
       published: false,
       tags: [],
+      image_url: "",
     });
     setEditingPost(null);
     setIsCreating(false);
@@ -190,6 +194,7 @@ const BlogManagement = () => {
       author: post.author || "agent13 ai Team",
       published: post.published,
       tags: post.tags || [],
+      image_url: post.image_url || "",
     });
     setIsCreating(true);
   };
@@ -299,6 +304,11 @@ const BlogManagement = () => {
                     />
                   </div>
 
+                  <BlogImageUpload
+                    imageUrl={formData.image_url}
+                    onImageChange={(url) => setFormData({ ...formData, image_url: url })}
+                  />
+
                   <div>
                     <Label>Content</Label>
                     <RichTextEditor
@@ -350,6 +360,12 @@ const BlogManagement = () => {
                             </Badge>
                           ))}
                         </div>
+                      )}
+                      {post.image_url && (
+                        <Badge variant="secondary" className="text-xs mt-2">
+                          <ImageIcon className="w-3 h-3 mr-1" />
+                          Has image
+                        </Badge>
                       )}
                     </div>
                     <div className="flex gap-2">
