@@ -16,6 +16,7 @@ interface BlogPost {
   date: string;
   category: string;
   tags: string[];
+  image_url?: string | null;
 }
 
 const Blog = () => {
@@ -35,7 +36,7 @@ const Blog = () => {
     try {
       const { data, error } = await supabase
         .from('blog_posts')
-        .select('id, slug, title, excerpt, date, category, tags')
+        .select('id, slug, title, excerpt, date, category, tags, image_url')
         .eq('published', true)
         .order('date', { ascending: false});
       
@@ -130,7 +131,16 @@ const Blog = () => {
           ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
               {filteredPosts.map((post) => (
-                <Card key={post.id} className="hover:shadow-lg transition-shadow">
+              <Card key={post.id} className="hover:shadow-lg transition-shadow overflow-hidden">
+                  {post.image_url && (
+                    <div className="aspect-video overflow-hidden">
+                      <img 
+                        src={post.image_url} 
+                        alt={post.title}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  )}
                   <CardHeader>
                     <Badge className="w-fit mb-2 bg-primary/10 text-primary border-primary/20">
                       {post.category}
