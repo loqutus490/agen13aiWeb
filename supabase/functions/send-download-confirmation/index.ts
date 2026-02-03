@@ -31,7 +31,7 @@ const handler = async (req: Request): Promise<Response> => {
     console.log(`Sending confirmation email to ${email} for ${resourceTitle}`);
 
     const emailResponse = await resend.emails.send({
-      from: "Agent13 AI <noreply@agent13.ai>",
+      from: "Agent13 AI <onboarding@resend.dev>",
       to: [email],
       subject: `Your ${resourceTitle} is Ready!`,
       html: `
