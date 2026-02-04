@@ -1,22 +1,46 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { Resend } from "https://esm.sh/resend@4.0.0";
+import { z } from "https://deno.land/x/zod@v3.22.4/mod.ts";
 
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
-const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers":
-    "authorization, x-client-info, apikey, content-type",
+// Allowed origins for CORS
+const allowedOrigins = [
+  "https://here-what-now.lovable.app",
+  "https://id-preview--2f888fe4-d5d8-4e61-9d34-5bc252b0ec1f.lovable.app",
+];
+
+const getCorsHeaders = (req: Request) => {
+  const origin = req.headers.get("origin") || "";
+  const allowedOrigin = allowedOrigins.includes(origin) ? origin : allowedOrigins[0];
+  return {
+    "Access-Control-Allow-Origin": allowedOrigin,
+    "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+    "Access-Control-Allow-Credentials": "true",
+  };
 };
 
-interface DownloadConfirmationRequest {
-  firstName: string;
-  lastName: string;
-  email: string;
-  resourceTitle: string;
-}
+// Input validation schema
+const confirmationSchema = z.object({
+  firstName: z.string().trim().min(1, "First name required").max(100, "First name too long"),
+  lastName: z.string().trim().min(1, "Last name required").max(100, "Last name too long"),
+  email: z.string().email("Invalid email").max(255, "Email too long"),
+  resourceTitle: z.string().trim().min(1, "Resource title required").max(200, "Resource title too long"),
+});
+
+// HTML escape function to prevent XSS
+const escapeHtml = (unsafe: string): string => {
+  return unsafe
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+};
 
 const handler = async (req: Request): Promise<Response> => {
+  const corsHeaders = getCorsHeaders(req);
+  
   console.log("Send download confirmation function invoked");
 
   // Handle CORS preflight requests
@@ -25,15 +49,18 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
-    const { firstName, lastName, email, resourceTitle }: DownloadConfirmationRequest = 
-      await req.json();
+    const body = await req.json();
+    
+    // Validate input
+    const validatedData = confirmationSchema.parse(body);
+    const { firstName, lastName, email, resourceTitle } = validatedData;
 
-    console.log(`Sending confirmation email to ${email} for ${resourceTitle}`);
+    console.log(`Sending confirmation email to ${email} for resource download`);
 
     const emailResponse = await resend.emails.send({
       from: "Agent13 AI <onboarding@resend.dev>",
       to: [email],
-      subject: `Your ${resourceTitle} is Ready!`,
+      subject: `Your ${escapeHtml(resourceTitle)} is Ready!`,
       html: `
         <!DOCTYPE html>
         <html>
@@ -119,17 +146,17 @@ const handler = async (req: Request): Promise<Response> => {
           <body>
             <div class="container">
               <div class="header">
-                <h1>Thank You, ${firstName}! 🎉</h1>
+                <h1>Thank You, ${escapeHtml(firstName)}! 🎉</h1>
               </div>
               <div class="content">
                 <h2>Your Download is Complete</h2>
-                <p>Hi ${firstName} ${lastName},</p>
+                <p>Hi ${escapeHtml(firstName)} ${escapeHtml(lastName)},</p>
                 <p>
                   Thank you for downloading our resource! We're excited to help you on your AI journey.
                 </p>
                 
                 <div class="resource-box">
-                  <strong>${resourceTitle}</strong>
+                  <strong>${escapeHtml(resourceTitle)}</strong>
                 </div>
 
                 <p>
@@ -177,9 +204,9 @@ const handler = async (req: Request): Promise<Response> => {
       `,
     });
 
-    console.log("Email sent successfully:", emailResponse);
+    console.log("Email sent successfully");
 
-    return new Response(JSON.stringify(emailResponse), {
+    return new Response(JSON.stringify({ success: true }), {
       status: 200,
       headers: {
         "Content-Type": "application/json",
@@ -187,12 +214,29 @@ const handler = async (req: Request): Promise<Response> => {
       },
     });
   } catch (error: any) {
-    console.error("Error in send-download-confirmation function:", error);
+    console.error("Error in send-download-confirmation function");
+    
+    if (error instanceof z.ZodError) {
+      return new Response(
+        JSON.stringify({ 
+          success: false,
+          error: "Invalid input data" 
+        }),
+        {
+          status: 400,
+          headers: { "Content-Type": "application/json", ...getCorsHeaders(req) },
+        }
+      );
+    }
+    
     return new Response(
-      JSON.stringify({ error: error.message }),
+      JSON.stringify({ 
+        success: false,
+        error: "Failed to send confirmation email" 
+      }),
       {
         status: 500,
-        headers: { "Content-Type": "application/json", ...corsHeaders },
+        headers: { "Content-Type": "application/json", ...getCorsHeaders(req) },
       }
     );
   }
