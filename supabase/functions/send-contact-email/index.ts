@@ -10,10 +10,20 @@ const supabase = createClient(
   Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
 );
 
-const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers":
-    "authorization, x-client-info, apikey, content-type",
+// Allowed origins for CORS
+const allowedOrigins = [
+  "https://here-what-now.lovable.app",
+  "https://id-preview--2f888fe4-d5d8-4e61-9d34-5bc252b0ec1f.lovable.app",
+];
+
+const getCorsHeaders = (req: Request) => {
+  const origin = req.headers.get("origin") || "";
+  const allowedOrigin = allowedOrigins.includes(origin) ? origin : allowedOrigins[0];
+  return {
+    "Access-Control-Allow-Origin": allowedOrigin,
+    "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+    "Access-Control-Allow-Credentials": "true",
+  };
 };
 
 const contactSchema = z.object({
@@ -33,6 +43,8 @@ const escapeHtml = (unsafe: string): string => {
 };
 
 const handler = async (req: Request): Promise<Response> => {
+  const corsHeaders = getCorsHeaders(req);
+
   // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
@@ -135,7 +147,7 @@ const handler = async (req: Request): Promise<Response> => {
       replyTo: email,
     });
 
-    console.log("Business notification email sent:", businessEmail);
+    console.log("Business notification email sent successfully");
 
     // Send confirmation email to the user
     const confirmationEmail = await resend.emails.send({
@@ -159,7 +171,7 @@ const handler = async (req: Request): Promise<Response> => {
       `,
     });
 
-    console.log("Confirmation email sent:", confirmationEmail);
+    console.log("Confirmation email sent successfully");
 
     return new Response(
       JSON.stringify({ 
@@ -187,7 +199,7 @@ const handler = async (req: Request): Promise<Response> => {
           status: 400,
           headers: { 
             "Content-Type": "application/json", 
-            ...corsHeaders 
+            ...getCorsHeaders(req) 
           },
         }
       );
@@ -202,7 +214,7 @@ const handler = async (req: Request): Promise<Response> => {
         status: 500,
         headers: { 
           "Content-Type": "application/json", 
-          ...corsHeaders 
+          ...getCorsHeaders(req) 
         },
       }
     );
