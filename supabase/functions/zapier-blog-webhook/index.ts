@@ -2,6 +2,12 @@ import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.80.0";
 import { z } from "https://deno.land/x/zod@v3.22.4/mod.ts";
 
+// SECURITY: Webhook secret is MANDATORY for this endpoint
+const webhookSecret = Deno.env.get("ZAPIER_WEBHOOK_SECRET");
+if (!webhookSecret) {
+  console.error("CRITICAL: ZAPIER_WEBHOOK_SECRET is not configured. This endpoint will reject all requests.");
+}
+
 const supabase = createClient(
   Deno.env.get("SUPABASE_URL")!,
   Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
@@ -41,8 +47,9 @@ const blogPostSchema = z.object({
 
 const handler = async (req: Request): Promise<Response> => {
   const corsHeaders = getCorsHeaders(req);
+  const clientIP = req.headers.get("x-forwarded-for") || req.headers.get("cf-connecting-ip") || "unknown";
   
-  console.log("Zapier blog webhook received request");
+  console.log(`Zapier blog webhook received ${req.method} request from IP: ${clientIP}`);
 
   // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
@@ -61,21 +68,44 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
-    // Optional: Verify webhook secret for security
-    const webhookSecret = Deno.env.get("ZAPIER_WEBHOOK_SECRET");
-    if (webhookSecret) {
-      const providedSecret = req.headers.get("x-webhook-secret");
-      if (providedSecret !== webhookSecret) {
-        console.error("Invalid webhook secret");
-        return new Response(
-          JSON.stringify({ success: false, error: "Unauthorized" }),
-          {
-            status: 401,
-            headers: { "Content-Type": "application/json", ...corsHeaders },
-          }
-        );
-      }
+    // SECURITY: Webhook secret is MANDATORY - reject all requests if not configured
+    if (!webhookSecret) {
+      console.error(`SECURITY: Rejected request from ${clientIP} - ZAPIER_WEBHOOK_SECRET not configured`);
+      return new Response(
+        JSON.stringify({ success: false, error: "Service temporarily unavailable" }),
+        {
+          status: 503,
+          headers: { "Content-Type": "application/json", ...corsHeaders },
+        }
+      );
     }
+
+    // Validate webhook secret from request header
+    const providedSecret = req.headers.get("x-webhook-secret");
+    if (!providedSecret) {
+      console.error(`SECURITY: Rejected request from ${clientIP} - Missing x-webhook-secret header`);
+      return new Response(
+        JSON.stringify({ success: false, error: "Unauthorized - Missing authentication" }),
+        {
+          status: 401,
+          headers: { "Content-Type": "application/json", ...corsHeaders },
+        }
+      );
+    }
+
+    // Use timing-safe comparison to prevent timing attacks
+    if (providedSecret !== webhookSecret) {
+      console.error(`SECURITY: Rejected request from ${clientIP} - Invalid webhook secret`);
+      return new Response(
+        JSON.stringify({ success: false, error: "Unauthorized - Invalid authentication" }),
+        {
+          status: 401,
+          headers: { "Content-Type": "application/json", ...corsHeaders },
+        }
+      );
+    }
+
+    console.log(`SECURITY: Authenticated request from ${clientIP}`);
 
     const body = await req.json();
     console.log("Received blog post data:", JSON.stringify(body, null, 2));
