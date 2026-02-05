@@ -1,8 +1,14 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { Resend } from "https://esm.sh/resend@4.0.0";
 import { z } from "https://deno.land/x/zod@v3.22.4/mod.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2.80.0";
 
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
+
+const supabase = createClient(
+  Deno.env.get("SUPABASE_URL")!,
+  Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
+);
 
 // Allowed origins for CORS
 const allowedOrigins = [
@@ -40,8 +46,11 @@ const escapeHtml = (unsafe: string): string => {
 
 const handler = async (req: Request): Promise<Response> => {
   const corsHeaders = getCorsHeaders(req);
+  const clientIP = req.headers.get("x-forwarded-for")?.split(",")[0] || 
+                   req.headers.get("x-real-ip") || 
+                   "unknown";
   
-  console.log("Send download confirmation function invoked");
+  console.log(`Send download confirmation function invoked from IP: ${clientIP}`);
 
   // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
@@ -49,6 +58,74 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
+    // Rate limiting: 3 download requests per hour per IP
+    const { data: rateLimit, error: rateLimitError } = await supabase
+      .from("rate_limits")
+      .select("*")
+      .eq("ip_address", clientIP)
+      .maybeSingle();
+
+    if (rateLimitError) {
+      console.error("Rate limit check error:", rateLimitError);
+    }
+
+    const now = new Date();
+    const oneHourAgo = new Date(now.getTime() - 60 * 60 * 1000);
+
+    if (rateLimit) {
+      const windowStart = new Date(rateLimit.window_start);
+      
+      // If within the same hour window
+      if (windowStart > oneHourAgo) {
+        if (rateLimit.request_count >= 3) {
+          console.warn(`RATE LIMIT: IP ${clientIP} exceeded download limit (${rateLimit.request_count}/3)`);
+          return new Response(
+            JSON.stringify({ 
+              success: false,
+              error: "Too many download requests. Please try again later." 
+            }),
+            {
+              status: 429,
+              headers: {
+                "Content-Type": "application/json",
+                "Retry-After": "3600",
+                ...corsHeaders,
+              },
+            }
+          );
+        }
+        
+        // Increment count
+        await supabase
+          .from("rate_limits")
+          .update({ 
+            request_count: rateLimit.request_count + 1,
+            updated_at: now.toISOString()
+          })
+          .eq("ip_address", clientIP);
+      } else {
+        // Reset window
+        await supabase
+          .from("rate_limits")
+          .update({ 
+            request_count: 1,
+            window_start: now.toISOString(),
+            updated_at: now.toISOString()
+          })
+          .eq("ip_address", clientIP);
+      }
+    } else {
+      // First request from this IP
+      await supabase
+        .from("rate_limits")
+        .insert({ 
+          ip_address: clientIP,
+          request_count: 1,
+          window_start: now.toISOString(),
+          updated_at: now.toISOString()
+        });
+    }
+
     const body = await req.json();
     
     // Validate input
