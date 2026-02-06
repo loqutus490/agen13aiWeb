@@ -1,110 +1,140 @@
 
-# AI Chatbot Widget for agent13 ai
 
-A floating AI-powered chatbot that helps visitors learn about your AI services and captures leads when appropriate.
+# Plan: Train Chatbot with Business FAQ Information
 
-## What You'll Get
+## Overview
+Update the AI chatbot's system prompt to include your comprehensive FAQ information, enabling it to answer detailed questions about your AI Assistant service accurately and consistently.
 
-- **Floating chat bubble** in the bottom-right corner of every page
-- **AI-powered responses** using Lovable AI (no API keys needed)
-- **Smart lead capture** - the bot will naturally ask for contact info when visitors show interest
-- **Brand-consistent design** matching your existing tech/AI aesthetic
-- **Real-time streaming** responses for a natural conversation feel
-- **Conversation persistence** within a session
+## What Will Change
 
-## User Experience
+### Enhanced Chatbot Knowledge
+The chatbot will be able to answer questions about:
+- **Service type** - Professional service vs. software product
+- **Data ownership** - Clear answers about who owns what
+- **Target audience** - Law firms, professional services, document-heavy businesses
+- **Capabilities** - What the AI can and cannot do
+- **Security & privacy** - How documents are handled and protected
+- **Setup process** - Timeline and pilot approach
+- **Pricing structure** - Setup fees and monthly support
+- **How to get started** - Discovery call process
 
-1. Visitor sees a chat bubble with a friendly pulse animation
-2. Clicking opens a sleek chat panel with your branding
-3. The AI greets them and offers to help
-4. As they chat, the AI answers questions about your services, pricing, case studies, etc.
-5. When the visitor expresses interest (e.g., "I'd like to learn more"), the AI naturally asks for their contact info
-6. Lead data is saved to your existing `download_leads` table (reusing your lead capture infrastructure)
+## Implementation Steps
 
-## Components to Create
+### 1. Restructure System Prompt
+Organize the expanded knowledge into clear sections:
+- About the Service
+- How It Works
+- Security & Data
+- Capabilities & Limitations
+- Setup & Onboarding
+- Pricing & Getting Started
 
-### 1. Chat Edge Function (`supabase/functions/chat/index.ts`)
-- Receives conversation messages from frontend
-- Calls Lovable AI with a custom system prompt about agent13 ai
-- Streams responses back in real-time
-- Handles rate limits and errors gracefully
+### 2. Add FAQ Knowledge Base
+Incorporate all 26 FAQ items as reference knowledge the AI can draw from when answering questions.
 
-### 2. ChatWidget Component (`src/components/ChatWidget.tsx`)
-- Floating bubble with expand/collapse animation
-- Chat message list with markdown rendering
-- Input field with send button
-- Loading/typing indicators
-- Lead capture form that appears inline when triggered
+### 3. Update Behavior Guidelines
+Refine how the chatbot should:
+- Emphasize that this is a managed service, not software
+- Clarify that AI supports staff (never replaces)
+- Explain document security clearly
+- Guide users toward discovery calls
 
-### 3. Chat Message Types (`src/components/ChatMessage.tsx`)
-- User message styling (right-aligned, primary color)
-- Assistant message styling (left-aligned, with AI avatar)
-- Markdown support for formatted responses
-- Lead capture card component
-
-### 4. Chat Hook (`src/hooks/useChatBot.ts`)
-- Manages conversation state
-- Handles streaming responses
-- Detects when to trigger lead capture
-- Saves leads to database
-
-## AI System Prompt
-
-The chatbot will be configured with knowledge about:
-- Your AI services (automation, chatbots, analytics, content, consulting, custom solutions)
-- Pricing ranges for each service
-- Company mission and approach
-- How to naturally transition to lead capture
-
-## Integration Points
-
-- **Existing lead capture**: Uses your `download_leads` table
-- **Analytics**: Fires GTM events for chat engagement
-- **Rate limiting**: Uses your existing rate limiting infrastructure
-- **Design system**: Uses your existing UI components (Button, Card, Badge)
+### 4. Deploy Updated Edge Function
+Redeploy the chat function with the new system prompt.
 
 ---
 
 ## Technical Details
 
-### Edge Function Implementation
+**File to modify:** `supabase/functions/chat/index.ts`
+
+The `SYSTEM_PROMPT` constant will be expanded to include:
 
 ```text
-+------------------+     +------------------+     +------------------+
-|   Chat Widget    | --> |   Edge Function  | --> |   Lovable AI     |
-|   (Frontend)     |     |   /chat          |     |   Gateway        |
-+------------------+     +------------------+     +------------------+
-        |                        |
-        v                        v
-   Stream tokens            System prompt
-   to user                  + conversation
+## Service Overview
+
+### What We Offer
+- Professional service (not standalone software)
+- Design, configure, and manage AI assistants using trusted platforms
+- You own your data, documents, and access
+- We provide configuration, expertise, and ongoing support
+
+### Who This Is For
+- Document-heavy, process-driven businesses
+- Law firms and professional services
+- Operations-focused teams
+
+### What the AI Assistant Does
+- Reduces repetitive email and document drafting
+- Improves consistency across staff
+- Speeds up internal responses
+- Reduces time searching for procedures/templates
+
+### What the AI Assistant Does NOT Do
+- Provide legal advice
+- Make decisions or develop strategy
+- Act independently
+- Access information outside approved content
+
+## Security & Data Handling
+
+### Document Security
+- Access is read-only, limited to approved folders
+- Data is never used to train other clients' systems
+- Original files remain unchanged
+- Automatically updates when files change
+
+### Access Control
+- Organization designates internal admin
+- Access can be restricted by role
+- We never control your internal permissions
+
+## Setup & Process
+
+### Timeline
+- Initial setup: typically a few weeks
+- Depends on document volume and workflow complexity
+
+### Approach
+- Start with pilot focused on one workflow
+- Ensure accuracy and confidence before expanding
+- No special document formatting required
+
+### Interaction
+- Simple chat interface
+- Plain language questions
+- Can draft emails using approved templates
+- All outputs require human review
+
+## Pricing & Getting Started
+
+### Pricing Structure
+- One-time setup fee
+- Monthly support fee
+- Depends on scope and complexity
+
+### Getting Started
+- Short discovery call to identify workflows
+- Focus on areas that benefit most from automation
+
+## FAQ Quick Reference
+[Full FAQ knowledge for accurate responses]
 ```
 
-### Database Changes
-- No new tables needed - reuses existing `download_leads` table
-- Leads captured via chat will have `downloaded_resource` set to "AI Chatbot Conversation"
+---
 
-### Files to Create/Modify
+## Expected Behavior After Update
 
-| File | Action | Purpose |
-|------|--------|---------|
-| `supabase/functions/chat/index.ts` | Create | Edge function for AI responses |
-| `supabase/config.toml` | Modify | Add chat function config |
-| `src/components/ChatWidget.tsx` | Create | Main chat widget component |
-| `src/components/chat/ChatBubble.tsx` | Create | Floating trigger button |
-| `src/components/chat/ChatPanel.tsx` | Create | Expanded chat interface |
-| `src/components/chat/ChatMessage.tsx` | Create | Message display component |
-| `src/components/chat/ChatInput.tsx` | Create | Message input component |
-| `src/components/chat/LeadCaptureCard.tsx` | Create | Inline lead form |
-| `src/hooks/useChatBot.ts` | Create | Chat state management |
-| `src/App.tsx` | Modify | Add ChatWidget to app |
+| User Question | Chatbot Response |
+|---------------|------------------|
+| "Is this software I can buy?" | Explains it's a professional service, not software |
+| "Do you train on our data?" | Clarifies data is never used for training other systems |
+| "Will this replace our staff?" | Emphasizes AI supports staff, requires human review |
+| "How long to get started?" | Explains few weeks setup, pilot approach |
+| "What if we want to stop?" | Can end with notice, documents remain yours |
 
-### Lead Capture Trigger
+---
 
-The AI will be prompted to suggest sharing contact info when:
-- Visitor asks about pricing specifics
-- Visitor mentions wanting a consultation
-- Visitor expresses interest in getting started
-- After 3+ meaningful exchanges
+## Deployment
+After updating the edge function, it will be automatically redeployed and the chatbot will immediately have access to all this knowledge.
 
-The lead form appears as a chat card, not a separate modal, keeping the experience seamless.
