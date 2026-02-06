@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 
@@ -18,6 +18,8 @@ interface LeadData {
 }
 
 const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/chat`;
+const STORAGE_KEY = "agent13_chat_history";
+const LEAD_CAPTURED_KEY = "agent13_lead_captured";
 
 const INITIAL_MESSAGE: ChatMessage = {
   id: "welcome",
@@ -26,15 +28,59 @@ const INITIAL_MESSAGE: ChatMessage = {
   timestamp: new Date(),
 };
 
+// Load messages from localStorage
+const loadStoredMessages = (): ChatMessage[] => {
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored) {
+      const parsed = JSON.parse(stored);
+      return parsed.map((msg: any) => ({
+        ...msg,
+        timestamp: new Date(msg.timestamp),
+      }));
+    }
+  } catch (error) {
+    console.error("Error loading chat history:", error);
+  }
+  return [INITIAL_MESSAGE];
+};
+
+// Load lead captured state from localStorage
+const loadLeadCaptured = (): boolean => {
+  try {
+    return localStorage.getItem(LEAD_CAPTURED_KEY) === "true";
+  } catch {
+    return false;
+  }
+};
+
 export const useChatBot = () => {
-  const [messages, setMessages] = useState<ChatMessage[]>([INITIAL_MESSAGE]);
+  const [messages, setMessages] = useState<ChatMessage[]>(loadStoredMessages);
   const [isLoading, setIsLoading] = useState(false);
   const [showLeadCapture, setShowLeadCapture] = useState(false);
-  const [leadCaptured, setLeadCaptured] = useState(false);
+  const [leadCaptured, setLeadCaptured] = useState(loadLeadCaptured);
   const { toast } = useToast();
   const abortControllerRef = useRef<AbortController | null>(null);
 
   const generateId = () => `msg-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+
+  // Persist messages to localStorage whenever they change
+  useEffect(() => {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
+    } catch (error) {
+      console.error("Error saving chat history:", error);
+    }
+  }, [messages]);
+
+  // Persist lead captured state
+  useEffect(() => {
+    try {
+      localStorage.setItem(LEAD_CAPTURED_KEY, String(leadCaptured));
+    } catch (error) {
+      console.error("Error saving lead state:", error);
+    }
+  }, [leadCaptured]);
 
   const streamChat = async (userMessage: string) => {
     const userMsg: ChatMessage = {
@@ -222,6 +268,13 @@ export const useChatBot = () => {
     setMessages([INITIAL_MESSAGE]);
     setShowLeadCapture(false);
     setLeadCaptured(false);
+    // Clear localStorage on reset
+    try {
+      localStorage.removeItem(STORAGE_KEY);
+      localStorage.removeItem(LEAD_CAPTURED_KEY);
+    } catch (error) {
+      console.error("Error clearing chat history:", error);
+    }
   }, [cancelStream]);
 
   return {
