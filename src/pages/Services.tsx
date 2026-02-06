@@ -14,7 +14,7 @@ const Services = () => {
     {
       icon: FileSearch,
       title: "Secure Document AI",
-      description: "A custom AI assistant for legal firms that only answers from your approved documents—never makes things up. Built for compliance-focused teams.",
+      description: "Reduce repetitive email and document work. Use your existing templates and internal documents. Improve consistency and response speed across staff. Maintain strict data control and human oversight. Deploy as a managed, low-risk service.",
       features: [
         "Answers only from approved documents",
         "Refuses to answer if not in source docs",
