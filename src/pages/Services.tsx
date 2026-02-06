@@ -22,7 +22,7 @@ const Services = () => {
         "Source citation for every answer",
         "Secure internal knowledge search"
       ],
-      pricing: "Starting at $899/month",
+      pricing: "Starting at $999/month",
       popular: true
     },
     {
