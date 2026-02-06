@@ -6,11 +6,25 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { 
   Workflow, BrainCircuit, Bot, CircuitBoard, 
-  Cpu, Network, CheckCircle, ArrowRight 
+  Cpu, Network, CheckCircle, ArrowRight, FileSearch 
 } from "lucide-react";
 
 const Services = () => {
   const services = [
+    {
+      icon: FileSearch,
+      title: "Secure Document AI",
+      description: "A custom AI assistant for legal firms that only answers from your approved documents—never makes things up. Built for compliance-focused teams.",
+      features: [
+        "Answers only from approved documents",
+        "Refuses to answer if not in source docs",
+        "Full audit logging for compliance",
+        "Source citation for every answer",
+        "Secure internal knowledge search"
+      ],
+      pricing: "Starting at $899/month",
+      popular: true
+    },
     {
       icon: Workflow,
       title: "Process Automation",
@@ -37,7 +51,7 @@ const Services = () => {
         "Integration with CRM systems"
       ],
       pricing: "Starting at $799/month",
-      popular: true
+      popular: false
     },
     {
       icon: BrainCircuit,
