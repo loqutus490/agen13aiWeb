@@ -1,140 +1,148 @@
 
-
-# Plan: Train Chatbot with Business FAQ Information
+# Plan: Make Secure Document AI the Flagship Service
 
 ## Overview
-Update the AI chatbot's system prompt to include your comprehensive FAQ information, enabling it to answer detailed questions about your AI Assistant service accurately and consistently.
+Reposition the entire website to highlight **Secure Document AI** as your core offering and primary expertise, while maintaining other services as complementary offerings.
 
 ## What Will Change
 
-### Enhanced Chatbot Knowledge
-The chatbot will be able to answer questions about:
-- **Service type** - Professional service vs. software product
-- **Data ownership** - Clear answers about who owns what
-- **Target audience** - Law firms, professional services, document-heavy businesses
-- **Capabilities** - What the AI can and cannot do
-- **Security & privacy** - How documents are handled and protected
-- **Setup process** - Timeline and pilot approach
-- **Pricing structure** - Setup fees and monthly support
-- **How to get started** - Discovery call process
+### 1. Home Page (`src/pages/Home.tsx`)
+**Hero Section:**
+- Update headline from generic "AI Solutions" to focus on document-grounded AI
+- New headline: "Secure Document AI for Professional Services"
+- Subheadline emphasizing law firms and document-heavy businesses
+- Primary CTA: "Schedule Discovery Call"
 
-## Implementation Steps
+**Problem/Solution Section:**
+- Reframe challenges around document work, email drafting, and consistency
+- Solution focused on secure, document-grounded AI assistants
 
-### 1. Restructure System Prompt
-Organize the expanded knowledge into clear sections:
-- About the Service
-- How It Works
-- Security & Data
-- Capabilities & Limitations
-- Setup & Onboarding
-- Pricing & Getting Started
+**Features Grid:**
+- Lead with document-related capabilities
+- Emphasize security, human oversight, and workflow support
 
-### 2. Add FAQ Knowledge Base
-Incorporate all 26 FAQ items as reference knowledge the AI can draw from when answering questions.
+### 2. Services Page (`src/pages/Services.tsx`)
+**Hero Section:**
+- Update headline to emphasize Secure Document AI expertise
 
-### 3. Update Behavior Guidelines
-Refine how the chatbot should:
-- Emphasize that this is a managed service, not software
-- Clarify that AI supports staff (never replaces)
-- Explain document security clearly
-- Guide users toward discovery calls
+**Services Reordering:**
+- Move "Secure Document AI" to prominent first position
+- Add visual distinction (larger card, featured badge already exists)
+- Consider a dedicated section above other services
 
-### 4. Deploy Updated Edge Function
-Redeploy the chat function with the new system prompt.
+### 3. Features Page (`src/pages/Features.tsx`)
+**Restructure Features:**
+- Lead with document AI capabilities
+- Add specific features: document indexing, email drafting, template usage
+- Include security and compliance features prominently
+
+### 4. About Page (`src/pages/About.tsx`)
+**Mission Update:**
+- Emphasize expertise in secure, document-grounded AI
+- Highlight target market: law firms, professional services
+
+### 5. Pricing Page (`src/pages/Pricing.tsx`)
+**Complete Overhaul:**
+- Replace generic product tiers with service-based pricing
+- Feature Secure Document AI ($999/month) prominently
+- Include other services as additional offerings
+- Remove outdated "Free Trial" / "$19/month" product references
+
+### 6. FAQ Page (`src/pages/FAQ.tsx`)
+**Add New Category:**
+- "Secure Document AI" category with relevant questions from your FAQ document
+- Security and data handling questions
+
+### 7. Navbar (`src/components/Navbar.tsx`)
+**Optional Enhancement:**
+- Add "Secure Document AI" as a prominent navigation item
+- Or rename "Services" link to draw attention
+
+### 8. Footer (`src/components/Footer.tsx`)
+**Update Tagline:**
+- From "AI-powered tools for modern business"
+- To something like "Secure Document AI for Professional Services"
+
+---
+
+## Detailed Changes by File
+
+### Home Page Hero
+```text
+Current: "Empower Your Business with AI Solutions"
+New: "Secure Document AI for Professional Services"
+
+Current subheadline: Generic productivity message
+New: "Reduce repetitive email and document work with secure, 
+     document-grounded AI assistants. Built for law firms 
+     and professional services."
+```
+
+### Home Problem/Solution Cards
+**Problems to highlight:**
+- Repetitive email and document drafting consuming staff time
+- Inconsistent responses across team members
+- Time lost searching for procedures and templates
+- Need to maintain strict data security
+
+**Solutions:**
+- Document-grounded AI using your existing materials
+- Improved consistency and response speed
+- Simple chat interface for staff
+- Your data, your control - never used for training
+
+### Services Page Structure
+```text
+┌─────────────────────────────────────────────────┐
+│  FLAGSHIP: Secure Document AI                   │
+│  Full-width featured card with detailed info    │
+│  Starting at $999/month                         │
+└─────────────────────────────────────────────────┘
+
+┌─────────────┐  ┌─────────────┐  ┌─────────────┐
+│ Process     │  │ AI Chatbot  │  │ Analytics   │
+│ Automation  │  │ $799/mo     │  │ $699/mo     │
+│ $499/mo     │  │             │  │             │
+└─────────────┘  └─────────────┘  └─────────────┘
+```
+
+### Pricing Page Transformation
+**From:** Product tiers ($0/$19)
+**To:** Service offerings focused on professional services
+
+New structure:
+- **Secure Document AI** - $999/month (Featured)
+- **Discovery Call** - Free consultation CTA
+- Comparison of service tiers or custom quote option
 
 ---
 
 ## Technical Details
 
-**File to modify:** `supabase/functions/chat/index.ts`
+**Files to modify:**
+1. `src/pages/Home.tsx` - Hero, problem/solution, features
+2. `src/pages/Services.tsx` - Reorder, enhance flagship service
+3. `src/pages/Features.tsx` - Document AI focus
+4. `src/pages/Pricing.tsx` - Replace product tiers with services
+5. `src/pages/About.tsx` - Mission and expertise update
+6. `src/pages/FAQ.tsx` - Add Document AI category
+7. `src/components/Footer.tsx` - Update tagline
 
-The `SYSTEM_PROMPT` constant will be expanded to include:
-
-```text
-## Service Overview
-
-### What We Offer
-- Professional service (not standalone software)
-- Design, configure, and manage AI assistants using trusted platforms
-- You own your data, documents, and access
-- We provide configuration, expertise, and ongoing support
-
-### Who This Is For
-- Document-heavy, process-driven businesses
-- Law firms and professional services
-- Operations-focused teams
-
-### What the AI Assistant Does
-- Reduces repetitive email and document drafting
-- Improves consistency across staff
-- Speeds up internal responses
-- Reduces time searching for procedures/templates
-
-### What the AI Assistant Does NOT Do
-- Provide legal advice
-- Make decisions or develop strategy
-- Act independently
-- Access information outside approved content
-
-## Security & Data Handling
-
-### Document Security
-- Access is read-only, limited to approved folders
-- Data is never used to train other clients' systems
-- Original files remain unchanged
-- Automatically updates when files change
-
-### Access Control
-- Organization designates internal admin
-- Access can be restricted by role
-- We never control your internal permissions
-
-## Setup & Process
-
-### Timeline
-- Initial setup: typically a few weeks
-- Depends on document volume and workflow complexity
-
-### Approach
-- Start with pilot focused on one workflow
-- Ensure accuracy and confidence before expanding
-- No special document formatting required
-
-### Interaction
-- Simple chat interface
-- Plain language questions
-- Can draft emails using approved templates
-- All outputs require human review
-
-## Pricing & Getting Started
-
-### Pricing Structure
-- One-time setup fee
-- Monthly support fee
-- Depends on scope and complexity
-
-### Getting Started
-- Short discovery call to identify workflows
-- Focus on areas that benefit most from automation
-
-## FAQ Quick Reference
-[Full FAQ knowledge for accurate responses]
-```
+**No database changes required**
 
 ---
 
-## Expected Behavior After Update
+## Key Messaging Throughout
 
-| User Question | Chatbot Response |
-|---------------|------------------|
-| "Is this software I can buy?" | Explains it's a professional service, not software |
-| "Do you train on our data?" | Clarifies data is never used for training other systems |
-| "Will this replace our staff?" | Emphasizes AI supports staff, requires human review |
-| "How long to get started?" | Explains few weeks setup, pilot approach |
-| "What if we want to stop?" | Can end with notice, documents remain yours |
+| Element | Current | New |
+|---------|---------|-----|
+| Primary audience | Generic "business" | Law firms, professional services |
+| Core offering | AI solutions | Secure Document AI |
+| Key benefit | Productivity | Reduce repetitive work, improve consistency |
+| Trust signals | Generic | Data security, human oversight, no training on data |
+| CTA | "Get Started" | "Schedule Discovery Call" |
 
 ---
 
-## Deployment
-After updating the edge function, it will be automatically redeployed and the chatbot will immediately have access to all this knowledge.
-
+## Chatbot Already Updated
+The chatbot system prompt already emphasizes Secure Document AI as the primary service, so it will align with these website changes.
