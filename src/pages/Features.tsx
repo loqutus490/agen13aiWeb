@@ -5,47 +5,47 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { 
-  Sparkles, Zap, Target, TrendingUp, 
-  RefreshCw, CheckCircle, Workflow, BrainCircuit, Cpu, CircuitBoard, Network, Bot
+  Sparkles, FileSearch, Shield, Lock, Users, 
+  CheckCircle, Workflow, Bot, RefreshCw, Mail
 } from "lucide-react";
 
 const Features = () => {
   const features = [
     {
+      icon: FileSearch,
+      title: "Document Indexing",
+      description: "AI trained on your existing templates, procedures, and internal documents. The assistant uses your firm's own materials to generate accurate, consistent responses.",
+      benefits: ["Uses your existing templates", "Learns your firm's procedures", "Maintains your document standards"]
+    },
+    {
+      icon: Mail,
+      title: "Email & Document Drafting",
+      description: "Generate consistent, professional email responses and documents faster. Staff can draft replies in seconds while maintaining your firm's voice and standards.",
+      benefits: ["Faster email responses", "Consistent messaging", "Professional tone maintained"]
+    },
+    {
+      icon: Shield,
+      title: "Enterprise-Grade Security",
+      description: "Your data stays secure with strict access controls and enterprise-grade encryption. Built for industries that demand the highest security standards.",
+      benefits: ["Strict data control", "Enterprise encryption", "Compliance-ready infrastructure"]
+    },
+    {
+      icon: Lock,
+      title: "Your Data, Your Control",
+      description: "Your documents and data are never used to train external AI models. You maintain full ownership and control over all your firm's information.",
+      benefits: ["Never used for training", "Full data ownership", "Complete privacy control"]
+    },
+    {
+      icon: Users,
+      title: "Human Oversight",
+      description: "AI supports your staff—it never replaces human judgment. All outputs can be reviewed and approved before use, ensuring quality and accuracy.",
+      benefits: ["Supports staff, not replaces", "Review before sending", "Quality assurance built-in"]
+    },
+    {
       icon: Workflow,
-      title: "Process Automation",
-      description: "Eliminate repetitive tasks and free up valuable time for strategic work. Automate data entry, scheduling, and routine workflows.",
-      benefits: ["Save 10-20 hours per week", "Reduce human error", "Focus on growth activities"]
-    },
-    {
-      icon: BrainCircuit,
-      title: "Customer Analytics",
-      description: "Understand your customers better with AI-powered insights. Analyze behavior patterns, predict needs, and identify opportunities.",
-      benefits: ["Behavior analysis", "Predictive insights", "Audience segmentation"]
-    },
-    {
-      icon: TrendingUp,
-      title: "Revenue Optimization",
-      description: "Data-driven strategies to increase sales and profit margins. Get dynamic pricing recommendations and sales forecasting.",
-      benefits: ["Pricing optimization", "Sales forecasting", "Inventory management"]
-    },
-    {
-      icon: Cpu,
-      title: "Content Creation",
-      description: "Generate marketing content, emails, and social media posts instantly. Maintain consistent brand voice across all channels.",
-      benefits: ["Marketing copy", "Email automation", "Social media content"]
-    },
-    {
-      icon: Bot,
-      title: "24/7 AI Assistants",
-      description: "AI-powered chatbots and assistants that work around the clock. Automate customer support and handle multiple conversations.",
-      benefits: ["Instant responses", "Multiple conversations", "Improved satisfaction"]
-    },
-    {
-      icon: CircuitBoard,
-      title: "Cost Reduction",
-      description: "Reduce operational costs while improving quality and efficiency. Lower labor costs and minimize errors through automation.",
-      benefits: ["Lower labor costs", "Reduce software expenses", "Minimize errors"]
+      title: "Workflow Integration",
+      description: "Works seamlessly with your existing tools and processes. No need to overhaul your current systems—we integrate with what you already use.",
+      benefits: ["Works with existing tools", "No workflow disruption", "Simple adoption process"]
     }
   ];
 
@@ -60,11 +60,11 @@ const Features = () => {
             Features
           </Badge>
           <h1 className="text-5xl md:text-6xl font-bold mb-6 tracking-tight">
-            AI Solutions for
-            <span className="block text-primary">Business Growth</span>
+            Secure Document AI
+            <span className="block text-primary">Built for Professional Services</span>
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Practical AI applications that drive productivity and profitability for your business.
+            Document-grounded AI that uses your existing materials to reduce repetitive work while maintaining security and control.
           </p>
         </div>
       </section>
@@ -102,17 +102,46 @@ const Features = () => {
         </div>
       </section>
 
+      {/* How It Works */}
       <section className="py-20 px-4 bg-muted/30">
+        <div className="container mx-auto max-w-4xl">
+          <div className="text-center mb-12">
+            <Badge className="mb-4 bg-primary/10 text-primary border-primary/20">How It Works</Badge>
+            <h2 className="text-3xl font-bold mb-4">Simple, Managed Deployment</h2>
+          </div>
+          
+          <div className="space-y-8">
+            {[
+              { step: "1", title: "Discovery Call", description: "We learn about your firm's workflows, documents, and specific needs" },
+              { step: "2", title: "Document Setup", description: "We securely index your existing templates and internal materials" },
+              { step: "3", title: "Staff Training", description: "Your team learns to use the simple chat interface" },
+              { step: "4", title: "Ongoing Support", description: "Managed service with continuous optimization and support" }
+            ].map((item) => (
+              <div key={item.step} className="flex items-start gap-6">
+                <div className="w-12 h-12 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold text-lg flex-shrink-0">
+                  {item.step}
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
+                  <p className="text-muted-foreground">{item.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="py-20 px-4">
         <div className="container mx-auto max-w-4xl text-center">
           <h2 className="text-4xl font-bold mb-6">
-            Ready to Transform Your Business?
+            Ready to Reduce Repetitive Work?
           </h2>
           <p className="text-xl text-muted-foreground mb-8">
-            Let's discuss how AI can drive real results for your business.
+            Schedule a discovery call to see how Secure Document AI can help your firm.
           </p>
           <Link to="/contact">
             <Button size="lg" className="bg-primary hover:bg-primary/90 text-lg px-8">
-              Get in Touch
+              Schedule Discovery Call
               <Sparkles className="ml-2 w-5 h-5" />
             </Button>
           </Link>

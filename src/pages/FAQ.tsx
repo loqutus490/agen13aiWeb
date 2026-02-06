@@ -15,65 +15,61 @@ import { HelpCircle, ArrowRight } from "lucide-react";
 const FAQ = () => {
   const faqCategories = [
     {
+      category: "Secure Document AI",
+      questions: [
+        {
+          q: "What is Secure Document AI?",
+          a: "Secure Document AI is our flagship service that helps law firms and professional services reduce repetitive email and document work. The AI is grounded in your existing templates and internal documents, allowing it to generate consistent, accurate responses while maintaining strict data security."
+        },
+        {
+          q: "How does the document indexing work?",
+          a: "We securely index your existing templates, procedures, and internal documents. The AI uses these materials to understand your firm's standards and generate responses that match your established practices and voice."
+        },
+        {
+          q: "Is my data secure?",
+          a: "Absolutely. Your data is never used to train external AI models. You maintain full ownership and control over all your firm's information. We use enterprise-grade encryption and strict access controls to protect your documents."
+        },
+        {
+          q: "Will AI replace my staff?",
+          a: "No. Secure Document AI is designed to support your staff, not replace them. It handles repetitive tasks so your team can focus on higher-value work that requires human judgment, expertise, and client relationships."
+        },
+        {
+          q: "How long does implementation take?",
+          a: "Most implementations are completed within 2-4 weeks, depending on the scope and complexity of your document library. We handle the setup, and training is included so your team can start using the system quickly."
+        }
+      ]
+    },
+    {
       category: "Getting Started",
       questions: [
         {
-          q: "Is AI too expensive for my business?",
-          a: "Not at all! AI solutions have become increasingly affordable, with many options starting at just a few hundred dollars per month. Most businesses see ROI within 3-6 months through time savings and increased efficiency. We offer solutions scaled to your budget and can start with high-impact, low-cost implementations."
+          q: "Is AI too expensive for my firm?",
+          a: "Our Secure Document AI service starts at $999/month, which typically pays for itself through time savings within the first month. We focus on delivering measurable ROI through reduced time spent on repetitive tasks."
         },
         {
           q: "Do I need technical knowledge to use AI?",
-          a: "No technical expertise required! We handle all the technical implementation and setup. Our solutions are designed to be user-friendly, with intuitive interfaces that your team can use without any coding or technical background. We provide full training and ongoing support."
+          a: "No technical expertise required. We handle all the technical implementation and setup. The interface is a simple chat that your staff can use without any training on AI or coding."
         },
         {
-          q: "How long does AI implementation take?",
-          a: "Implementation timelines vary by project complexity. Simple solutions like chatbots or process automation can be deployed in 2-4 weeks. More complex custom solutions may take 6-12 weeks. We always start with a detailed timeline during the consultation phase so you know exactly what to expect."
-        },
-        {
-          q: "Will AI replace my employees?",
-          a: "No, AI is designed to augment your team, not replace them. The goal is to automate repetitive, time-consuming tasks so your employees can focus on higher-value work that requires human judgment, creativity, and relationship-building. Most of our clients report increased job satisfaction as employees spend less time on boring tasks."
+          q: "What if I'm not sure if AI is right for my firm?",
+          a: "Schedule a free discovery call with us. We'll assess your current workflows and honestly tell you whether our solutions would provide value for your specific situation. No pressure, just honest advice."
         }
       ]
     },
     {
-      category: "Implementation & Integration",
+      category: "Security & Compliance",
       questions: [
         {
-          q: "Will AI work with my existing software?",
-          a: "In most cases, yes! Modern AI solutions are designed to integrate with popular business tools like CRMs, email platforms, accounting software, and more. During our consultation, we'll assess your current tech stack and ensure seamless integration with your existing systems."
+          q: "How do you handle client confidentiality?",
+          a: "We treat your client data with the same confidentiality standards you do. Documents are processed in secure, isolated environments. We never share data between clients, and we're happy to sign NDAs and BAAs as required."
         },
         {
-          q: "What if I don't have much data?",
-          a: "You don't need massive datasets to benefit from AI. Many solutions work with minimal data or can use pre-trained models. We focus on practical implementations that deliver value regardless of your data situation. As you use the AI systems, they'll improve over time with your specific business data."
+          q: "What happens to my documents after processing?",
+          a: "Your documents remain under your control. They're securely indexed for AI use but never leave your designated secure environment. You can request deletion at any time."
         },
         {
-          q: "How secure is my business data with AI?",
-          a: "Data security is our top priority. We use enterprise-grade encryption, comply with industry standards (GDPR, CCPA), and follow best practices for data handling. Your data stays secure and private. We can also discuss options for on-premise solutions if you have specific security requirements."
-        },
-        {
-          q: "Can I customize the AI to match my brand?",
-          a: "Absolutely! All our AI solutions can be customized to match your brand voice, tone, and specific business processes. For chatbots and content generation, we train the AI on your brand guidelines and examples to ensure consistency across all customer interactions."
-        }
-      ]
-    },
-    {
-      category: "ROI & Results",
-      questions: [
-        {
-          q: "How quickly will I see results?",
-          a: "Most clients see immediate benefits once AI is deployed. Time savings and efficiency improvements are typically noticeable within the first week. Financial ROI usually becomes clear within 3-6 months, depending on the solution. We provide regular analytics reports so you can track your progress and ROI."
-        },
-        {
-          q: "What kind of ROI can I expect?",
-          a: "While results vary by business and implementation, our clients typically see: 15-25 hours saved per week, 30-50% reduction in operational costs, 25-40% increase in customer satisfaction, and 2-3x improvement in task efficiency. We'll help you set realistic expectations based on your specific situation during the consultation."
-        },
-        {
-          q: "What if the AI doesn't work for my business?",
-          a: "We start every project with a thorough assessment to ensure AI is a good fit for your specific needs. If during implementation we discover the solution isn't delivering expected results, we'll work with you to adjust the approach or refund your investment according to our satisfaction guarantee terms."
-        },
-        {
-          q: "Do you provide ongoing support?",
-          a: "Yes! All our service packages include ongoing support and maintenance. We provide regular check-ins, performance optimization, troubleshooting, and updates to ensure your AI solutions continue delivering value. Support is available via email, phone, and video calls."
+          q: "Are you compliant with industry regulations?",
+          a: "Our infrastructure is designed to meet the compliance requirements of legal and professional services industries. We're happy to discuss specific compliance needs during your discovery call."
         }
       ]
     },
@@ -82,19 +78,19 @@ const FAQ = () => {
       questions: [
         {
           q: "What's included in the monthly pricing?",
-          a: "Monthly pricing typically includes: the AI solution itself, hosting and infrastructure, regular updates and improvements, ongoing support, performance monitoring, and monthly analytics reports. Custom projects may have different inclusions, which we'll detail in your proposal."
+          a: "Monthly pricing includes the AI service, secure hosting, ongoing support, and regular optimization. Setup and initial training are typically handled separately based on your specific needs."
         },
         {
           q: "Are there any setup fees?",
-          a: "Some projects may have a one-time setup fee depending on complexity and customization requirements. This covers initial consultation, system design, development, integration, testing, and training. We're transparent about all costs upfront—no hidden fees."
+          a: "Setup fees depend on complexity and customization requirements. We'll provide a clear, transparent quote during your discovery call so you know exactly what to expect."
         },
         {
           q: "Can I cancel anytime?",
-          a: "Most of our service packages are month-to-month with 30 days notice required for cancellation. Custom development projects may have different terms, which we'll outline clearly in your contract. We believe in earning your business every month through results, not locking you into long-term contracts."
+          a: "Yes. Our services are month-to-month with 30 days notice. We believe in earning your business through results, not locking you into long-term contracts."
         },
         {
-          q: "Do you offer free trials or demos?",
-          a: "Yes! We offer free 30-minute consultations where we'll assess your needs and demonstrate relevant solutions. For some services, we can provide a limited pilot program so you can experience the benefits before committing to a full implementation."
+          q: "Do you offer custom solutions?",
+          a: "Absolutely. Every firm is different, and we tailor our implementation to your specific workflows, documents, and needs. Contact us to discuss your requirements."
         }
       ]
     }
@@ -118,7 +114,7 @@ const FAQ = () => {
             <span className="block text-primary">Answered</span>
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Everything you need to know about implementing AI in your business.
+            Everything you need to know about Secure Document AI for professional services.
           </p>
         </div>
       </section>
@@ -161,11 +157,11 @@ const FAQ = () => {
             Still Have Questions?
           </h2>
           <p className="text-xl text-muted-foreground mb-8">
-            Let's talk! Schedule a free consultation to discuss your specific needs and concerns.
+            Schedule a free discovery call to discuss your specific needs and see if Secure Document AI is right for your firm.
           </p>
           <Link to="/contact">
             <Button size="lg" className="bg-primary hover:bg-primary-dark shadow-glow hover:shadow-tech-lg transition-all relative overflow-hidden group">
-              <span className="relative z-10">Schedule Free Consultation</span>
+              <span className="relative z-10">Schedule Discovery Call</span>
               <ArrowRight className="ml-2 w-5 h-5 relative z-10" />
               <div className="absolute inset-0 bg-gradient-to-r from-primary-glow to-primary opacity-0 group-hover:opacity-100 transition-opacity" />
             </Button>

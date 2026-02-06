@@ -4,7 +4,8 @@ import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
 import { 
   Sparkles, Zap, Target, TrendingUp, 
-  CheckCircle, Youtube, RefreshCw, Cpu, BrainCircuit, Workflow
+  CheckCircle, Youtube, RefreshCw, Cpu, BrainCircuit, Workflow,
+  FileSearch, Shield, Users, Lock
 } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -26,16 +27,16 @@ const Home = () => {
         
         <div className="container mx-auto text-center max-w-4xl relative z-10">
           <Badge className="mb-6 bg-primary/10 text-primary border-primary/20 backdrop-blur-sm text-sm">
-            <Cpu className="w-4 h-4 mr-1 inline animate-pulse" />
-            AI Business Solutions
+            <FileSearch className="w-4 h-4 mr-1 inline animate-pulse" />
+            Secure Document AI
           </Badge>
           <h1 className="text-5xl md:text-7xl font-bold mb-6 tracking-tight">
-            Empower Your Business
-            <span className="block text-primary">with AI Solutions</span>
+            Secure Document AI
+            <span className="block text-primary">for Professional Services</span>
           </h1>
           <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Unlock productivity and profitability with cutting-edge AI technology. 
-            Transform how you work, compete, and grow.
+            Reduce repetitive email and document work with secure, document-grounded AI assistants. 
+            Built for law firms and professional services.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link to="/contact">
@@ -46,13 +47,13 @@ const Home = () => {
                   (window as any).dataLayer = (window as any).dataLayer || [];
                   (window as any).dataLayer.push({
                     event: 'cta_click',
-                    cta_name: 'Get Started - Hero',
+                    cta_name: 'Schedule Discovery Call - Hero',
                     cta_location: 'home_hero',
                     destination: '/contact'
                   });
                 }}
               >
-                Get Started
+                Schedule Discovery Call
                 <Sparkles className="ml-2 w-5 h-5" />
               </Button>
             </Link>
@@ -77,7 +78,7 @@ const Home = () => {
             </a>
           </div>
           <p className="text-sm text-muted-foreground mt-4">
-            Learn how AI can transform your business today
+            Your data, your control — never used for training
           </p>
         </div>
       </section>
@@ -89,10 +90,15 @@ const Home = () => {
             <div>
               <Badge className="mb-4 bg-destructive/10 text-destructive border-destructive/20 text-base font-semibold">The Challenge</Badge>
               <h2 className="text-4xl font-bold mb-6">
-                Struggling to Keep Up?
+                Drowning in Repetitive Work?
               </h2>
               <ul className="space-y-4">
-                {["Manual processes eating valuable time", "Competing with larger companies", "Limited budget for enterprise software", "Difficulty scaling operations"].map((item) => (
+                {[
+                  "Repetitive email and document drafting consuming staff time",
+                  "Inconsistent responses across team members",
+                  "Time lost searching for procedures and templates",
+                  "Need to maintain strict data security and compliance"
+                ].map((item) => (
                   <li key={item} className="flex items-start gap-3">
                     <div className="w-6 h-6 rounded-full bg-destructive/10 flex items-center justify-center flex-shrink-0 mt-0.5">
                       <span className="text-destructive text-sm">✕</span>
@@ -106,38 +112,38 @@ const Home = () => {
               <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary-glow/5 pointer-events-none" />
               <div className="relative z-10">
                 <Badge className="mb-4 bg-primary/10 text-primary border-primary/20 backdrop-blur-sm">The Solution</Badge>
-                <h3 className="text-2xl font-bold mb-6">AI-Powered Business Transformation</h3>
+                <h3 className="text-2xl font-bold mb-6">Secure Document AI</h3>
               <div className="space-y-6">
                 <div className="flex items-start gap-3">
                   <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-                    <Sparkles className="w-5 h-5 text-primary" />
+                    <FileSearch className="w-5 h-5 text-primary" />
                   </div>
                   <div>
-                    <h3 className="font-semibold mb-2">Automate Tasks</h3>
+                    <h3 className="font-semibold mb-2">Document-Grounded AI</h3>
                     <p className="text-sm text-muted-foreground">
-                      Save hours daily by automating repetitive processes
+                      Uses your existing templates and internal documents
                     </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-                    <BrainCircuit className="w-5 h-5 text-primary" />
+                    <Users className="w-5 h-5 text-primary" />
                   </div>
                   <div>
-                    <h3 className="font-semibold mb-2">Enterprise-Grade AI</h3>
+                    <h3 className="font-semibold mb-2">Improved Consistency</h3>
                     <p className="text-sm text-muted-foreground">
-                      Access powerful AI tools at affordable prices
+                      Better response speed and consistency across staff
                     </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-                    <TrendingUp className="w-5 h-5 text-primary" />
+                    <Lock className="w-5 h-5 text-primary" />
                   </div>
                   <div>
-                    <h3 className="font-semibold mb-2">Scale Efficiently</h3>
+                    <h3 className="font-semibold mb-2">Your Data, Your Control</h3>
                     <p className="text-sm text-muted-foreground">
-                      Grow operations without proportional cost increases
+                      Strict data control with human oversight — never used for training
                     </p>
                   </div>
                 </div>
@@ -152,44 +158,44 @@ const Home = () => {
       <section className="py-20 px-4">
         <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-16">
-            <Badge className="mb-4 bg-primary/10 text-primary border-primary/20">AI Solutions</Badge>
-            <h2 className="text-4xl font-bold mb-4">How AI Transforms Your Business</h2>
+            <Badge className="mb-4 bg-primary/10 text-primary border-primary/20">Why Choose Us</Badge>
+            <h2 className="text-4xl font-bold mb-4">Built for Professional Services</h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Practical AI applications that drive real results for businesses
+              Secure, document-grounded AI that supports your team without disrupting workflows
             </p>
           </div>
           
           <div className="grid md:grid-cols-3 gap-8">
             {[
               {
-                icon: Workflow,
-                title: "Process Automation",
-                description: "Eliminate repetitive tasks and focus on growth"
+                icon: FileSearch,
+                title: "Document Indexing",
+                description: "AI trained on your existing templates and documents"
               },
               {
-                icon: BrainCircuit,
-                title: "Customer Insights",
-                description: "AI-powered analytics to understand customers better"
+                icon: Shield,
+                title: "Security First",
+                description: "Strict data control with enterprise-grade security"
               },
               {
-                icon: TrendingUp,
-                title: "Revenue Growth",
-                description: "Data-driven strategies to increase sales"
+                icon: Users,
+                title: "Human Oversight",
+                description: "AI supports staff, never replaces human judgment"
               },
               {
                 icon: Sparkles,
-                title: "Content Creation",
-                description: "Generate marketing copy and content instantly"
+                title: "Email Drafting",
+                description: "Generate consistent, professional responses faster"
               },
               {
                 icon: RefreshCw,
-                title: "24/7 Availability",
-                description: "AI assistants that work around the clock"
+                title: "Managed Service",
+                description: "Low-risk deployment with ongoing support"
               },
               {
                 icon: CheckCircle,
-                title: "Cost Efficiency",
-                description: "Reduce costs while improving quality"
+                title: "Workflow Integration",
+                description: "Works with your existing tools and processes"
               }
             ].map((feature) => (
               <Card key={feature.title} className="p-6 hover:shadow-glow transition-all duration-300 border-primary/10 bg-card/50 backdrop-blur-sm group scan-line-effect holographic-border relative overflow-hidden">
@@ -248,14 +254,14 @@ const Home = () => {
       <section className="py-20 px-4">
         <div className="container mx-auto max-w-4xl text-center">
           <h2 className="text-4xl font-bold mb-6">
-            Ready to Transform Your Business with AI?
+            Ready to Reduce Repetitive Work?
           </h2>
           <p className="text-xl text-muted-foreground mb-8">
-            Let's discuss how AI can drive productivity and profitability for your business
+            Schedule a discovery call to see how Secure Document AI can help your firm
           </p>
           <Link to="/contact">
             <Button size="lg" className="bg-primary hover:bg-primary/90 text-lg px-8">
-              Get in Touch
+              Schedule Discovery Call
               <Sparkles className="ml-2 w-5 h-5" />
             </Button>
           </Link>
