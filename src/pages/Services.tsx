@@ -16,11 +16,11 @@ const Services = () => {
       title: "Secure Document AI",
       description: "We help law firms reduce repetitive email and document work by implementing secure, document-grounded AI assistants that use existing firm materials to improve efficiency, consistency, and response times—without replacing staff or disrupting current workflows.",
       features: [
-        "Answers only from approved documents",
-        "Refuses to answer if not in source docs",
-        "Full audit logging for compliance",
-        "Source citation for every answer",
-        "Secure internal knowledge search"
+        "Reduce repetitive email and document work",
+        "Use your existing templates and internal documents",
+        "Improve consistency and response speed across staff",
+        "Maintain strict data control and human oversight",
+        "Deploy as a managed, low-risk service"
       ],
       pricing: "Starting at $999/month",
       popular: true
