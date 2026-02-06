@@ -94,7 +94,21 @@ const handler = async (req: Request): Promise<Response> => {
     }
 
     // Use timing-safe comparison to prevent timing attacks
-    if (providedSecret !== webhookSecret) {
+    const encoder = new TextEncoder();
+    const providedBytes = encoder.encode(providedSecret);
+    const expectedBytes = encoder.encode(webhookSecret);
+    
+    // Constant-time comparison: always compare same length and iterate all bytes
+    const maxLen = Math.max(providedBytes.length, expectedBytes.length);
+    let mismatch = providedBytes.length !== expectedBytes.length ? 1 : 0;
+    
+    for (let i = 0; i < maxLen; i++) {
+      const a = providedBytes[i] ?? 0;
+      const b = expectedBytes[i] ?? 0;
+      mismatch |= a ^ b;
+    }
+    
+    if (mismatch !== 0) {
       console.error(`SECURITY: Rejected request from ${clientIP} - Invalid webhook secret`);
       return new Response(
         JSON.stringify({ success: false, error: "Unauthorized - Invalid authentication" }),
@@ -108,7 +122,7 @@ const handler = async (req: Request): Promise<Response> => {
     console.log(`SECURITY: Authenticated request from ${clientIP}`);
 
     const body = await req.json();
-    console.log("Received blog post data:", JSON.stringify(body, null, 2));
+    console.log("Received blog post data for slug:", body.slug || "unknown");
 
     // Validate the incoming data
     const validatedData = blogPostSchema.parse(body);
