@@ -1,29 +1,30 @@
 
-# Change Favicon to Logo
+# Update All Email Addresses to RoyBernales@agent13.ai
 
 ## Summary
-Update the site's favicon to use the existing brand logo (`/logo.png`) instead of the current placeholder.
+Replace all email addresses across the website with the unified address: `RoyBernales@agent13.ai`
 
-## Changes
+## Files to Update
 
-### 1. Update index.html
-**File:** `index.html`
+### 1. Contact Page
+**File:** `src/pages/Contact.tsx` (line 237)
+- Change `contact@agent13.ai` → `RoyBernales@agent13.ai`
 
-Replace the current base64 placeholder favicon with a reference to the logo file:
+### 2. Privacy Policy Page
+**File:** `src/pages/PrivacyPolicy.tsx` (line 111)
+- Change `support@agent13ai.com` → `RoyBernales@agent13.ai`
 
-```html
-<!-- Current (line 16) -->
-<link rel="icon" href="data:image/png;base64,iVBORw0KGgo..." type="image/png" />
+### 3. Terms of Service Page
+**File:** `src/pages/TermsOfService.tsx` (line 126)
+- Change `support@agent13ai.com` → `RoyBernales@agent13.ai`
 
-<!-- New -->
-<link rel="icon" href="/logo.png" type="image/png" />
-```
-
-That's it! The logo file already exists at `public/logo.png` and will be served at the root path `/logo.png`.
+### 4. Contact Form Email Function (Backend)
+**File:** `supabase/functions/send-contact-email/index.ts` (line 135)
+- Change `roy.bernales@agent13.ai` → `RoyBernales@agent13.ai`
 
 ---
 
 ## Technical Notes
-- The existing `public/favicon.ico` file will remain but won't be used
-- PNG favicons are well-supported across all modern browsers
-- No additional files need to be created or copied
+- Four files require changes total
+- The YouTube channel links (`@agent13ai`) will remain unchanged as those are social media handles, not email addresses
+- The chat function reference to YouTube is also left unchanged
