@@ -1,148 +1,117 @@
 
-# Plan: Make Secure Document AI the Flagship Service
 
-## Overview
-Reposition the entire website to highlight **Secure Document AI** as your core offering and primary expertise, while maintaining other services as complementary offerings.
+# Plan: Tron: Ares "Bad Guys" Color Scheme (Black + Crimson Red)
 
-## What Will Change
+## Reference Analysis
+Based on your Tron: Ares (2025) poster, the color palette features:
+- **Deep crimson/blood red** glowing elements (slightly darker than pure red)
+- **Pure black** backgrounds with atmospheric dark gray tones
+- **Orange/amber** accent for secondary highlights (the horizontal beam)
+- **High contrast** with minimal color variation for that menacing look
 
-### 1. Home Page (`src/pages/Home.tsx`)
-**Hero Section:**
-- Update headline from generic "AI Solutions" to focus on document-grounded AI
-- New headline: "Secure Document AI for Professional Services"
-- Subheadline emphasizing law firms and document-heavy businesses
-- Primary CTA: "Schedule Discovery Call"
+## Color Palette Transformation
 
-**Problem/Solution Section:**
-- Reframe challenges around document work, email drafting, and consistency
-- Solution focused on secure, document-grounded AI assistants
-
-**Features Grid:**
-- Lead with document-related capabilities
-- Emphasize security, human oversight, and workflow support
-
-### 2. Services Page (`src/pages/Services.tsx`)
-**Hero Section:**
-- Update headline to emphasize Secure Document AI expertise
-
-**Services Reordering:**
-- Move "Secure Document AI" to prominent first position
-- Add visual distinction (larger card, featured badge already exists)
-- Consider a dedicated section above other services
-
-### 3. Features Page (`src/pages/Features.tsx`)
-**Restructure Features:**
-- Lead with document AI capabilities
-- Add specific features: document indexing, email drafting, template usage
-- Include security and compliance features prominently
-
-### 4. About Page (`src/pages/About.tsx`)
-**Mission Update:**
-- Emphasize expertise in secure, document-grounded AI
-- Highlight target market: law firms, professional services
-
-### 5. Pricing Page (`src/pages/Pricing.tsx`)
-**Complete Overhaul:**
-- Replace generic product tiers with service-based pricing
-- Feature Secure Document AI ($999/month) prominently
-- Include other services as additional offerings
-- Remove outdated "Free Trial" / "$19/month" product references
-
-### 6. FAQ Page (`src/pages/FAQ.tsx`)
-**Add New Category:**
-- "Secure Document AI" category with relevant questions from your FAQ document
-- Security and data handling questions
-
-### 7. Navbar (`src/components/Navbar.tsx`)
-**Optional Enhancement:**
-- Add "Secure Document AI" as a prominent navigation item
-- Or rename "Services" link to draw attention
-
-### 8. Footer (`src/components/Footer.tsx`)
-**Update Tagline:**
-- From "AI-powered tools for modern business"
-- To something like "Secure Document AI for Professional Services"
+| Element | Current (Cyan) | New (Crimson Red) |
+|---------|----------------|-------------------|
+| Primary | Electric Cyan | Crimson Red `hsl(0 85% 50%)` |
+| Primary Glow | Bright Cyan | Bright Red `hsl(0 90% 58%)` |
+| Primary Dark | Deep Cyan | Dark Crimson `hsl(0 80% 40%)` |
+| Foreground | Cyan-tinted White | Neutral White `hsl(0 5% 95%)` |
+| Accent | Cyan | Dark Red `hsl(0 70% 15%)` |
+| Border/Ring | Cyan-tinted | Red-tinted |
+| CTA Accent | Orange (keep) | Orange (keep) |
 
 ---
 
-## Detailed Changes by File
+## Files to Modify
 
-### Home Page Hero
+### 1. `src/index.css` - Core Color Variables
+
+Update all CSS custom properties from cyan to crimson red:
+
+**Light mode (`:root`):**
 ```text
-Current: "Empower Your Business with AI Solutions"
-New: "Secure Document AI for Professional Services"
-
-Current subheadline: Generic productivity message
-New: "Reduce repetitive email and document work with secure, 
-     document-grounded AI assistants. Built for law firms 
-     and professional services."
+--primary: 0 85% 50%           (Crimson Red)
+--primary-glow: 0 90% 58%      (Bright Red Glow)
+--primary-dark: 0 80% 40%      (Deep Red)
+--foreground: 0 5% 95%         (Neutral White)
+--card-foreground: 0 5% 95%
+--popover-foreground: 0 5% 95%
+--secondary-foreground: 0 10% 88%
+--muted-foreground: 0 10% 55%
+--accent: 0 70% 15%            (Dark Red)
+--accent-foreground: 0 85% 65%
+--border: 0 50% 15%            (Red-tinted)
+--ring: 0 85% 50%              (Red focus ring)
 ```
 
-### Home Problem/Solution Cards
-**Problems to highlight:**
-- Repetitive email and document drafting consuming staff time
-- Inconsistent responses across team members
-- Time lost searching for procedures and templates
-- Need to maintain strict data security
+**Dark mode (`.dark`):**
+Similar adjustments with slightly adjusted values for darker theme.
 
-**Solutions:**
-- Document-grounded AI using your existing materials
-- Improved consistency and response speed
-- Simple chat interface for staff
-- Your data, your control - never used for training
-
-### Services Page Structure
+**Gradient updates:**
 ```text
-┌─────────────────────────────────────────────────┐
-│  FLAGSHIP: Secure Document AI                   │
-│  Full-width featured card with detailed info    │
-│  Starting at $999/month                         │
-└─────────────────────────────────────────────────┘
-
-┌─────────────┐  ┌─────────────┐  ┌─────────────┐
-│ Process     │  │ AI Chatbot  │  │ Analytics   │
-│ Automation  │  │ $799/mo     │  │ $699/mo     │
-│ $499/mo     │  │             │  │             │
-└─────────────┘  └─────────────┘  └─────────────┘
+--gradient-primary: linear-gradient(135deg, hsl(0 85% 50%), hsl(0 90% 62%))
+--gradient-hero: linear-gradient(180deg, hsl(220 25% 2%), hsl(0 50% 6%))
+--gradient-text: linear-gradient(135deg, hsl(0 85% 50%), hsl(0 90% 70%))
+--shadow-elegant: 0 8px 32px -8px hsl(0 85% 50% / 0.5)
+--shadow-glow: 0 0 40px hsl(0 90% 58% / 0.6)
+--shadow-tech: 0 4px 24px -4px hsl(0 85% 50% / 0.4)
 ```
 
-### Pricing Page Transformation
-**From:** Product tiers ($0/$19)
-**To:** Service offerings focused on professional services
+**Animated gradient background:**
+```text
+.animated-gradient-bg:
+  - hsl(220 25% 2%)      (Deep black - keep)
+  - hsl(0 50% 6%)        (Red tint - new)
+  - hsl(220 25% 3%)      (Deep black - keep)
+  - hsl(0 40% 8%)        (Red tint - new)
+```
 
-New structure:
-- **Secure Document AI** - $999/month (Featured)
-- **Discovery Call** - Free consultation CTA
-- Comparison of service tiers or custom quote option
-
----
-
-## Technical Details
-
-**Files to modify:**
-1. `src/pages/Home.tsx` - Hero, problem/solution, features
-2. `src/pages/Services.tsx` - Reorder, enhance flagship service
-3. `src/pages/Features.tsx` - Document AI focus
-4. `src/pages/Pricing.tsx` - Replace product tiers with services
-5. `src/pages/About.tsx` - Mission and expertise update
-6. `src/pages/FAQ.tsx` - Add Document AI category
-7. `src/components/Footer.tsx` - Update tagline
-
-**No database changes required**
+**Sidebar variables:**
+```text
+--sidebar-primary: 0 85% 50%
+--sidebar-border: 0 50% 12%
+--sidebar-ring: 0 85% 50%
+```
 
 ---
 
-## Key Messaging Throughout
+## What Changes Automatically
 
-| Element | Current | New |
-|---------|---------|-----|
-| Primary audience | Generic "business" | Law firms, professional services |
-| Core offering | AI solutions | Secure Document AI |
-| Key benefit | Productivity | Reduce repetitive work, improve consistency |
-| Trust signals | Generic | Data security, human oversight, no training on data |
-| CTA | "Get Started" | "Schedule Discovery Call" |
+Since the design system uses CSS variables, these elements will update automatically:
+- All badges with `text-primary` or `bg-primary/10`
+- All icon colors using `text-primary`
+- Card hover effects and glows
+- Grid background animations
+- Scan-line and holographic border effects
+- Navigation underline animations
+- Chat widget accents
+- Form focus rings
+
+## What Stays the Same
+
+- **Orange CTA buttons** - kept for visual hierarchy and contrast
+- **Background darkness** - already optimal pure black
+- **Component layouts** - no structural changes needed
+- **Typography sizes and spacing**
 
 ---
 
-## Chatbot Already Updated
-The chatbot system prompt already emphasizes Secure Document AI as the primary service, so it will align with these website changes.
+## Visual Impact
+
+After implementation:
+- Primary buttons, badges, and icons will glow **crimson red**
+- Hero sections will have subtle **red atmospheric tints**
+- Card hover effects will emit **red glow**
+- Grid/circuit backgrounds will animate in **red**
+- The menacing "bad guy" Tron aesthetic from your reference image
+
+## Implementation
+
+This is a single-file change (`src/index.css`) with no component modifications needed. The CSS variable system propagates the new colors across:
+- All 15+ pages
+- Navigation and Footer
+- Chat widget
+- All cards, badges, and buttons
+- Hover animations and effects
+
