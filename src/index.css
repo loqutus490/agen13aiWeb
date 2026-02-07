@@ -8,101 +8,115 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 0 0% 10%;
-    --foreground: 0 0% 95%;
+    /* Tron: Ares 2025 - Deep black with electric cyan and orange accents */
+    --background: 220 20% 4%;
+    --foreground: 195 100% 95%;
 
-    --card: 0 0% 13%;
-    --card-foreground: 0 0% 95%;
+    --card: 220 25% 7%;
+    --card-foreground: 195 100% 95%;
 
-    --popover: 0 0% 13%;
-    --popover-foreground: 0 0% 95%;
+    --popover: 220 25% 7%;
+    --popover-foreground: 195 100% 95%;
 
-    --primary: 175 45% 55%;
-    --primary-foreground: 0 0% 10%;
-    --primary-glow: 175 50% 65%;
-    --primary-dark: 175 50% 45%;
+    /* Electric Cyan - Tron signature */
+    --primary: 190 100% 50%;
+    --primary-foreground: 220 20% 4%;
+    --primary-glow: 190 100% 60%;
+    --primary-dark: 190 100% 40%;
 
-    --secondary: 0 0% 18%;
-    --secondary-foreground: 0 0% 90%;
+    /* Orange/Amber accent - for CTAs and highlights */
+    --accent-orange: 25 100% 55%;
+    --accent-orange-glow: 25 100% 65%;
 
-    --muted: 0 0% 18%;
-    --muted-foreground: 0 0% 65%;
+    --secondary: 220 20% 12%;
+    --secondary-foreground: 195 80% 90%;
 
-    --accent: 175 40% 20%;
-    --accent-foreground: 175 50% 65%;
+    --muted: 220 20% 12%;
+    --muted-foreground: 195 40% 60%;
+
+    --accent: 190 80% 15%;
+    --accent-foreground: 190 100% 70%;
     
-    --gradient-primary: linear-gradient(135deg, hsl(175 45% 55%), hsl(175 50% 65%));
-    --gradient-hero: linear-gradient(180deg, hsl(0 0% 10%), hsl(175 30% 15%));
-    --gradient-text: linear-gradient(135deg, hsl(175 45% 55%), hsl(175 50% 70%));
-    --shadow-elegant: 0 8px 32px -8px hsl(175 45% 55% / 0.3);
-    --shadow-glow: 0 0 40px hsl(175 50% 65% / 0.4);
-    --shadow-tech: 0 4px 24px -4px hsl(175 45% 55% / 0.25);
+    --gradient-primary: linear-gradient(135deg, hsl(190 100% 50%), hsl(190 100% 65%));
+    --gradient-hero: linear-gradient(180deg, hsl(220 20% 4%), hsl(190 50% 8%));
+    --gradient-text: linear-gradient(135deg, hsl(190 100% 50%), hsl(190 100% 70%));
+    --gradient-orange: linear-gradient(135deg, hsl(25 100% 55%), hsl(25 100% 65%));
+    --shadow-elegant: 0 8px 32px -8px hsl(190 100% 50% / 0.4);
+    --shadow-glow: 0 0 40px hsl(190 100% 60% / 0.5);
+    --shadow-tech: 0 4px 24px -4px hsl(190 100% 50% / 0.3);
+    --shadow-orange: 0 0 30px hsl(25 100% 55% / 0.4);
 
-    --destructive: 0 72% 51%;
-    --destructive-foreground: 0 0% 95%;
+    --destructive: 0 85% 55%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 0 0% 22%;
-    --input: 0 0% 22%;
-    --ring: 175 45% 55%;
+    --border: 190 50% 15%;
+    --input: 220 20% 15%;
+    --ring: 190 100% 50%;
 
-    --radius: 0.75rem;
+    --radius: 0.5rem;
 
-    --sidebar-background: 0 0% 12%;
-    --sidebar-foreground: 0 0% 90%;
-    --sidebar-primary: 175 45% 55%;
-    --sidebar-primary-foreground: 0 0% 10%;
-    --sidebar-accent: 0 0% 16%;
-    --sidebar-accent-foreground: 0 0% 90%;
-    --sidebar-border: 0 0% 20%;
-    --sidebar-ring: 175 45% 55%;
+    --sidebar-background: 220 25% 6%;
+    --sidebar-foreground: 195 80% 90%;
+    --sidebar-primary: 190 100% 50%;
+    --sidebar-primary-foreground: 220 20% 4%;
+    --sidebar-accent: 220 20% 10%;
+    --sidebar-accent-foreground: 195 80% 90%;
+    --sidebar-border: 190 50% 12%;
+    --sidebar-ring: 190 100% 50%;
   }
 
   .dark {
-    --background: 0 0% 8%;
-    --foreground: 0 0% 98%;
+    /* Tron: Ares 2025 Dark Mode - Even deeper blacks */
+    --background: 220 25% 2%;
+    --foreground: 195 100% 96%;
 
-    --card: 0 0% 11%;
-    --card-foreground: 0 0% 98%;
+    --card: 220 25% 5%;
+    --card-foreground: 195 100% 96%;
 
-    --popover: 0 0% 11%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 220 25% 5%;
+    --popover-foreground: 195 100% 96%;
 
-    --primary: 175 50% 58%;
-    --primary-foreground: 0 0% 8%;
-    --primary-glow: 175 55% 68%;
-    --primary-dark: 175 50% 48%;
+    --primary: 190 100% 52%;
+    --primary-foreground: 220 25% 2%;
+    --primary-glow: 190 100% 62%;
+    --primary-dark: 190 100% 42%;
 
-    --secondary: 0 0% 16%;
-    --secondary-foreground: 0 0% 92%;
+    --accent-orange: 25 100% 58%;
+    --accent-orange-glow: 25 100% 68%;
 
-    --muted: 0 0% 16%;
-    --muted-foreground: 0 0% 68%;
+    --secondary: 220 20% 10%;
+    --secondary-foreground: 195 80% 92%;
 
-    --accent: 175 45% 18%;
-    --accent-foreground: 175 55% 68%;
+    --muted: 220 20% 10%;
+    --muted-foreground: 195 40% 65%;
+
+    --accent: 190 80% 12%;
+    --accent-foreground: 190 100% 72%;
     
-    --gradient-primary: linear-gradient(135deg, hsl(175 50% 58%), hsl(175 55% 68%));
-    --gradient-hero: linear-gradient(180deg, hsl(0 0% 8%), hsl(175 35% 13%));
-    --gradient-text: linear-gradient(135deg, hsl(175 50% 58%), hsl(175 55% 75%));
-    --shadow-elegant: 0 8px 32px -8px hsl(175 50% 58% / 0.4);
-    --shadow-glow: 0 0 40px hsl(175 55% 68% / 0.5);
-    --shadow-tech: 0 4px 24px -4px hsl(175 50% 58% / 0.3);
+    --gradient-primary: linear-gradient(135deg, hsl(190 100% 52%), hsl(190 100% 68%));
+    --gradient-hero: linear-gradient(180deg, hsl(220 25% 2%), hsl(190 50% 6%));
+    --gradient-text: linear-gradient(135deg, hsl(190 100% 52%), hsl(190 100% 75%));
+    --gradient-orange: linear-gradient(135deg, hsl(25 100% 58%), hsl(25 100% 68%));
+    --shadow-elegant: 0 8px 32px -8px hsl(190 100% 52% / 0.5);
+    --shadow-glow: 0 0 40px hsl(190 100% 62% / 0.6);
+    --shadow-tech: 0 4px 24px -4px hsl(190 100% 52% / 0.4);
+    --shadow-orange: 0 0 30px hsl(25 100% 58% / 0.5);
 
-    --destructive: 0 72% 55%;
+    --destructive: 0 85% 58%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 0 0% 20%;
-    --input: 0 0% 20%;
-    --ring: 175 50% 58%;
+    --border: 190 50% 12%;
+    --input: 220 20% 12%;
+    --ring: 190 100% 52%;
     
-    --sidebar-background: 0 0% 10%;
-    --sidebar-foreground: 0 0% 92%;
-    --sidebar-primary: 175 50% 58%;
-    --sidebar-primary-foreground: 0 0% 8%;
-    --sidebar-accent: 0 0% 14%;
-    --sidebar-accent-foreground: 0 0% 92%;
-    --sidebar-border: 0 0% 18%;
-    --sidebar-ring: 175 50% 58%;
+    --sidebar-background: 220 25% 4%;
+    --sidebar-foreground: 195 80% 92%;
+    --sidebar-primary: 190 100% 52%;
+    --sidebar-primary-foreground: 220 25% 2%;
+    --sidebar-accent: 220 20% 8%;
+    --sidebar-accent-foreground: 195 80% 92%;
+    --sidebar-border: 190 50% 10%;
+    --sidebar-ring: 190 100% 52%;
   }
 }
 
@@ -153,11 +167,11 @@ All colors MUST be HSL.
   .animated-gradient-bg {
     background: linear-gradient(
       135deg,
-      hsl(0 0% 10%),
-      hsl(175 30% 12%),
-      hsl(0 0% 8%),
-      hsl(175 35% 15%),
-      hsl(0 0% 10%)
+      hsl(220 20% 4%),
+      hsl(190 50% 8%),
+      hsl(220 25% 3%),
+      hsl(190 40% 10%),
+      hsl(220 20% 4%)
     );
     background-size: 400% 400%;
     animation: gradient-shift 15s ease infinite;

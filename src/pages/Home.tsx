@@ -42,7 +42,7 @@ const Home = () => {
             <Link to="/contact">
               <Button 
                 size="lg" 
-                className="bg-primary hover:bg-primary/90 text-lg px-8 shadow-lg hover:shadow-xl transition-all"
+                className="bg-accent-orange hover:bg-accent-orange/90 text-lg px-8 shadow-glow-orange hover:shadow-lg transition-all"
                 onClick={() => {
                   (window as any).dataLayer = (window as any).dataLayer || [];
                   (window as any).dataLayer.push({
@@ -239,7 +239,7 @@ const Home = () => {
                 target="_blank" 
                 rel="noopener noreferrer"
               >
-                <Button size="lg" className="bg-primary hover:bg-primary/90">
+                <Button size="lg" className="bg-accent-orange hover:bg-accent-orange/90 shadow-glow-orange">
                   <Youtube className="mr-2 w-5 h-5" />
                   Subscribe Now
                 </Button>
@@ -260,7 +260,7 @@ const Home = () => {
             Schedule a discovery call to see how Secure Document AI can help your firm
           </p>
           <Link to="/contact">
-            <Button size="lg" className="bg-primary hover:bg-primary/90 text-lg px-8">
+            <Button size="lg" className="bg-accent-orange hover:bg-accent-orange/90 text-lg px-8 shadow-glow-orange">
               Schedule Discovery Call
               <Sparkles className="ml-2 w-5 h-5" />
             </Button>

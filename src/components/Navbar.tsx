@@ -88,17 +88,15 @@ const Navbar = () => {
                     </Button>
                   </Link>
                   <Link to="/signup">
-                    <Button size="sm" className="bg-primary hover:bg-primary-dark shadow-glow hover:shadow-tech-lg transition-all relative overflow-hidden group">
-                      <span className="relative z-10">Sign Up</span>
-                      <div className="absolute inset-0 bg-gradient-to-r from-primary-glow to-primary opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <Button size="sm" className="bg-accent-orange hover:bg-accent-orange/90 shadow-glow-orange transition-all">
+                      Sign Up
                     </Button>
                   </Link>
                 </>}
             </>}
           <Link to="/contact">
-            <Button size="sm" className="bg-primary hover:bg-primary-dark shadow-glow hover:shadow-tech-lg transition-all relative overflow-hidden group">
-              <span className="relative z-10">Contact Us</span>
-              <div className="absolute inset-0 bg-gradient-to-r from-primary-glow to-primary opacity-0 group-hover:opacity-100 transition-opacity" />
+            <Button size="sm" className="bg-accent-orange hover:bg-accent-orange/90 shadow-glow-orange transition-all">
+              Contact Us
             </Button>
           </Link>
         </div>
