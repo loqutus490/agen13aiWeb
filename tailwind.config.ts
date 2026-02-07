@@ -43,6 +43,8 @@ export default {
         accent: {
           DEFAULT: "hsl(var(--accent))",
           foreground: "hsl(var(--accent-foreground))",
+          orange: "hsl(var(--accent-orange))",
+          "orange-glow": "hsl(var(--accent-orange-glow))",
         },
         popover: {
           DEFAULT: "hsl(var(--popover))",
@@ -69,9 +71,10 @@ export default {
         sm: "calc(var(--radius) - 4px)",
       },
       boxShadow: {
-        'tech': '0 4px 24px -4px hsl(var(--primary) / 0.12)',
-        'tech-lg': '0 8px 32px -8px hsl(var(--primary) / 0.15)',
-        'glow': '0 0 40px hsl(var(--primary-glow) / 0.25)',
+        'tech': '0 4px 24px -4px hsl(var(--primary) / 0.15)',
+        'tech-lg': '0 8px 32px -8px hsl(var(--primary) / 0.25)',
+        'glow': '0 0 40px hsl(var(--primary-glow) / 0.4)',
+        'glow-orange': '0 0 30px hsl(var(--accent-orange) / 0.4)',
       },
       keyframes: {
         "accordion-down": {
