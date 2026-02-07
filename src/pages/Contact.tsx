@@ -234,7 +234,7 @@ const Contact = () => {
                   We typically respond within 24 hours during business days. For urgent inquiries, please mention it in your message.
                 </p>
                 <div className="space-y-1 text-sm text-muted-foreground">
-                  <p>📧 Email: contact@agent13.ai</p>
+                  <p>📧 Email: RoyBernales@agent13.ai</p>
                   <p>📺 YouTube: <a href="https://youtube.com/@agent13ai" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">@agent13ai</a></p>
                 </div>
               </div>
