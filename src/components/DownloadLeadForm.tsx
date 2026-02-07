@@ -72,16 +72,31 @@ export const DownloadLeadForm = ({
   const onSubmit = async (data: FormData) => {
     setIsSubmitting(true);
     try {
-      // Save lead data to database
-      const { error: insertError } = await supabase.from("download_leads").insert({
-        first_name: data.firstName,
-        last_name: data.lastName,
-        email: data.email,
-        phone_number: data.phoneNumber,
-        downloaded_resource: resourceTitle,
-      });
+      // Save lead data via rate-limited edge function
+      const { data: leadResponse, error: leadError } = await supabase.functions.invoke(
+        "submit-lead",
+        {
+          body: {
+            firstName: data.firstName,
+            lastName: data.lastName,
+            email: data.email,
+            phoneNumber: data.phoneNumber,
+            downloadedResource: resourceTitle,
+          },
+        }
+      );
 
-      if (insertError) throw insertError;
+      if (leadError) {
+        // Check if it's a rate limit error
+        if (leadError.message?.includes("429") || leadResponse?.error?.includes("Too many")) {
+          throw new Error("Too many submissions. Please try again later.");
+        }
+        throw leadError;
+      }
+      
+      if (!leadResponse?.success) {
+        throw new Error(leadResponse?.error || "Failed to submit");
+      }
 
       // Send thank you email
       const { error: emailError } = await supabase.functions.invoke(
