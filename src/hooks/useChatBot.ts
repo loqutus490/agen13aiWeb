@@ -209,15 +209,31 @@ export const useChatBot = () => {
 
   const submitLead = async (data: LeadData) => {
     try {
-      const { error } = await supabase.from("download_leads").insert({
-        first_name: data.firstName,
-        last_name: data.lastName,
-        email: data.email,
-        phone_number: data.phoneNumber,
-        downloaded_resource: "AI Chatbot Conversation",
-      });
+      // Use rate-limited edge function for lead submission
+      const { data: leadResponse, error } = await supabase.functions.invoke(
+        "submit-lead",
+        {
+          body: {
+            firstName: data.firstName,
+            lastName: data.lastName,
+            email: data.email,
+            phoneNumber: data.phoneNumber,
+            downloadedResource: "AI Chatbot Conversation",
+          },
+        }
+      );
 
-      if (error) throw error;
+      if (error) {
+        // Check if it's a rate limit error
+        if (error.message?.includes("429")) {
+          throw new Error("Too many submissions. Please try again later.");
+        }
+        throw error;
+      }
+      
+      if (!leadResponse?.success) {
+        throw new Error(leadResponse?.error || "Failed to submit lead");
+      }
 
       // Fire GTM event
       (window as any).dataLayer = (window as any).dataLayer || [];
