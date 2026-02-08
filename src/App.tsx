@@ -14,6 +14,7 @@ import BlogPost from "./pages/BlogPost";
 import BlogManagement from "./pages/BlogManagement";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
+import ContactThankYou from "./pages/ContactThankYou";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import NotFound from "./pages/NotFound";
@@ -45,6 +46,7 @@ const App = () => (
             <Route path="/blog-management" element={<BlogManagement />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/contact/thank-you" element={<ContactThankYou />} />
             <Route path="/case-studies" element={<CaseStudies />} />
             <Route path="/services" element={<Services />} />
             <Route path="/resources" element={<Resources />} />

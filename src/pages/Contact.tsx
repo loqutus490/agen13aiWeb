@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -39,6 +40,7 @@ const Contact = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   const {
     register,
@@ -76,16 +78,11 @@ const Contact = () => {
         company_name: data.company
       });
       
-      toast({
-        title: "Message sent successfully!",
-        description: "We'll get back to you as soon as possible.",
-      });
-      
-      // Reset form after successful submission
+      // Reset form
       reset();
       
-      // Reset success state after 5 seconds
-      setTimeout(() => setIsSuccess(false), 5000);
+      // Redirect to thank you page
+      navigate("/contact/thank-you");
     } catch (error: any) {
       console.error("Error sending contact form:", error);
       toast({
