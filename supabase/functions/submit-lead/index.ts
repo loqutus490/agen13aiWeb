@@ -215,7 +215,7 @@ const handler = async (req: Request): Promise<Response> => {
     try {
       await resend.emails.send({
         from: "agent13 ai Leads <roybernales@agent13.ai>",
-        to: ["agent13leads@theimoroip.resend.app"],
+        to: ["RoyBernales@agent13.ai"],
         subject: `🎯 New Lead: ${escapeHtml(validatedData.firstName)} ${escapeHtml(validatedData.lastName)}`,
         html: `
           <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
