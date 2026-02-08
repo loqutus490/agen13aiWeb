@@ -135,7 +135,7 @@ const handler = async (req: Request): Promise<Response> => {
     console.log(`Sending confirmation email to ${email} for resource download`);
 
     const emailResponse = await resend.emails.send({
-      from: "Agent13 AI <noreply@agent13.ai>",
+      from: "Agent13 AI <roybernales@agent13.ai>",
       to: [email],
       subject: `Your ${escapeHtml(resourceTitle)} is Ready!`,
       html: `

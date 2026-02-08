@@ -141,7 +141,7 @@ const handler = async (req: Request): Promise<Response> => {
       const isChatbotLead = validatedData.downloadedResource.toLowerCase().includes("chatbot");
       
       const emailResponse = await resend.emails.send({
-        from: "agent13 ai <noreply@agent13.ai>",
+        from: "agent13 ai <roybernales@agent13.ai>",
         to: [validatedData.email],
         subject: isChatbotLead 
           ? "Thanks for Connecting with agent13 ai!" 
@@ -214,7 +214,7 @@ const handler = async (req: Request): Promise<Response> => {
     // Send notification to business
     try {
       await resend.emails.send({
-        from: "agent13 ai Leads <noreply@agent13.ai>",
+        from: "agent13 ai Leads <roybernales@agent13.ai>",
         to: ["RoyBernales@agent13.ai"],
         subject: `🎯 New Lead: ${escapeHtml(validatedData.firstName)} ${escapeHtml(validatedData.lastName)}`,
         html: `
