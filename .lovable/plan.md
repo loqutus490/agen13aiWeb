@@ -1,30 +1,67 @@
 
-# Update All Email Addresses to RoyBernales@agent13.ai
+# Fix Contact Form CORS and Email Routing
 
-## Summary
-Replace all email addresses across the website with the unified address: `RoyBernales@agent13.ai`
+## Overview
+The Contact form fails with "Failed to send message" because the edge function's CORS configuration blocks requests from domains not in its whitelist. Additionally, the business notification email needs to be routed to the same destination as the lead capture form.
 
-## Files to Update
+## Root Cause Analysis
+1. **CORS Whitelist Issue**: The `send-contact-email` function only allows specific origins, but the browser may be accessing from a different subdomain or preview URL variant
+2. **Email Routing Mismatch**: Contact form notifications still go to `RoyBernales@agent13.ai` instead of `agent13leads@theimoroip.resend.app`
 
-### 1. Contact Page
-**File:** `src/pages/Contact.tsx` (line 237)
-- Change `contact@agent13.ai` → `RoyBernales@agent13.ai`
+## Solution
 
-### 2. Privacy Policy Page
-**File:** `src/pages/PrivacyPolicy.tsx` (line 111)
-- Change `support@agent13ai.com` → `RoyBernales@agent13.ai`
+### Step 1: Update CORS Configuration
+Change the CORS headers to use the standard `'*'` wildcard, matching the pattern used successfully in other edge functions like `submit-lead` and `chat`.
 
-### 3. Terms of Service Page
-**File:** `src/pages/TermsOfService.tsx` (line 126)
-- Change `support@agent13ai.com` → `RoyBernales@agent13.ai`
+```text
+File: supabase/functions/send-contact-email/index.ts
 
-### 4. Contact Form Email Function (Backend)
-**File:** `supabase/functions/send-contact-email/index.ts` (line 135)
-- Change `roy.bernales@agent13.ai` → `RoyBernales@agent13.ai`
+Change from:
+- Restrictive origin whitelist
+
+Change to:
+- Standard corsHeaders with '*' allow-origin
+```
+
+### Step 2: Update Business Email Destination
+Route business notifications to `agent13leads@theimoroip.resend.app` for consistency with lead capture form.
+
+```text
+File: supabase/functions/send-contact-email/index.ts
+
+Line ~135: to: ["RoyBernales@agent13.ai"]
+Change to: to: ["agent13leads@theimoroip.resend.app"]
+```
+
+### Step 3: Deploy and Test
+- Deploy the updated edge function
+- Test the contact form end-to-end to verify emails are sent successfully
 
 ---
 
-## Technical Notes
-- Four files require changes total
-- The YouTube channel links (`@agent13ai`) will remain unchanged as those are social media handles, not email addresses
-- The chat function reference to YouTube is also left unchanged
+## Technical Details
+
+### Files to Modify
+| File | Change |
+|------|--------|
+| `supabase/functions/send-contact-email/index.ts` | Update CORS headers and business email recipient |
+
+### CORS Headers Update
+```typescript
+// Replace restrictive origin whitelist with standard headers
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+};
+```
+
+### Email Recipient Change
+```typescript
+// Line 135
+to: ["agent13leads@theimoroip.resend.app"],
+```
+
+## Expected Outcome
+- Contact form submissions will work from any domain
+- Business notifications will go to the consolidated leads inbox
+- User confirmations will still be sent to the submitter
