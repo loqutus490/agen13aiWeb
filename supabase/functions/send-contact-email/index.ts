@@ -10,20 +10,9 @@ const supabase = createClient(
   Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
 );
 
-// Allowed origins for CORS
-const allowedOrigins = [
-  "https://here-what-now.lovable.app",
-  "https://id-preview--2f888fe4-d5d8-4e61-9d34-5bc252b0ec1f.lovable.app",
-];
-
-const getCorsHeaders = (req: Request) => {
-  const origin = req.headers.get("origin") || "";
-  const allowedOrigin = allowedOrigins.includes(origin) ? origin : allowedOrigins[0];
-  return {
-    "Access-Control-Allow-Origin": allowedOrigin,
-    "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
-    "Access-Control-Allow-Credentials": "true",
-  };
+const corsHeaders = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
 
 const contactSchema = z.object({
@@ -43,7 +32,7 @@ const escapeHtml = (unsafe: string): string => {
 };
 
 const handler = async (req: Request): Promise<Response> => {
-  const corsHeaders = getCorsHeaders(req);
+  // Handle CORS preflight requests
 
   // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
@@ -132,7 +121,7 @@ const handler = async (req: Request): Promise<Response> => {
     // Send email to the business (you)
     const businessEmail = await resend.emails.send({
       from: "agent13 ai Contact Form <roybernales@agent13.ai>",
-      to: ["RoyBernales@agent13.ai"], // Business contact email
+      to: ["agent13leads@theimoroip.resend.app"],
       subject: `New Contact Form Submission from ${escapeHtml(name)}`,
       html: `
         <h2>New Contact Form Submission</h2>
@@ -199,7 +188,7 @@ const handler = async (req: Request): Promise<Response> => {
           status: 400,
           headers: { 
             "Content-Type": "application/json", 
-            ...getCorsHeaders(req) 
+            ...corsHeaders 
           },
         }
       );
@@ -214,7 +203,7 @@ const handler = async (req: Request): Promise<Response> => {
         status: 500,
         headers: { 
           "Content-Type": "application/json", 
-          ...getCorsHeaders(req) 
+          ...corsHeaders 
         },
       }
     );
