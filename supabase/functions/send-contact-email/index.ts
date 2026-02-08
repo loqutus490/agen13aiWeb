@@ -131,7 +131,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Send email to the business (you)
     const businessEmail = await resend.emails.send({
-      from: "agent13 ai Contact Form <noreply@agent13.ai>",
+      from: "agent13 ai Contact Form <roybernales@agent13.ai>",
       to: ["RoyBernales@agent13.ai"], // Business contact email
       subject: `New Contact Form Submission from ${escapeHtml(name)}`,
       html: `
@@ -151,7 +151,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Send confirmation email to the user
     const confirmationEmail = await resend.emails.send({
-      from: "agent13 ai <noreply@agent13.ai>",
+      from: "agent13 ai <roybernales@agent13.ai>",
       to: [email],
       subject: "We received your message!",
       html: `
