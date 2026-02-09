@@ -123,7 +123,7 @@ const TermsOfService = () => {
             </p>
             <p className="text-muted-foreground">
               agent13 ai<br />
-              Email: RoyBernales@agent13.ai
+              Email: roybernales@agent13.ai
             </p>
           </div>
         </div>
