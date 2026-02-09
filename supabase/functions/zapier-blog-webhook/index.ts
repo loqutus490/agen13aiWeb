@@ -30,6 +30,45 @@ const getCorsHeaders = (req: Request) => {
   };
 };
 
+// ============================================================
+// ZAPIER FIELD MAPPING GUIDE
+// ============================================================
+// Configure your Zapier "Webhooks by Zapier" action with these fields:
+//
+// REQUIRED FIELDS (webhook will fail without these):
+//   title        → Blog post title (e.g. "AI Trends in 2026")
+//   slug         → URL-friendly identifier, lowercase + hyphens only (e.g. "ai-trends-2026")
+//   content      → Full blog post body as HTML (e.g. "<p>Your article...</p>")
+//                   Alt field names accepted: "body", "html_content", "text"
+//                   Falls back to "excerpt" if all are empty
+//   excerpt      → Short summary/description (max 500 chars)
+//   category     → Post category (e.g. "AI Tools", "Automation")
+//
+// OPTIONAL FIELDS:
+//   author       → Author name (e.g. "agent13 ai Team")
+//   tags         → Comma-separated string OR JSON array (e.g. "AI, Automation, Tools")
+//   published    → "true" or "false" string, or boolean (default: false)
+//   date         → ISO date string (e.g. "2026-02-09"), defaults to today
+//   image_url    → Full URL to featured image (must start with http:// or https://)
+//                   NOTE: This must be an actual image URL, NOT an image prompt/description
+//
+// AUTHENTICATION:
+//   Header: x-webhook-secret → Your ZAPIER_WEBHOOK_SECRET value
+//
+// EXAMPLE PAYLOAD:
+// {
+//   "title": "AI Trends for Small Business in 2026",
+//   "slug": "ai-trends-small-business-2026",
+//   "content": "<h2>Introduction</h2><p>AI is transforming...</p>",
+//   "excerpt": "Discover the top AI trends reshaping small business in 2026",
+//   "category": "AI Tools",
+//   "author": "agent13 ai Team",
+//   "tags": "AI, Small Business, Trends",
+//   "published": "true",
+//   "image_url": "https://example.com/images/ai-trends.jpg"
+// }
+// ============================================================
+
 // Schema for incoming blog post data from Zapier
 const blogPostSchema = z.object({
   title: z.string().min(1, "Title is required").max(200, "Title too long"),
@@ -41,7 +80,7 @@ const blogPostSchema = z.object({
   author: z.string().optional().nullable(),
   tags: z.array(z.string()).optional().default([]),
   published: z.boolean().optional().default(false),
-  date: z.string().optional(), // ISO date string
+  date: z.string().optional(),
   image_url: z.string().url("Must be a valid URL").optional().nullable(),
 });
 
@@ -141,10 +180,13 @@ const handler = async (req: Request): Promise<Response> => {
       published: typeof body.published === "string"
         ? body.published.toLowerCase() === "true"
         : Boolean(body.published ?? false),
-      // Image URL: empty string should be null
-      image_url: body.image_url && body.image_url.trim() ? body.image_url.trim() : null,
-      // Content: fall back to excerpt if missing
-      content: body.content || body.body || body.html_content || body.text || "",
+      // Image URL: must be a valid URL, ignore prompt text or empty strings
+      image_url: (() => {
+        const url = (body.image_url || "").trim();
+        return url && (url.startsWith("http://") || url.startsWith("https://")) ? url : null;
+      })(),
+      // Content: try multiple field names, fall back to excerpt
+      content: body.content || body.body || body.html_content || body.text || body.excerpt || "",
     };
 
     console.log("Preprocessed data for slug:", preprocessed.slug || "unknown");
