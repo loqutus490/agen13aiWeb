@@ -202,7 +202,7 @@ const handler = async (req: Request): Promise<Response> => {
             </p>
           </div>
         `,
-        replyTo: "RoyBernales@agent13.ai",
+        replyTo: "roybernales@agent13.ai",
       });
 
       console.log(`Welcome email sent successfully to ${validatedData.email}`);
