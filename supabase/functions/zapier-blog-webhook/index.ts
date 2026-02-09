@@ -121,11 +121,36 @@ const handler = async (req: Request): Promise<Response> => {
 
     console.log(`SECURITY: Authenticated request from ${clientIP}`);
 
-    const body = await req.json();
-    console.log("Received blog post data for slug:", body.slug || "unknown");
+    const rawBody = await req.json();
+    console.log("Raw body keys:", Object.keys(rawBody));
+    console.log("Raw body:", JSON.stringify(rawBody).substring(0, 500));
+
+    // Zapier may nest data or send flat - try to extract the actual data
+    const body = rawBody.data || rawBody;
+
+    // Preprocess Zapier-specific formatting issues
+    const preprocessed = {
+      ...body,
+      // Tags: Zapier sends comma-separated string, convert to array
+      tags: Array.isArray(body.tags)
+        ? body.tags
+        : typeof body.tags === "string" && body.tags.trim()
+          ? body.tags.split(",").map((t: string) => t.trim()).filter(Boolean)
+          : [],
+      // Published: Zapier sends "true"/"false" strings
+      published: typeof body.published === "string"
+        ? body.published.toLowerCase() === "true"
+        : Boolean(body.published ?? false),
+      // Image URL: empty string should be null
+      image_url: body.image_url && body.image_url.trim() ? body.image_url.trim() : null,
+      // Content: fall back to excerpt if missing
+      content: body.content || body.body || body.html_content || body.text || "",
+    };
+
+    console.log("Preprocessed data for slug:", preprocessed.slug || "unknown");
 
     // Validate the incoming data
-    const validatedData = blogPostSchema.parse(body);
+    const validatedData = blogPostSchema.parse(preprocessed);
     console.log("Validated data:", validatedData);
 
     // Check if slug already exists
