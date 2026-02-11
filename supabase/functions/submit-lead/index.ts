@@ -1,21 +1,19 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { z } from "https://deno.land/x/zod@v3.22.4/mod.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.80.0";
-import { Resend } from "https://esm.sh/resend@4.0.0";
+
+const SENDGRID_API_KEY = Deno.env.get("SENDGRID_API_KEY")!;
 
 const supabase = createClient(
   Deno.env.get("SUPABASE_URL")!,
   Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
 );
 
-const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
-
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
 
-// Input validation schema
 const leadSchema = z.object({
   firstName: z.string().trim().min(1, "First name required").max(100, "First name too long"),
   lastName: z.string().trim().min(1, "Last name required").max(100, "Last name too long"),
@@ -34,6 +32,32 @@ const escapeHtml = (unsafe: string): string => {
     .replace(/'/g, "&#039;");
 };
 
+async function sendEmail(to: string, from: { email: string; name: string }, subject: string, htmlContent: string, replyTo?: string) {
+  const payload: any = {
+    personalizations: [{ to: [{ email: to }] }],
+    from: { email: from.email, name: from.name },
+    subject,
+    content: [{ type: "text/html", value: htmlContent }],
+  };
+  if (replyTo) {
+    payload.reply_to = { email: replyTo };
+  }
+
+  const res = await fetch("https://api.sendgrid.com/v3/mail/send", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${SENDGRID_API_KEY}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+  });
+
+  if (!res.ok) {
+    const errorBody = await res.text();
+    throw new Error(`SendGrid error ${res.status}: ${errorBody}`);
+  }
+}
+
 const handler = async (req: Request): Promise<Response> => {
   const clientIP = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || 
                    req.headers.get("x-real-ip") || 
@@ -41,7 +65,6 @@ const handler = async (req: Request): Promise<Response> => {
   
   console.log(`Submit lead function invoked from IP: ${clientIP}`);
 
-  // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
     return new Response("ok", { headers: corsHeaders });
   }
@@ -63,61 +86,23 @@ const handler = async (req: Request): Promise<Response> => {
 
     if (rateLimit) {
       const windowStart = new Date(rateLimit.window_start);
-      
-      // If within the same hour window
       if (windowStart > oneHourAgo) {
         if (rateLimit.request_count >= 5) {
           console.warn(`RATE LIMIT: IP ${clientIP} exceeded lead submission limit (${rateLimit.request_count}/5)`);
           return new Response(
-            JSON.stringify({ 
-              success: false,
-              error: "Too many submissions. Please try again later." 
-            }),
-            {
-              status: 429,
-              headers: {
-                "Content-Type": "application/json",
-                "Retry-After": "3600",
-                ...corsHeaders,
-              },
-            }
+            JSON.stringify({ success: false, error: "Too many submissions. Please try again later." }),
+            { status: 429, headers: { "Content-Type": "application/json", "Retry-After": "3600", ...corsHeaders } }
           );
         }
-        
-        // Increment count
-        await supabase
-          .from("rate_limits")
-          .update({ 
-            request_count: rateLimit.request_count + 1,
-            updated_at: now.toISOString()
-          })
-          .eq("ip_address", `lead_${clientIP}`);
+        await supabase.from("rate_limits").update({ request_count: rateLimit.request_count + 1, updated_at: now.toISOString() }).eq("ip_address", `lead_${clientIP}`);
       } else {
-        // Reset window
-        await supabase
-          .from("rate_limits")
-          .update({ 
-            request_count: 1,
-            window_start: now.toISOString(),
-            updated_at: now.toISOString()
-          })
-          .eq("ip_address", `lead_${clientIP}`);
+        await supabase.from("rate_limits").update({ request_count: 1, window_start: now.toISOString(), updated_at: now.toISOString() }).eq("ip_address", `lead_${clientIP}`);
       }
     } else {
-      // First request from this IP
-      await supabase
-        .from("rate_limits")
-        .insert({ 
-          ip_address: `lead_${clientIP}`,
-          request_count: 1,
-          window_start: now.toISOString(),
-          updated_at: now.toISOString()
-        });
+      await supabase.from("rate_limits").insert({ ip_address: `lead_${clientIP}`, request_count: 1, window_start: now.toISOString(), updated_at: now.toISOString() });
     }
 
     const body = await req.json();
-    
-    // Validate input
     const validatedData = leadSchema.parse(body);
 
     // Insert lead into database
@@ -140,13 +125,13 @@ const handler = async (req: Request): Promise<Response> => {
     try {
       const isChatbotLead = validatedData.downloadedResource.toLowerCase().includes("chatbot");
       
-      const emailResponse = await resend.emails.send({
-        from: "agent13 ai <roybernales@agent13.ai>",
-        to: [validatedData.email],
-        subject: isChatbotLead 
+      await sendEmail(
+        validatedData.email,
+        { email: "roybernales@agent13.ai", name: "agent13 ai" },
+        isChatbotLead 
           ? "Thanks for Connecting with agent13 ai!" 
           : `Your ${escapeHtml(validatedData.downloadedResource)} from agent13 ai`,
-        html: `
+        `
           <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
             <div style="text-align: center; margin-bottom: 30px;">
               <h1 style="color: #0BA5EC; margin: 0; font-size: 28px;">agent13 ai</h1>
@@ -159,11 +144,9 @@ const handler = async (req: Request): Promise<Response> => {
               <p style="color: #444; font-size: 16px; line-height: 1.6;">
                 Thank you for expressing interest in our AI services! We're excited to learn more about your business and explore how we can help you leverage AI for growth.
               </p>
-              
               <p style="color: #444; font-size: 16px; line-height: 1.6;">
                 One of our AI specialists will reach out to you shortly to schedule a free consultation. In the meantime, here's what you can expect:
               </p>
-              
               <ul style="color: #444; font-size: 16px; line-height: 1.8;">
                 <li><strong>Discovery Call:</strong> We'll learn about your business challenges and goals</li>
                 <li><strong>Custom Recommendations:</strong> Tailored AI solutions based on your needs</li>
@@ -173,7 +156,6 @@ const handler = async (req: Request): Promise<Response> => {
               <p style="color: #444; font-size: 16px; line-height: 1.6;">
                 Thank you for downloading <strong>${escapeHtml(validatedData.downloadedResource)}</strong>! We hope you find it valuable as you explore how AI can transform your business.
               </p>
-              
               <p style="color: #444; font-size: 16px; line-height: 1.6;">
                 Our team is here to help if you have any questions or would like to discuss how we can support your AI journey.
               </p>
@@ -187,14 +169,12 @@ const handler = async (req: Request): Promise<Response> => {
             <p style="color: #444; font-size: 16px; line-height: 1.6;">
               Have questions? Simply reply to this email – we'd love to hear from you!
             </p>
-            
             <p style="color: #444; font-size: 16px; line-height: 1.6;">
               Best regards,<br>
               <strong>The agent13 ai Team</strong>
             </p>
             
             <hr style="border: none; border-top: 1px solid #eee; margin: 30px 0;">
-            
             <p style="color: #999; font-size: 12px; text-align: center;">
               © ${new Date().getFullYear()} agent13 ai. All rights reserved.<br>
               <a href="https://here-what-now.lovable.app/privacy-policy" style="color: #999;">Privacy Policy</a> | 
@@ -202,25 +182,22 @@ const handler = async (req: Request): Promise<Response> => {
             </p>
           </div>
         `,
-        replyTo: "roybernales@agent13.ai",
-      });
-
+        "roybernales@agent13.ai"
+      );
       console.log(`Welcome email sent successfully to ${validatedData.email}`);
     } catch (emailError: any) {
-      // Log but don't fail the lead submission if email fails
       console.error("Failed to send welcome email:", emailError.message);
     }
 
     // Send notification to business
     try {
-      await resend.emails.send({
-        from: "agent13 ai Leads <roybernales@agent13.ai>",
-        to: ["roybernales@agent13.ai"],
-        subject: `🎯 New Lead: ${escapeHtml(validatedData.firstName)} ${escapeHtml(validatedData.lastName)}`,
-        html: `
+      await sendEmail(
+        "roybernales@agent13.ai",
+        { email: "roybernales@agent13.ai", name: "agent13 ai Leads" },
+        `🎯 New Lead: ${escapeHtml(validatedData.firstName)} ${escapeHtml(validatedData.lastName)}`,
+        `
           <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
             <h2 style="color: #0BA5EC; margin-bottom: 20px;">New Lead Captured! 🎉</h2>
-            
             <div style="background: #f8f9fa; border-radius: 12px; padding: 20px; margin-bottom: 20px;">
               <h3 style="margin: 0 0 15px; color: #333;">Contact Information</h3>
               <p style="margin: 8px 0; color: #444;"><strong>Name:</strong> ${escapeHtml(validatedData.firstName)} ${escapeHtml(validatedData.lastName)}</p>
@@ -229,15 +206,13 @@ const handler = async (req: Request): Promise<Response> => {
               <p style="margin: 8px 0; color: #444;"><strong>Source:</strong> ${escapeHtml(validatedData.downloadedResource)}</p>
               <p style="margin: 8px 0; color: #666;"><strong>Captured:</strong> ${now.toLocaleString('en-US', { timeZone: 'America/New_York' })} ET</p>
             </div>
-            
             <p style="color: #666; font-size: 14px;">
               Reply directly to this email to reach ${escapeHtml(validatedData.firstName)} at ${escapeHtml(validatedData.email)}.
             </p>
           </div>
         `,
-        replyTo: validatedData.email,
-      });
-
+        validatedData.email
+      );
       console.log(`Business notification sent for lead: ${validatedData.email}`);
     } catch (notifyError: any) {
       console.error("Failed to send business notification:", notifyError.message);
@@ -245,37 +220,21 @@ const handler = async (req: Request): Promise<Response> => {
 
     return new Response(
       JSON.stringify({ success: true }),
-      {
-        status: 200,
-        headers: { "Content-Type": "application/json", ...corsHeaders },
-      }
+      { status: 200, headers: { "Content-Type": "application/json", ...corsHeaders } }
     );
   } catch (error: any) {
     console.error("Error in submit-lead function:", error.message);
     
     if (error instanceof z.ZodError) {
       return new Response(
-        JSON.stringify({ 
-          success: false,
-          error: "Invalid input data",
-          details: error.errors.map(e => e.message)
-        }),
-        {
-          status: 400,
-          headers: { "Content-Type": "application/json", ...corsHeaders },
-        }
+        JSON.stringify({ success: false, error: "Invalid input data", details: error.errors.map(e => e.message) }),
+        { status: 400, headers: { "Content-Type": "application/json", ...corsHeaders } }
       );
     }
     
     return new Response(
-      JSON.stringify({ 
-        success: false,
-        error: "Failed to submit lead" 
-      }),
-      {
-        status: 500,
-        headers: { "Content-Type": "application/json", ...corsHeaders },
-      }
+      JSON.stringify({ success: false, error: "Failed to submit lead" }),
+      { status: 500, headers: { "Content-Type": "application/json", ...corsHeaders } }
     );
   }
 };

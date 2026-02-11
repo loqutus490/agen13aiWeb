@@ -1,9 +1,8 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
-import { Resend } from "https://esm.sh/resend@4.0.0";
 import { z } from "https://deno.land/x/zod@v3.22.4/mod.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.80.0";
 
-const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
+const SENDGRID_API_KEY = Deno.env.get("SENDGRID_API_KEY")!;
 
 const supabase = createClient(
   Deno.env.get("SUPABASE_URL")!,
@@ -31,16 +30,38 @@ const escapeHtml = (unsafe: string): string => {
     .replace(/'/g, "&#039;");
 };
 
-const handler = async (req: Request): Promise<Response> => {
-  // Handle CORS preflight requests
+async function sendEmail(to: string, from: { email: string; name: string }, subject: string, htmlContent: string, replyTo?: string) {
+  const payload: any = {
+    personalizations: [{ to: [{ email: to }] }],
+    from: { email: from.email, name: from.name },
+    subject,
+    content: [{ type: "text/html", value: htmlContent }],
+  };
+  if (replyTo) {
+    payload.reply_to = { email: replyTo };
+  }
 
-  // Handle CORS preflight requests
+  const res = await fetch("https://api.sendgrid.com/v3/mail/send", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${SENDGRID_API_KEY}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+  });
+
+  if (!res.ok) {
+    const errorBody = await res.text();
+    throw new Error(`SendGrid error ${res.status}: ${errorBody}`);
+  }
+}
+
+const handler = async (req: Request): Promise<Response> => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
-    // Get client IP address
     const ip = req.headers.get("x-forwarded-for")?.split(",")[0] || 
                req.headers.get("x-real-ip") || 
                "unknown";
@@ -61,55 +82,19 @@ const handler = async (req: Request): Promise<Response> => {
 
     if (rateLimit) {
       const windowStart = new Date(rateLimit.window_start);
-      
-      // If within the same hour window
       if (windowStart > oneHourAgo) {
         if (rateLimit.request_count >= 5) {
           return new Response(
-            JSON.stringify({ 
-              success: false,
-              error: "Too many requests. Please try again later." 
-            }),
-            {
-              status: 429,
-              headers: {
-                "Content-Type": "application/json",
-                "Retry-After": "3600",
-                ...corsHeaders,
-              },
-            }
+            JSON.stringify({ success: false, error: "Too many requests. Please try again later." }),
+            { status: 429, headers: { "Content-Type": "application/json", "Retry-After": "3600", ...corsHeaders } }
           );
         }
-        
-        // Increment count
-        await supabase
-          .from("rate_limits")
-          .update({ 
-            request_count: rateLimit.request_count + 1,
-            updated_at: now.toISOString()
-          })
-          .eq("ip_address", ip);
+        await supabase.from("rate_limits").update({ request_count: rateLimit.request_count + 1, updated_at: now.toISOString() }).eq("ip_address", ip);
       } else {
-        // Reset window
-        await supabase
-          .from("rate_limits")
-          .update({ 
-            request_count: 1,
-            window_start: now.toISOString(),
-            updated_at: now.toISOString()
-          })
-          .eq("ip_address", ip);
+        await supabase.from("rate_limits").update({ request_count: 1, window_start: now.toISOString(), updated_at: now.toISOString() }).eq("ip_address", ip);
       }
     } else {
-      // First request from this IP
-      await supabase
-        .from("rate_limits")
-        .insert({ 
-          ip_address: ip,
-          request_count: 1,
-          window_start: now.toISOString(),
-          updated_at: now.toISOString()
-        });
+      await supabase.from("rate_limits").insert({ ip_address: ip, request_count: 1, window_start: now.toISOString(), updated_at: now.toISOString() });
     }
 
     const body = await req.json();
@@ -118,12 +103,12 @@ const handler = async (req: Request): Promise<Response> => {
 
     console.log("Processing contact form submission");
 
-    // Send email to the business (you)
-    const businessEmail = await resend.emails.send({
-      from: "agent13 ai Contact Form <roybernales@agent13.ai>",
-      to: ["roybernales@agent13.ai"],
-      subject: `New Contact Form Submission from ${escapeHtml(name)}`,
-      html: `
+    // Send email to the business
+    await sendEmail(
+      "roybernales@agent13.ai",
+      { email: "roybernales@agent13.ai", name: "agent13 ai Contact Form" },
+      `New Contact Form Submission from ${escapeHtml(name)}`,
+      `
         <h2>New Contact Form Submission</h2>
         <p><strong>Name:</strong> ${escapeHtml(name)}</p>
         <p><strong>Email:</strong> ${escapeHtml(email)}</p>
@@ -133,79 +118,49 @@ const handler = async (req: Request): Promise<Response> => {
         <hr>
         <p><small>Reply to: ${escapeHtml(email)}</small></p>
       `,
-      replyTo: email,
-    });
+      email
+    );
 
     console.log("Business notification email sent successfully");
 
     // Send confirmation email to the user
-    const confirmationEmail = await resend.emails.send({
-      from: "agent13 ai <roybernales@agent13.ai>",
-      to: [email],
-      subject: "We received your message!",
-      html: `
+    await sendEmail(
+      email,
+      { email: "roybernales@agent13.ai", name: "agent13 ai" },
+      "We received your message!",
+      `
         <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
           <h1 style="color: #0BA5EC;">Thank you for contacting us, ${escapeHtml(name)}!</h1>
           <p>We have received your message and will get back to you as soon as possible.</p>
-          
           <div style="background: #f4f4f4; padding: 20px; border-radius: 8px; margin: 20px 0;">
             <h3 style="margin-top: 0;">Your Message:</h3>
             <p style="white-space: pre-wrap;">${escapeHtml(message)}</p>
           </div>
-          
           <p>If you have any urgent questions, feel free to reply to this email.</p>
-          
           <p style="color: #666;">Best regards,<br>The agent13 ai Team</p>
         </div>
-      `,
-    });
+      `
+    );
 
     console.log("Confirmation email sent successfully");
 
     return new Response(
-      JSON.stringify({ 
-        success: true,
-        message: "Email sent successfully" 
-      }), 
-      {
-        status: 200,
-        headers: {
-          "Content-Type": "application/json",
-          ...corsHeaders,
-        },
-      }
+      JSON.stringify({ success: true, message: "Email sent successfully" }),
+      { status: 200, headers: { "Content-Type": "application/json", ...corsHeaders } }
     );
   } catch (error: any) {
-    console.error("Error in send-contact-email function");
+    console.error("Error in send-contact-email function:", error.message);
     
     if (error instanceof z.ZodError) {
       return new Response(
-        JSON.stringify({ 
-          success: false,
-          error: "Invalid input data" 
-        }),
-        {
-          status: 400,
-          headers: { 
-            "Content-Type": "application/json", 
-            ...corsHeaders 
-          },
-        }
+        JSON.stringify({ success: false, error: "Invalid input data" }),
+        { status: 400, headers: { "Content-Type": "application/json", ...corsHeaders } }
       );
     }
     
     return new Response(
-      JSON.stringify({ 
-        success: false,
-        error: "Failed to send email. Please try again." 
-      }),
-      {
-        status: 500,
-        headers: { 
-          "Content-Type": "application/json", 
-          ...corsHeaders 
-        },
-      }
+      JSON.stringify({ success: false, error: "Failed to send email. Please try again." }),
+      { status: 500, headers: { "Content-Type": "application/json", ...corsHeaders } }
     );
   }
 };
