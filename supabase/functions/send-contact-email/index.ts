@@ -17,6 +17,8 @@ const corsHeaders = {
 const contactSchema = z.object({
   name: z.string().trim().min(2, "Name too short").max(100, "Name too long"),
   email: z.string().email("Invalid email").max(255, "Email too long"),
+  phone: z.string().trim().min(10, "Phone number too short").max(20, "Phone number too long")
+    .regex(/^[0-9+\-\s()]+$/, "Invalid phone number format"),
   company: z.string().trim().min(2, "Company name too short").max(100, "Company name too long"),
   message: z.string().trim().min(10, "Message too short").max(2000, "Message too long"),
 });
@@ -99,7 +101,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     const body = await req.json();
     const validatedData = contactSchema.parse(body);
-    const { name, email, company, message } = validatedData;
+    const { name, email, phone, company, message } = validatedData;
 
     console.log("Processing contact form submission");
 
@@ -112,6 +114,7 @@ const handler = async (req: Request): Promise<Response> => {
         <h2>New Contact Form Submission</h2>
         <p><strong>Name:</strong> ${escapeHtml(name)}</p>
         <p><strong>Email:</strong> ${escapeHtml(email)}</p>
+        <p><strong>Phone:</strong> ${escapeHtml(phone)}</p>
         <p><strong>Company:</strong> ${escapeHtml(company)}</p>
         <p><strong>Message:</strong></p>
         <p>${escapeHtml(message).replace(/\n/g, '<br>')}</p>
