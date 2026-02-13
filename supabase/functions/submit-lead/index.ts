@@ -149,7 +149,7 @@ const handler = async (req: Request): Promise<Response> => {
               </p>
               <ul style="color: #444; font-size: 16px; line-height: 1.8;">
                 <li><strong>Discovery Call:</strong> We'll learn about your business challenges and goals</li>
-                <li><strong>Custom Recommendations:</strong> Tailored AI solutions based on your needs</li>
+                <li><strong>AI Strategy Overview:</strong> Proven solutions to streamline your operations</li>
                 <li><strong>Clear Roadmap:</strong> A practical plan to implement AI in your operations</li>
               </ul>
             ` : `
