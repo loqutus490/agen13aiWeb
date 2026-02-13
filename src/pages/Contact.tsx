@@ -24,6 +24,11 @@ const contactSchema = z.object({
     .trim()
     .email({ message: "Please enter a valid email address" })
     .max(255, { message: "Email must be less than 255 characters" }),
+  phone: z.string()
+    .trim()
+    .min(10, { message: "Phone number must be at least 10 characters" })
+    .max(20, { message: "Phone number must be less than 20 characters" })
+    .regex(/^[0-9+\-\s()]+$/, { message: "Please enter a valid phone number" }),
   company: z.string()
     .trim()
     .min(2, { message: "Company name must be at least 2 characters" })
@@ -155,6 +160,25 @@ const Contact = () => {
                 {errors.email && (
                   <p className="text-sm text-destructive mt-1">
                     {errors.email.message}
+                  </p>
+                )}
+              </div>
+
+              <div>
+                <Label htmlFor="phone" className="text-base">
+                  Phone Number *
+                </Label>
+                <Input
+                  id="phone"
+                  type="tel"
+                  {...register("phone")}
+                  placeholder="(555) 123-4567"
+                  className="mt-2"
+                  disabled={isSubmitting}
+                />
+                {errors.phone && (
+                  <p className="text-sm text-destructive mt-1">
+                    {errors.phone.message}
                   </p>
                 )}
               </div>
