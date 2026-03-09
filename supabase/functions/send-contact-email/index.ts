@@ -105,6 +105,16 @@ const handler = async (req: Request): Promise<Response> => {
 
     console.log("Processing contact form submission");
 
+    // Persist to contact_submissions table
+    const { error: insertError } = await supabase
+      .from("contact_submissions")
+      .insert({ name, email, phone, company, message });
+
+    if (insertError) {
+      console.error("Failed to save contact submission:", insertError);
+      // Continue with email even if DB insert fails
+    }
+
     // Send email to the business
     await sendEmail(
       "roybernales@agent13.ai",
