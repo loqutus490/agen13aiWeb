@@ -239,7 +239,7 @@ const Home = () => {
                 target="_blank" 
                 rel="noopener noreferrer"
               >
-                <Button size="lg" className="bg-accent-orange hover:bg-accent-orange/90 shadow-glow-orange">
+                <Button size="lg" className="bg-primary hover:bg-primary-dark text-primary-foreground shadow-glow">
                   <Youtube className="mr-2 w-5 h-5" />
                   Subscribe Now
                 </Button>
