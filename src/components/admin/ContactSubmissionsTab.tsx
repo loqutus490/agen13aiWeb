@@ -49,7 +49,7 @@ const ContactSubmissionsTab = () => {
 
   const fetchSubmissions = async () => {
     try {
-      const { data, error } = await supabase
+      const { data, error } = await (supabase as any)
         .from("contact_submissions")
         .select("*")
         .order("created_at", { ascending: false });
