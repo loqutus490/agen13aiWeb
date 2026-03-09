@@ -98,20 +98,28 @@ export const DownloadLeadForm = ({
         throw new Error(leadResponse?.error || "Failed to submit");
       }
 
-      // Send thank you email
-      const { error: emailError } = await supabase.functions.invoke(
-        "send-download-confirmation",
-        {
-          body: {
-            firstName: data.firstName,
-            lastName: data.lastName,
-            email: data.email,
-            resourceTitle: resourceTitle,
-          },
+      // Send thank you email via internal-key-protected endpoint
+      try {
+        const emailRes = await fetch(
+          `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/send-download-confirmation`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "x-agent13-internal-key": import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
+            },
+            body: JSON.stringify({
+              firstName: data.firstName,
+              lastName: data.lastName,
+              email: data.email,
+              resourceTitle: resourceTitle,
+            }),
+          }
+        );
+        if (!emailRes.ok) {
+          console.error("Email sending failed:", emailRes.status);
         }
-      );
-
-      if (emailError) {
+      } catch (emailError) {
         console.error("Email sending failed:", emailError);
         // Don't block download if email fails
       }
