@@ -88,14 +88,14 @@ const Navbar = () => {
                     </Button>
                   </Link>
                   <Link to="/signup">
-                    <Button size="sm" className="bg-accent-orange hover:bg-accent-orange/90 shadow-glow-orange transition-all">
+                    <Button size="sm" className="bg-primary hover:bg-primary-dark text-primary-foreground shadow-glow transition-all">
                       Sign Up
                     </Button>
                   </Link>
                 </>}
             </>}
           <Link to="/contact">
-            <Button size="sm" className="bg-accent-orange hover:bg-accent-orange/90 shadow-glow-orange transition-all">
+            <Button size="sm" className="bg-primary hover:bg-primary-dark text-primary-foreground shadow-glow transition-all">
               Contact Us
             </Button>
           </Link>

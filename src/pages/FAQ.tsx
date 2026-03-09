@@ -160,7 +160,7 @@ const FAQ = () => {
             Schedule a free discovery call to discuss your specific needs and see if Secure Document AI is right for your firm.
           </p>
           <Link to="/contact">
-            <Button size="lg" className="bg-accent-orange hover:bg-accent-orange/90 shadow-glow-orange transition-all">
+            <Button size="lg" className="bg-primary hover:bg-primary-dark text-primary-foreground shadow-glow transition-all">
               Schedule Discovery Call
               <ArrowRight className="ml-2 w-5 h-5" />
             </Button>
