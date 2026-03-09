@@ -181,6 +181,13 @@ const BlogManagement = () => {
     await fetchPosts();
   };
 
+  const handleDelete = async () => {
+    if (!deletePostId) return;
+    await supabase.from("blog_posts").delete().eq("id", deletePostId);
+    setDeletePostId(null);
+    await fetchPosts();
+  };
+
   const resetForm = () => {
     setFormData({ slug: "", title: "", excerpt: "", content: "", date: new Date().toISOString().split("T")[0], category: "", author: "agent13 ai Team", published: false, tags: [], image_url: "", status: "pending_review", newsletter_status: "draft" });
     setEditingPost(null);
