@@ -21,12 +21,32 @@ export type Database = {
           category: string
           content: string
           created_at: string
+          created_by_system: boolean | null
           date: string
           excerpt: string
+          faq_json: Json | null
+          generation_run_id: string | null
           id: string
+          image_options_json: Json | null
           image_url: string | null
+          internal_link_suggestions: Json | null
+          meta_description: string | null
+          newsletter_body: string | null
+          newsletter_preview_text: string | null
+          newsletter_status: string | null
+          newsletter_subject_options: string[] | null
+          post_type: string | null
+          primary_keyword: string | null
           published: boolean
+          published_at: string | null
+          review_notes: string | null
+          scheduled_publish_at: string | null
+          schema_json: Json | null
+          secondary_keywords: string[] | null
+          seo_title: string | null
           slug: string
+          source_links_json: Json | null
+          status: string | null
           tags: string[] | null
           title: string
           updated_at: string
@@ -37,12 +57,32 @@ export type Database = {
           category: string
           content: string
           created_at?: string
+          created_by_system?: boolean | null
           date?: string
           excerpt: string
+          faq_json?: Json | null
+          generation_run_id?: string | null
           id?: string
+          image_options_json?: Json | null
           image_url?: string | null
+          internal_link_suggestions?: Json | null
+          meta_description?: string | null
+          newsletter_body?: string | null
+          newsletter_preview_text?: string | null
+          newsletter_status?: string | null
+          newsletter_subject_options?: string[] | null
+          post_type?: string | null
+          primary_keyword?: string | null
           published?: boolean
+          published_at?: string | null
+          review_notes?: string | null
+          scheduled_publish_at?: string | null
+          schema_json?: Json | null
+          secondary_keywords?: string[] | null
+          seo_title?: string | null
           slug: string
+          source_links_json?: Json | null
+          status?: string | null
           tags?: string[] | null
           title: string
           updated_at?: string
@@ -53,17 +93,99 @@ export type Database = {
           category?: string
           content?: string
           created_at?: string
+          created_by_system?: boolean | null
           date?: string
           excerpt?: string
+          faq_json?: Json | null
+          generation_run_id?: string | null
           id?: string
+          image_options_json?: Json | null
           image_url?: string | null
+          internal_link_suggestions?: Json | null
+          meta_description?: string | null
+          newsletter_body?: string | null
+          newsletter_preview_text?: string | null
+          newsletter_status?: string | null
+          newsletter_subject_options?: string[] | null
+          post_type?: string | null
+          primary_keyword?: string | null
           published?: boolean
+          published_at?: string | null
+          review_notes?: string | null
+          scheduled_publish_at?: string | null
+          schema_json?: Json | null
+          secondary_keywords?: string[] | null
+          seo_title?: string | null
           slug?: string
+          source_links_json?: Json | null
+          status?: string | null
           tags?: string[] | null
           title?: string
           updated_at?: string
         }
         Relationships: []
+      }
+      content_generation_runs: {
+        Row: {
+          completed_at: string | null
+          created_at: string
+          error_message: string | null
+          id: string
+          logs_json: Json
+          mode: string
+          newsletter_generated: boolean
+          output_post_id: string | null
+          selected_keyword: string | null
+          selected_topic: string | null
+          source_count: number
+          started_at: string
+          status: string
+          trigger_type: string
+          updated_at: string
+        }
+        Insert: {
+          completed_at?: string | null
+          created_at?: string
+          error_message?: string | null
+          id?: string
+          logs_json?: Json
+          mode?: string
+          newsletter_generated?: boolean
+          output_post_id?: string | null
+          selected_keyword?: string | null
+          selected_topic?: string | null
+          source_count?: number
+          started_at?: string
+          status?: string
+          trigger_type?: string
+          updated_at?: string
+        }
+        Update: {
+          completed_at?: string | null
+          created_at?: string
+          error_message?: string | null
+          id?: string
+          logs_json?: Json
+          mode?: string
+          newsletter_generated?: boolean
+          output_post_id?: string | null
+          selected_keyword?: string | null
+          selected_topic?: string | null
+          source_count?: number
+          started_at?: string
+          status?: string
+          trigger_type?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "content_generation_runs_output_post_id_fkey"
+            columns: ["output_post_id"]
+            isOneToOne: false
+            referencedRelation: "blog_posts"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       download_leads: {
         Row: {
