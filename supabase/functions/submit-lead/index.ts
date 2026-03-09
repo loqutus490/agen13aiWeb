@@ -122,7 +122,8 @@ const handler = async (req: Request): Promise<Response> => {
 
     console.log(`Lead submitted successfully for ${validatedData.email}`);
 
-    // Send welcome email to the lead
+    const isChatbotLead = validatedData.downloadedResource.toLowerCase().includes("chatbot");
+    const sendDownloadConfirmation = validatedData.sendDownloadConfirmation === true && !isChatbotLead;
     try {
       const isChatbotLead = validatedData.downloadedResource.toLowerCase().includes("chatbot");
       
