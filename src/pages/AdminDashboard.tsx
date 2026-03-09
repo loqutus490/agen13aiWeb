@@ -9,6 +9,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { 
   Table, TableBody, TableCell, TableHead, 
   TableHeader, TableRow 
@@ -20,8 +21,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Download, Search, Filter, TrendingUp, FileText, FlaskConical } from "lucide-react";
+import { Download, Search, Filter, TrendingUp, FileText, FlaskConical, MessageSquare } from "lucide-react";
 import { toast } from "sonner";
+import ContactSubmissionsTab from "@/components/admin/ContactSubmissionsTab";
 
 interface Lead {
   id: string;
