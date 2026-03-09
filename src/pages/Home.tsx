@@ -59,25 +59,15 @@ const Home = () => {
                 <Sparkles className="ml-2 w-5 h-5" />
               </Button>
             </Link>
-            <a href="https://youtube.com/@agent13ai" target="_blank" rel="noopener noreferrer">
-              <Button 
-                size="lg" 
-                variant="outline" 
-                className="text-lg px-8"
-                onClick={() => {
-                  (window as any).dataLayer = (window as any).dataLayer || [];
-                  (window as any).dataLayer.push({
-                    event: 'cta_click',
-                    cta_name: 'Watch Videos',
-                    cta_location: 'home_hero',
-                    destination: 'https://youtube.com/@agent13ai'
-                  });
-                }}
-              >
-                <Youtube className="mr-2 w-5 h-5" />
-                Watch Videos
-              </Button>
-            </a>
+            <Button 
+              size="lg" 
+              variant="outline" 
+              className="text-lg px-8 cursor-default opacity-70"
+              disabled
+            >
+              <Youtube className="mr-2 w-5 h-5" />
+              Coming Soon
+            </Button>
           </div>
           <p className="text-sm text-muted-foreground mt-4">
             Your data, your control — never used for training
