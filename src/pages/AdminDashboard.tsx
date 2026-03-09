@@ -20,7 +20,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Download, Search, Filter, TrendingUp } from "lucide-react";
+import { Download, Search, Filter, TrendingUp, FileText, FlaskConical } from "lucide-react";
 import { toast } from "sonner";
 
 interface Lead {
@@ -167,9 +167,19 @@ const AdminDashboard = () => {
       
       <section className="pt-32 pb-20 px-4">
         <div className="container mx-auto max-w-7xl">
-          <div className="mb-8">
-            <h1 className="text-4xl font-bold mb-2">Admin Dashboard</h1>
-            <p className="text-muted-foreground">Manage download leads and view analytics</p>
+          <div className="flex flex-wrap justify-between items-start gap-4 mb-8">
+            <div>
+              <h1 className="text-4xl font-bold mb-2">Admin Dashboard</h1>
+              <p className="text-muted-foreground">Manage download leads and view analytics</p>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              <Button variant="outline" onClick={() => navigate("/blog-management")}>
+                <FileText className="w-4 h-4 mr-2" />Blog Management
+              </Button>
+              <Button variant="outline" onClick={() => navigate("/admin/internal-tests/content-ingestion")}>
+                <FlaskConical className="w-4 h-4 mr-2" />Content Ingestion Test
+              </Button>
+            </div>
           </div>
 
           {/* Analytics Cards */}
