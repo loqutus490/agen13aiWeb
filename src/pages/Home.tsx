@@ -42,7 +42,7 @@ const Home = () => {
             <Link to="/contact">
               <Button 
                 size="lg" 
-                className="bg-accent-orange hover:bg-accent-orange/90 text-lg px-8 shadow-glow-orange hover:shadow-lg transition-all"
+                className="bg-primary hover:bg-primary-dark text-primary-foreground text-lg px-8 shadow-glow hover:shadow-lg transition-all"
                 onClick={() => {
                   (window as any).dataLayer = (window as any).dataLayer || [];
                   (window as any).dataLayer.push({
