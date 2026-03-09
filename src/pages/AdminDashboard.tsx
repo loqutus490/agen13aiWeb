@@ -20,7 +20,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Download, Search, Filter, TrendingUp } from "lucide-react";
+import { Download, Search, Filter, TrendingUp, FileText, FlaskConical } from "lucide-react";
 import { toast } from "sonner";
 
 interface Lead {
