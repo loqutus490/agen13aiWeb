@@ -72,7 +72,7 @@ export const DownloadLeadForm = ({
   const onSubmit = async (data: FormData) => {
     setIsSubmitting(true);
     try {
-      // Save lead data via rate-limited edge function
+      // Save lead data via rate-limited edge function (also sends confirmation email)
       const { data: leadResponse, error: leadError } = await supabase.functions.invoke(
         "submit-lead",
         {
@@ -82,6 +82,7 @@ export const DownloadLeadForm = ({
             email: data.email,
             phoneNumber: data.phoneNumber,
             downloadedResource: resourceTitle,
+            sendDownloadConfirmation: true,
           },
         }
       );
@@ -96,32 +97,6 @@ export const DownloadLeadForm = ({
       
       if (!leadResponse?.success) {
         throw new Error(leadResponse?.error || "Failed to submit");
-      }
-
-      // Send thank you email via internal-key-protected endpoint
-      try {
-        const emailRes = await fetch(
-          `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/send-download-confirmation`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              "x-agent13-internal-key": import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
-            },
-            body: JSON.stringify({
-              firstName: data.firstName,
-              lastName: data.lastName,
-              email: data.email,
-              resourceTitle: resourceTitle,
-            }),
-          }
-        );
-        if (!emailRes.ok) {
-          console.error("Email sending failed:", emailRes.status);
-        }
-      } catch (emailError) {
-        console.error("Email sending failed:", emailError);
-        // Don't block download if email fails
       }
 
       // Trigger download
