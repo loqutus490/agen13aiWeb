@@ -18,7 +18,7 @@ import { useToast } from "@/hooks/use-toast";
 import RichTextEditor from "@/components/RichTextEditor";
 import { TagInput } from "@/components/TagInput";
 import { BlogImageUpload } from "@/components/BlogImageUpload";
-import { Pencil, Trash2, Plus, Tag, Image as ImageIcon, Bot, Eye, CheckCircle, XCircle, Mail, ExternalLink } from "lucide-react";
+import { Pencil, Trash2, Plus, Tag, Image as ImageIcon, Bot, Eye, CheckCircle, XCircle, Mail, ExternalLink, Save } from "lucide-react";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { canTransitionStatus } from "@/lib/contentAutomation";
