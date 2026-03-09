@@ -59,6 +59,8 @@ const App = () => (
             <Route path="/signup" element={<Signup />} />
             <Route path="/admin" element={<AdminDashboard />} />
             <Route path="/admin/internal-tests/content-ingestion" element={<ContentIngestionTest />} />
+            <Route path="/internal-tests/content-ingestion" element={<Navigate to="/admin/internal-tests/content-ingestion" replace />} />
+            <Route path="/content-ingestion" element={<Navigate to="/admin/internal-tests/content-ingestion" replace />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
