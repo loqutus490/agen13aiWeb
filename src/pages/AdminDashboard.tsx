@@ -50,6 +50,8 @@ const AdminDashboard = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [resourceFilter, setResourceFilter] = useState("all");
   const [stats, setStats] = useState<ResourceStats[]>([]);
+  const [selectedLeadIds, setSelectedLeadIds] = useState<Set<string>>(new Set());
+  const [deletingLeads, setDeletingLeads] = useState(false);
 
   useEffect(() => {
     if (!adminLoading && !isAdmin) {
