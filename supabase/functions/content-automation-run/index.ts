@@ -37,10 +37,26 @@ serve(async (req) => {
     const authHeader = req.headers.get("authorization");
     const runSecret = req.headers.get("x-run-secret");
     const expected = Deno.env.get("CONTENT_AUTOMATION_RUN_SECRET");
-    const hasBearerToken = Boolean(authHeader?.toLowerCase().startsWith("bearer "));
     const hasValidSecret = Boolean(expected && runSecret === expected);
 
-    if (!hasBearerToken && !hasValidSecret) {
+    let authorized = hasValidSecret;
+
+    if (!authorized && authHeader?.toLowerCase().startsWith("bearer ")) {
+      // Verify the bearer token belongs to an admin user
+      const token = authHeader.replace(/^bearer\s+/i, "");
+      const { data: userData, error: userErr } = await supabase.auth.getUser(token);
+      if (!userErr && userData?.user?.id) {
+        const { data: role } = await supabase
+          .from("user_roles")
+          .select("role")
+          .eq("user_id", userData.user.id)
+          .eq("role", "admin")
+          .maybeSingle();
+        authorized = !!role;
+      }
+    }
+
+    if (!authorized) {
       return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } });
     }
 
