@@ -151,6 +151,47 @@ const AdminDashboard = () => {
     toast.success("CSV exported successfully");
   };
 
+  const toggleLeadSelect = (id: string) => {
+    setSelectedLeadIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
+
+  const toggleSelectAllLeads = () => {
+    if (selectedLeadIds.size === filteredLeads.length) {
+      setSelectedLeadIds(new Set());
+    } else {
+      setSelectedLeadIds(new Set(filteredLeads.map((l) => l.id)));
+    }
+  };
+
+  const deleteSelectedLeads = async () => {
+    if (selectedLeadIds.size === 0) return;
+    if (!confirm(`Delete ${selectedLeadIds.size} lead(s)? This cannot be undone.`)) return;
+
+    setDeletingLeads(true);
+    try {
+      const { error } = await supabase
+        .from("download_leads")
+        .delete()
+        .in("id", Array.from(selectedLeadIds));
+
+      if (error) throw error;
+
+      setLeads((prev) => prev.filter((l) => !selectedLeadIds.has(l.id)));
+      setSelectedLeadIds(new Set());
+      toast.success(`Deleted ${selectedLeadIds.size} lead(s)`);
+    } catch (error) {
+      console.error("Error deleting leads:", error);
+      toast.error("Failed to delete leads");
+    } finally {
+      setDeletingLeads(false);
+    }
+  };
+
   const uniqueResources = [...new Set(leads.map(lead => lead.downloaded_resource))];
 
   if (adminLoading || loading) {
