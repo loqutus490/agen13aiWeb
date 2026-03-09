@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import SEO from "@/components/SEO";
 import { supabase } from "@/integrations/supabase/client";
 import { useAdmin } from "@/hooks/useAdmin";
 import { Card } from "@/components/ui/card";
@@ -161,6 +162,7 @@ const AdminDashboard = () => {
 
   return (
     <div className="min-h-screen">
+      <SEO title="Admin Dashboard" description="Manage leads, users, and site content from the agent13 ai admin dashboard." />
       <Navbar />
       
       <section className="pt-32 pb-20 px-4">

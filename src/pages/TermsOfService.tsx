@@ -1,11 +1,13 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import SEO from "@/components/SEO";
 import { Badge } from "@/components/ui/badge";
 import { FileText } from "lucide-react";
 
 const TermsOfService = () => {
   return (
     <div className="min-h-screen">
+      <SEO title="Terms of Service" description="agent13 ai terms of service — the agreement governing your use of our website and services." />
       <Navbar />
       
       <section className="pt-32 pb-20 px-4 animated-gradient-bg">

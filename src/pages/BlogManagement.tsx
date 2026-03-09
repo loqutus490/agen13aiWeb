@@ -5,6 +5,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useAdmin } from "@/hooks/useAdmin";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -209,6 +210,7 @@ const BlogManagement = () => {
 
   return (
     <div className="min-h-screen">
+      <SEO title="Blog Management" description="Create, edit, and manage blog posts for the agent13 ai website." />
       <Navbar />
       
       <div className="pt-32 pb-20 px-4">

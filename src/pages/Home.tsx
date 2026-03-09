@@ -8,11 +8,13 @@ import {
   FileSearch, Shield, Users, Lock
 } from "lucide-react";
 import Navbar from "@/components/Navbar";
+import SEO from "@/components/SEO";
 import Footer from "@/components/Footer";
 
 const Home = () => {
   return (
     <div className="min-h-screen">
+      <SEO title="AI Solutions for Business" description="agent13 ai helps businesses automate workflows, reduce repetitive work, and scale with secure AI solutions built for professional services." />
       <Navbar />
       
       {/* Hero Section */}

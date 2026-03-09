@@ -1,5 +1,6 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import SEO from "@/components/SEO";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import {
@@ -98,6 +99,7 @@ const FAQ = () => {
 
   return (
     <div className="min-h-screen">
+      <SEO title="FAQ" description="Frequently asked questions about agent13 ai services, pricing, security, and implementation process." />
       <Navbar />
       
       <section className="pt-32 pb-20 px-4 relative overflow-hidden animated-gradient-bg">

@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import SEO from "@/components/SEO";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
@@ -88,6 +89,7 @@ const Signup = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center px-4 animated-gradient-bg">
+      <SEO title="Sign Up" description="Create your agent13 ai account to get started with AI-powered business automation and document processing." />
       <Card className="w-full max-w-md p-8">
         <div className="text-center mb-8">
           <Link to="/" className="inline-flex items-center gap-2 mb-4">

@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import SEO from "@/components/SEO";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -62,6 +63,7 @@ const Blog = () => {
 
   return (
     <div className="min-h-screen">
+      <SEO title="Blog" description="Insights, tips, and guides on AI automation, document processing, and business growth from the agent13 ai team." />
       <Navbar />
       
       <section className="pt-32 pb-20 px-4 animated-gradient-bg">

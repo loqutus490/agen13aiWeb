@@ -4,6 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import DOMPurify from "dompurify";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import SEO from "@/components/SEO";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Calendar, ArrowLeft, User, Tag } from "lucide-react";
@@ -69,6 +70,7 @@ const BlogPost = () => {
 
   return (
     <div className="min-h-screen">
+      <SEO title={post.title} description={post.content.replace(/<[^>]*>/g, '').slice(0, 155)} type="article" />
       <Navbar />
       
       <article className="pt-32 pb-20 px-4">

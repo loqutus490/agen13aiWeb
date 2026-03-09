@@ -2,6 +2,7 @@ import { ArrowRight, Sparkles, ExternalLink } from "lucide-react";
 import { Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -26,6 +27,7 @@ const AITools = () => {
 
   return (
     <div className="min-h-screen">
+      <SEO title="AI Tools" description="Explore free AI tools from agent13 ai including product description generators and upcoming business automation utilities." />
       <Navbar />
       
       {/* Hero Section */}

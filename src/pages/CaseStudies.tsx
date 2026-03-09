@@ -1,5 +1,6 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import SEO from "@/components/SEO";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { TrendingUp, Clock, DollarSign, Users, ArrowRight } from "lucide-react";
@@ -54,6 +55,7 @@ const CaseStudies = () => {
 
   return (
     <div className="min-h-screen">
+      <SEO title="Case Studies" description="Real results from businesses using agent13 ai — see how AI automation drives revenue growth, saves time, and improves efficiency." />
       <Navbar />
       
       <section className="pt-32 pb-20 px-4 relative overflow-hidden animated-gradient-bg">

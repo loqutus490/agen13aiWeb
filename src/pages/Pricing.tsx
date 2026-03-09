@@ -1,5 +1,6 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import SEO from "@/components/SEO";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -89,6 +90,7 @@ const Pricing = () => {
 
   return (
     <div className="min-h-screen">
+      <SEO title="Pricing" description="Transparent pricing for agent13 ai services. Secure Document AI, process automation, and custom AI solutions tailored for your business." />
       <Navbar />
       
       <section className="pt-32 pb-20 px-4 animated-gradient-bg relative overflow-hidden">

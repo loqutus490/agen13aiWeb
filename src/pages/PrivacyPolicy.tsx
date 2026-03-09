@@ -1,11 +1,13 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import SEO from "@/components/SEO";
 import { Badge } from "@/components/ui/badge";
 import { Shield } from "lucide-react";
 
 const PrivacyPolicy = () => {
   return (
     <div className="min-h-screen">
+      <SEO title="Privacy Policy" description="agent13 ai privacy policy — how we collect, use, and protect your personal information." />
       <Navbar />
       
       <section className="pt-32 pb-20 px-4 animated-gradient-bg">
