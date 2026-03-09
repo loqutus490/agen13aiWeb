@@ -70,6 +70,7 @@ const BlogPost = () => {
 
   return (
     <div className="min-h-screen">
+      <SEO title={post.title} description={post.content.replace(/<[^>]*>/g, '').slice(0, 155)} type="article" />
       <Navbar />
       
       <article className="pt-32 pb-20 px-4">
