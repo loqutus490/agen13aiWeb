@@ -289,6 +289,13 @@ const AdminDashboard = () => {
                     </SelectContent>
                   </Select>
 
+                  {selectedLeadIds.size > 0 && (
+                    <Button onClick={deleteSelectedLeads} variant="destructive" disabled={deletingLeads}>
+                      <Trash2 className="w-4 h-4 mr-2" />
+                      Delete ({selectedLeadIds.size})
+                    </Button>
+                  )}
+
                   <Button onClick={exportToCSV} variant="outline">
                     <Download className="w-4 h-4 mr-2" />
                     Export CSV
@@ -306,6 +313,12 @@ const AdminDashboard = () => {
                   <Table>
                     <TableHeader>
                       <TableRow>
+                        <TableHead className="w-[50px]">
+                          <Checkbox
+                            checked={filteredLeads.length > 0 && selectedLeadIds.size === filteredLeads.length}
+                            onCheckedChange={toggleSelectAllLeads}
+                          />
+                        </TableHead>
                         <TableHead>Name</TableHead>
                         <TableHead>Email</TableHead>
                         <TableHead>Phone</TableHead>
@@ -316,13 +329,19 @@ const AdminDashboard = () => {
                     <TableBody>
                       {filteredLeads.length === 0 ? (
                         <TableRow>
-                          <TableCell colSpan={5} className="text-center py-8 text-muted-foreground">
+                          <TableCell colSpan={6} className="text-center py-8 text-muted-foreground">
                             No leads found
                           </TableCell>
                         </TableRow>
                       ) : (
                         filteredLeads.map((lead) => (
-                          <TableRow key={lead.id}>
+                          <TableRow key={lead.id} data-state={selectedLeadIds.has(lead.id) ? "selected" : undefined}>
+                            <TableCell>
+                              <Checkbox
+                                checked={selectedLeadIds.has(lead.id)}
+                                onCheckedChange={() => toggleLeadSelect(lead.id)}
+                              />
+                            </TableCell>
                             <TableCell className="font-medium">
                               {lead.first_name} {lead.last_name}
                             </TableCell>
