@@ -99,6 +99,7 @@ const FAQ = () => {
 
   return (
     <div className="min-h-screen">
+      <SEO title="FAQ" description="Frequently asked questions about agent13 ai services, pricing, security, and implementation process." />
       <Navbar />
       
       <section className="pt-32 pb-20 px-4 relative overflow-hidden animated-gradient-bg">

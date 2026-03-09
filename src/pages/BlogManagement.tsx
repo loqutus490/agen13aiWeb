@@ -210,6 +210,7 @@ const BlogManagement = () => {
 
   return (
     <div className="min-h-screen">
+      <SEO title="Blog Management" description="Create, edit, and manage blog posts for the agent13 ai website." />
       <Navbar />
       
       <div className="pt-32 pb-20 px-4">

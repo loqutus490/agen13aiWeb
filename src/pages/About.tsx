@@ -7,6 +7,7 @@ import { FileSearch, Youtube, Shield, Users } from "lucide-react";
 const About = () => {
   return (
     <div className="min-h-screen">
+      <SEO title="About Us" description="Learn about agent13 ai — our mission to help businesses leverage secure AI solutions for document processing, automation, and growth." />
       <Navbar />
       
       <section className="pt-32 pb-20 px-4 animated-gradient-bg">

@@ -103,6 +103,7 @@ const Contact = () => {
 
   return (
     <div className="min-h-screen">
+      <SEO title="Contact Us" description="Get in touch with agent13 ai. Schedule a discovery call to learn how AI can help your business reduce repetitive work and scale." />
       <Navbar />
       
       <section className="pt-32 pb-20 px-4 relative overflow-hidden animated-gradient-bg">

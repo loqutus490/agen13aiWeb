@@ -27,6 +27,7 @@ const AITools = () => {
 
   return (
     <div className="min-h-screen">
+      <SEO title="AI Tools" description="Explore free AI tools from agent13 ai including product description generators and upcoming business automation utilities." />
       <Navbar />
       
       {/* Hero Section */}

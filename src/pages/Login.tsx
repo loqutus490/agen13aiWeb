@@ -80,6 +80,7 @@ const Login = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center px-4 animated-gradient-bg">
+      <SEO title="Login" description="Sign in to your agent13 ai account to access your dashboard and AI tools." />
       <Card className="w-full max-w-md p-8">
         <div className="text-center mb-8">
           <Link to="/" className="inline-flex items-center gap-2 mb-4">

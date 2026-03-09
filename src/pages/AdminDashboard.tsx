@@ -162,6 +162,7 @@ const AdminDashboard = () => {
 
   return (
     <div className="min-h-screen">
+      <SEO title="Admin Dashboard" description="Manage leads, users, and site content from the agent13 ai admin dashboard." />
       <Navbar />
       
       <section className="pt-32 pb-20 px-4">

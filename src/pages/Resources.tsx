@@ -115,6 +115,7 @@ const Resources = () => {
 
   return (
     <div className="min-h-screen">
+      <SEO title="Resources" description="Free AI guides, templates, and tools to help your business get started with automation and document AI." />
       <Navbar />
       
       <section className="pt-32 pb-20 px-4 relative overflow-hidden animated-gradient-bg">

@@ -52,6 +52,7 @@ const Features = () => {
 
   return (
     <div className="min-h-screen">
+      <SEO title="Features" description="Discover agent13 ai features: document indexing, email drafting, enterprise security, workflow integration, and human oversight for professional services." />
       <Navbar />
       
       <section className="pt-32 pb-20 px-4 relative overflow-hidden animated-gradient-bg">

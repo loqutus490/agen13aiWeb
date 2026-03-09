@@ -55,6 +55,7 @@ const CaseStudies = () => {
 
   return (
     <div className="min-h-screen">
+      <SEO title="Case Studies" description="Real results from businesses using agent13 ai — see how AI automation drives revenue growth, saves time, and improves efficiency." />
       <Navbar />
       
       <section className="pt-32 pb-20 px-4 relative overflow-hidden animated-gradient-bg">

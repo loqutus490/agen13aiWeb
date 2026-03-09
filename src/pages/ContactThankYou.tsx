@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 const ContactThankYou = () => {
   return (
     <div className="min-h-screen">
+      <SEO title="Thank You" description="Your message has been received. Our team will contact you within 24 hours." />
       <Navbar />
       
       <section className="pt-32 pb-20 px-4 relative overflow-hidden animated-gradient-bg">

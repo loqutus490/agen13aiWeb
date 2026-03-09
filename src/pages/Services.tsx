@@ -81,6 +81,7 @@ const Services = () => {
 
   return (
     <div className="min-h-screen">
+      <SEO title="Services" description="Explore agent13 ai services including Secure Document AI, process automation, custom AI development, and workflow integration for professional firms." />
       <Navbar />
       
       <section className="pt-32 pb-20 px-4 relative overflow-hidden animated-gradient-bg">

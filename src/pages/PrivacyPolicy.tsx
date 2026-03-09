@@ -7,6 +7,7 @@ import { Shield } from "lucide-react";
 const PrivacyPolicy = () => {
   return (
     <div className="min-h-screen">
+      <SEO title="Privacy Policy" description="agent13 ai privacy policy — how we collect, use, and protect your personal information." />
       <Navbar />
       
       <section className="pt-32 pb-20 px-4 animated-gradient-bg">

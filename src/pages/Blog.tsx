@@ -63,6 +63,7 @@ const Blog = () => {
 
   return (
     <div className="min-h-screen">
+      <SEO title="Blog" description="Insights, tips, and guides on AI automation, document processing, and business growth from the agent13 ai team." />
       <Navbar />
       
       <section className="pt-32 pb-20 px-4 animated-gradient-bg">

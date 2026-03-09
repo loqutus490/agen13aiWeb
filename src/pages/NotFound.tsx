@@ -15,6 +15,7 @@ const NotFound = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
+      <SEO title="Page Not Found" description="The page you're looking for doesn't exist. Return to the agent13 ai homepage." />
       <Navbar />
       <div className="flex-1 flex items-center justify-center px-4">
         <div className="text-center">
