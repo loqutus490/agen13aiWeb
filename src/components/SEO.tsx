@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
 const SITE_NAME = "agent13 ai";
-const BASE_URL = "https://here-what-now.lovable.app";
+const BASE_URL = "https://agent13.ai";
 
 interface SEOProps {
   title: string;
