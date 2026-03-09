@@ -288,7 +288,31 @@ const BlogManagement = () => {
             </CardHeader>
             <CardContent>
               <p className="text-muted-foreground mb-3 text-sm">{post.excerpt}</p>
-              {post.review_notes && <p className="text-sm mb-3 p-2 bg-muted rounded"><strong>Review notes:</strong> {post.review_notes}</p>}
+              <div className="mb-3">
+                <Label className="text-xs font-medium mb-1 block">Review Notes</Label>
+                <div className="flex gap-2">
+                  <Textarea
+                    className="text-sm min-h-[60px]"
+                    placeholder="Add review notes..."
+                    value={editingNotes[post.id] ?? post.review_notes ?? ""}
+                    onChange={(e) => setEditingNotes((prev) => ({ ...prev, [post.id]: e.target.value }))}
+                    rows={2}
+                  />
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    className="shrink-0 self-end"
+                    disabled={editingNotes[post.id] === undefined}
+                    onClick={async () => {
+                      await updateReviewNotes(post, editingNotes[post.id] ?? "");
+                      setEditingNotes((prev) => { const n = { ...prev }; delete n[post.id]; return n; });
+                      toast({ title: "Notes saved" });
+                    }}
+                  >
+                    <Save className="w-4 h-4 mr-1" />Save
+                  </Button>
+                </div>
+              </div>
               <div className="flex flex-wrap gap-2">
                 {/* Blog workflow actions */}
                 {(post.status === "pending_review" || post.status === "draft_generated") && (
