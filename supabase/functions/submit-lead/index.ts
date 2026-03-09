@@ -21,6 +21,7 @@ const leadSchema = z.object({
   phoneNumber: z.string().trim().min(10, "Phone number too short").max(20, "Phone number too long")
     .regex(/^[0-9+\-\s()]+$/, "Invalid phone number format"),
   downloadedResource: z.string().trim().min(1, "Resource required").max(200, "Resource name too long"),
+  sendDownloadConfirmation: z.boolean().optional(),
 });
 
 const escapeHtml = (unsafe: string): string => {
