@@ -75,18 +75,13 @@ const About = () => {
           <div className="bg-card rounded-lg p-8 border border-border/40">
             <h2 className="text-3xl font-bold mb-4">Join Our Community</h2>
             <p className="text-lg text-muted-foreground mb-6">
-              Subscribe to our YouTube channel for insights on AI for professional services, practical 
+              Our YouTube channel is coming soon! We'll share insights on AI for professional services, practical 
               tutorials, and strategies for implementing AI in your practice.
             </p>
-            <a 
-              href="https://youtube.com/@agent13ai" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-primary hover:underline text-lg"
-            >
+            <span className="inline-flex items-center gap-2 text-muted-foreground text-lg opacity-70">
               <Youtube className="w-6 h-6" />
-              Subscribe to agent13 ai on YouTube
-            </a>
+              Coming Soon
+            </span>
           </div>
         </div>
       </section>

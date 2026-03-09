@@ -208,12 +208,10 @@ const Resources = () => {
                         </Badge>
                       ))}
                     </div>
-                    <a href="https://youtube.com/@agent13ai" target="_blank" rel="noopener noreferrer">
-                      <Button size="sm" variant="outline" className="w-full">
-                        <Youtube className="w-4 h-4 mr-2" />
-                        Watch on YouTube
-                      </Button>
-                    </a>
+                    <Button size="sm" variant="outline" className="w-full opacity-70" disabled>
+                      <Youtube className="w-4 h-4 mr-2" />
+                      Coming Soon
+                    </Button>
                   </div>
                 </div>
               </Card>

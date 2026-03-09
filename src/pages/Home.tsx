@@ -212,7 +212,7 @@ const Home = () => {
             <Badge className="mb-4 bg-primary/10 text-primary border-primary/20">Learn More</Badge>
             <h2 className="text-4xl font-bold mb-4">Stay Updated with AI Insights</h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Follow our YouTube channel for the latest AI news and business tips
+              Our YouTube channel is coming soon — stay tuned for AI news and business tips
             </p>
           </div>
 
@@ -223,19 +223,13 @@ const Home = () => {
                 <Youtube className="w-16 h-16 text-primary mx-auto mb-6" />
               <h3 className="text-2xl font-bold mb-4">agent13 ai on YouTube</h3>
               <p className="text-muted-foreground mb-8">
-                Get weekly updates on AI innovations, practical tutorials, and strategies to grow your 
-                business using artificial intelligence.
+                We're preparing weekly updates on AI innovations, practical tutorials, and strategies to grow your 
+                business using artificial intelligence. Coming soon!
               </p>
-              <a 
-                href="https://youtube.com/@agent13ai" 
-                target="_blank" 
-                rel="noopener noreferrer"
-              >
-                <Button size="lg" className="bg-primary hover:bg-primary-dark text-primary-foreground shadow-glow">
+                <Button size="lg" className="bg-primary hover:bg-primary-dark text-primary-foreground shadow-glow opacity-70" disabled>
                   <Youtube className="mr-2 w-5 h-5" />
-                  Subscribe Now
+                  Coming Soon
                 </Button>
-              </a>
               </div>
             </Card>
           </div>

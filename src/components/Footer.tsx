@@ -19,15 +19,10 @@ const Footer = () => {
               Secure Document AI for Professional Services
             </p>
             <div className="flex flex-col gap-2">
-              <a 
-                href="https://youtube.com/@agent13ai" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
-              >
+              <span className="inline-flex items-center gap-2 text-sm text-muted-foreground opacity-70">
                 <Youtube className="w-4 h-4" />
-                Follow on YouTube
-              </a>
+                YouTube — Coming Soon
+              </span>
               <a 
                 href="https://www.facebook.com/people/Agent13-ai/61583475990300/" 
                 target="_blank" 
