@@ -4,11 +4,12 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Table, TableBody, TableCell, TableHead,
   TableHeader, TableRow,
 } from "@/components/ui/table";
-import { Download, Search, MessageSquare } from "lucide-react";
+import { Download, Search, MessageSquare, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 
 interface ContactSubmission {
@@ -26,6 +27,8 @@ const ContactSubmissionsTab = () => {
   const [filteredSubmissions, setFilteredSubmissions] = useState<ContactSubmission[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+  const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
     fetchSubmissions();
@@ -61,6 +64,47 @@ const ContactSubmissionsTab = () => {
       toast.error("Failed to load contact submissions");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const toggleSelect = (id: string) => {
+    setSelectedIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
+
+  const toggleSelectAll = () => {
+    if (selectedIds.size === filteredSubmissions.length) {
+      setSelectedIds(new Set());
+    } else {
+      setSelectedIds(new Set(filteredSubmissions.map((s) => s.id)));
+    }
+  };
+
+  const deleteSelected = async () => {
+    if (selectedIds.size === 0) return;
+    if (!confirm(`Delete ${selectedIds.size} submission(s)? This cannot be undone.`)) return;
+
+    setDeleting(true);
+    try {
+      const { error } = await (supabase as any)
+        .from("contact_submissions")
+        .delete()
+        .in("id", Array.from(selectedIds));
+
+      if (error) throw error;
+
+      setSubmissions((prev) => prev.filter((s) => !selectedIds.has(s.id)));
+      setSelectedIds(new Set());
+      toast.success(`Deleted ${selectedIds.size} submission(s)`);
+    } catch (error) {
+      console.error("Error deleting submissions:", error);
+      toast.error("Failed to delete submissions");
+    } finally {
+      setDeleting(false);
     }
   };
 
@@ -115,7 +159,7 @@ const ContactSubmissionsTab = () => {
         </Card>
       </div>
 
-      {/* Search & Export */}
+      {/* Search & Actions */}
       <Card className="p-6">
         <div className="flex flex-col md:flex-row gap-4">
           <div className="flex-1 relative">
@@ -127,6 +171,12 @@ const ContactSubmissionsTab = () => {
               className="pl-10"
             />
           </div>
+          {selectedIds.size > 0 && (
+            <Button onClick={deleteSelected} variant="destructive" disabled={deleting}>
+              <Trash2 className="w-4 h-4 mr-2" />
+              Delete ({selectedIds.size})
+            </Button>
+          )}
           <Button onClick={exportToCSV} variant="outline">
             <Download className="w-4 h-4 mr-2" />
             Export CSV
@@ -143,6 +193,12 @@ const ContactSubmissionsTab = () => {
           <Table>
             <TableHeader>
               <TableRow>
+                <TableHead className="w-[50px]">
+                  <Checkbox
+                    checked={filteredSubmissions.length > 0 && selectedIds.size === filteredSubmissions.length}
+                    onCheckedChange={toggleSelectAll}
+                  />
+                </TableHead>
                 <TableHead>Name</TableHead>
                 <TableHead>Email</TableHead>
                 <TableHead>Phone</TableHead>
@@ -154,13 +210,19 @@ const ContactSubmissionsTab = () => {
             <TableBody>
               {filteredSubmissions.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={6} className="text-center py-8 text-muted-foreground">
+                  <TableCell colSpan={7} className="text-center py-8 text-muted-foreground">
                     No contact submissions found
                   </TableCell>
                 </TableRow>
               ) : (
                 filteredSubmissions.map((s) => (
-                  <TableRow key={s.id}>
+                  <TableRow key={s.id} data-state={selectedIds.has(s.id) ? "selected" : undefined}>
+                    <TableCell>
+                      <Checkbox
+                        checked={selectedIds.has(s.id)}
+                        onCheckedChange={() => toggleSelect(s.id)}
+                      />
+                    </TableCell>
                     <TableCell className="font-medium">{s.name}</TableCell>
                     <TableCell>{s.email}</TableCell>
                     <TableCell>{s.phone}</TableCell>

@@ -21,8 +21,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Download, Search, Filter, TrendingUp, FileText, FlaskConical, MessageSquare } from "lucide-react";
+import { Download, Search, Filter, TrendingUp, FileText, FlaskConical, MessageSquare, Trash2 } from "lucide-react";
 import { toast } from "sonner";
+import { Checkbox } from "@/components/ui/checkbox";
 import ContactSubmissionsTab from "@/components/admin/ContactSubmissionsTab";
 
 interface Lead {
@@ -49,6 +50,8 @@ const AdminDashboard = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [resourceFilter, setResourceFilter] = useState("all");
   const [stats, setStats] = useState<ResourceStats[]>([]);
+  const [selectedLeadIds, setSelectedLeadIds] = useState<Set<string>>(new Set());
+  const [deletingLeads, setDeletingLeads] = useState(false);
 
   useEffect(() => {
     if (!adminLoading && !isAdmin) {
@@ -148,6 +151,47 @@ const AdminDashboard = () => {
     toast.success("CSV exported successfully");
   };
 
+  const toggleLeadSelect = (id: string) => {
+    setSelectedLeadIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
+
+  const toggleSelectAllLeads = () => {
+    if (selectedLeadIds.size === filteredLeads.length) {
+      setSelectedLeadIds(new Set());
+    } else {
+      setSelectedLeadIds(new Set(filteredLeads.map((l) => l.id)));
+    }
+  };
+
+  const deleteSelectedLeads = async () => {
+    if (selectedLeadIds.size === 0) return;
+    if (!confirm(`Delete ${selectedLeadIds.size} lead(s)? This cannot be undone.`)) return;
+
+    setDeletingLeads(true);
+    try {
+      const { error } = await supabase
+        .from("download_leads")
+        .delete()
+        .in("id", Array.from(selectedLeadIds));
+
+      if (error) throw error;
+
+      setLeads((prev) => prev.filter((l) => !selectedLeadIds.has(l.id)));
+      setSelectedLeadIds(new Set());
+      toast.success(`Deleted ${selectedLeadIds.size} lead(s)`);
+    } catch (error) {
+      console.error("Error deleting leads:", error);
+      toast.error("Failed to delete leads");
+    } finally {
+      setDeletingLeads(false);
+    }
+  };
+
   const uniqueResources = [...new Set(leads.map(lead => lead.downloaded_resource))];
 
   if (adminLoading || loading) {
@@ -245,6 +289,13 @@ const AdminDashboard = () => {
                     </SelectContent>
                   </Select>
 
+                  {selectedLeadIds.size > 0 && (
+                    <Button onClick={deleteSelectedLeads} variant="destructive" disabled={deletingLeads}>
+                      <Trash2 className="w-4 h-4 mr-2" />
+                      Delete ({selectedLeadIds.size})
+                    </Button>
+                  )}
+
                   <Button onClick={exportToCSV} variant="outline">
                     <Download className="w-4 h-4 mr-2" />
                     Export CSV
@@ -262,6 +313,12 @@ const AdminDashboard = () => {
                   <Table>
                     <TableHeader>
                       <TableRow>
+                        <TableHead className="w-[50px]">
+                          <Checkbox
+                            checked={filteredLeads.length > 0 && selectedLeadIds.size === filteredLeads.length}
+                            onCheckedChange={toggleSelectAllLeads}
+                          />
+                        </TableHead>
                         <TableHead>Name</TableHead>
                         <TableHead>Email</TableHead>
                         <TableHead>Phone</TableHead>
@@ -272,13 +329,19 @@ const AdminDashboard = () => {
                     <TableBody>
                       {filteredLeads.length === 0 ? (
                         <TableRow>
-                          <TableCell colSpan={5} className="text-center py-8 text-muted-foreground">
+                          <TableCell colSpan={6} className="text-center py-8 text-muted-foreground">
                             No leads found
                           </TableCell>
                         </TableRow>
                       ) : (
                         filteredLeads.map((lead) => (
-                          <TableRow key={lead.id}>
+                          <TableRow key={lead.id} data-state={selectedLeadIds.has(lead.id) ? "selected" : undefined}>
+                            <TableCell>
+                              <Checkbox
+                                checked={selectedLeadIds.has(lead.id)}
+                                onCheckedChange={() => toggleLeadSelect(lead.id)}
+                              />
+                            </TableCell>
                             <TableCell className="font-medium">
                               {lead.first_name} {lead.last_name}
                             </TableCell>
