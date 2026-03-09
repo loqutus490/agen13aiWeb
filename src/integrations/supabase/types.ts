@@ -29,7 +29,7 @@ export type Database = {
           id: string
           image_options_json: Json | null
           image_url: string | null
-          internal_link_suggestions: Json | null
+          internal_link_suggestions: string[] | null
           meta_description: string | null
           newsletter_body: string | null
           newsletter_preview_text: string | null
@@ -65,7 +65,7 @@ export type Database = {
           id?: string
           image_options_json?: Json | null
           image_url?: string | null
-          internal_link_suggestions?: Json | null
+          internal_link_suggestions?: string[] | null
           meta_description?: string | null
           newsletter_body?: string | null
           newsletter_preview_text?: string | null
@@ -101,7 +101,7 @@ export type Database = {
           id?: string
           image_options_json?: Json | null
           image_url?: string | null
-          internal_link_suggestions?: Json | null
+          internal_link_suggestions?: string[] | null
           meta_description?: string | null
           newsletter_body?: string | null
           newsletter_preview_text?: string | null
@@ -131,51 +131,48 @@ export type Database = {
           created_at: string
           error_message: string | null
           id: string
-          logs_json: Json
+          logs_json: Json | null
           mode: string
-          newsletter_generated: boolean
+          newsletter_generated: boolean | null
           output_post_id: string | null
           selected_keyword: string | null
           selected_topic: string | null
-          source_count: number
+          source_count: number | null
           started_at: string
           status: string
           trigger_type: string
-          updated_at: string
         }
         Insert: {
           completed_at?: string | null
           created_at?: string
           error_message?: string | null
           id?: string
-          logs_json?: Json
+          logs_json?: Json | null
           mode?: string
-          newsletter_generated?: boolean
+          newsletter_generated?: boolean | null
           output_post_id?: string | null
           selected_keyword?: string | null
           selected_topic?: string | null
-          source_count?: number
+          source_count?: number | null
           started_at?: string
           status?: string
           trigger_type?: string
-          updated_at?: string
         }
         Update: {
           completed_at?: string | null
           created_at?: string
           error_message?: string | null
           id?: string
-          logs_json?: Json
+          logs_json?: Json | null
           mode?: string
-          newsletter_generated?: boolean
+          newsletter_generated?: boolean | null
           output_post_id?: string | null
           selected_keyword?: string | null
           selected_topic?: string | null
-          source_count?: number
+          source_count?: number | null
           started_at?: string
           status?: string
           trigger_type?: string
-          updated_at?: string
         }
         Relationships: [
           {
