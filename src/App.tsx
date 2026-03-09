@@ -26,6 +26,7 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
 import AdminDashboard from "./pages/AdminDashboard";
 import AITools from "./pages/AITools";
+import ContentIngestionTest from "./pages/ContentIngestionTest";
 
 const queryClient = new QueryClient();
 
