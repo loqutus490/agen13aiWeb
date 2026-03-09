@@ -176,13 +176,6 @@ const BlogManagement = () => {
 
   const handleDelete = async () => {
     if (!deletePostId) return;
-    await (supabase.from("blog_posts") as any).delete().eq("id", deletePostId);
-    setDeletePostId(null);
-    await fetchPosts();
-  };
-
-  const handleDelete = async () => {
-    if (!deletePostId) return;
     await supabase.from("blog_posts").delete().eq("id", deletePostId);
     setDeletePostId(null);
     await fetchPosts();
