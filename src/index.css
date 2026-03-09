@@ -25,8 +25,8 @@ All colors MUST be HSL.
     --primary-dark: 100 80% 35%;
 
     /* Navy accent - for titles and secondary highlights */
-    --accent-orange: 210 80% 30%;
-    --accent-orange-glow: 210 85% 38%;
+    --accent-navy: 210 80% 30%;
+    --accent-navy-glow: 210 85% 38%;
 
     --secondary: 210 40% 14%;
     --secondary-foreground: 0 0% 88%;
