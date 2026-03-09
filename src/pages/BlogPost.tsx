@@ -35,11 +35,10 @@ const BlogPost = () => {
 
   const fetchPost = async (postSlug: string) => {
     try {
-      const { data, error } = await supabase
-        .from('blog_posts')
+      const { data, error } = await (supabase
+        .from('blog_posts_public' as any) as any)
         .select('*')
         .eq('slug', postSlug)
-        .eq('published', true)
         .single();
       
       if (error) throw error;
