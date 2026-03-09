@@ -124,13 +124,16 @@ export const DownloadLeadForm = ({
       link.click();
       document.body.removeChild(link);
 
-      // Push conversion event to GTM dataLayer
+      // Push conversion event to GTM dataLayer (hashed PII for privacy)
+      const emailBytes = new TextEncoder().encode(data.email.toLowerCase().trim());
+      const hashBuffer = await crypto.subtle.digest('SHA-256', emailBytes);
+      const hashedEmail = Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
       (window as any).dataLayer = (window as any).dataLayer || [];
       (window as any).dataLayer.push({
         event: 'download_lead_submission',
         form_name: 'Download Lead Form',
         resource_title: resourceTitle,
-        lead_email: data.email
+        lead_email_hash: hashedEmail
       });
       
       toast({
