@@ -15,7 +15,7 @@ export const dedupeSources = (items: ScoredSourceItem[]): ScoredSourceItem[] => 
 
 export const canTransitionStatus = (from: string, to: string): boolean => {
   const graph: Record<string, string[]> = {
-    draft_generated: ["pending_review", "failed"],
+    draft_generated: ["pending_review", "approved", "failed"],
     pending_review: ["approved", "failed"],
     approved: ["published", "failed"],
     published: [],
