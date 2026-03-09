@@ -209,6 +209,18 @@ const ContentIngestionTest = () => {
             </div>
           </div>
 
+          {/* API Key */}
+          <Card className="mb-6">
+            <CardHeader>
+              <CardTitle>Authentication</CardTitle>
+              <CardDescription>Paste your internal API key. It is only held in memory and never stored.</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Label htmlFor="api-key">x-agent13-internal-key</Label>
+              <Input id="api-key" type="password" value={apiKey} onChange={(e) => setApiKey(e.target.value)} placeholder="Paste your AGENT13_INTERNAL_API_KEY value" />
+            </CardContent>
+          </Card>
+
           {/* Form */}
           <Card className="mb-6">
             <CardHeader>
