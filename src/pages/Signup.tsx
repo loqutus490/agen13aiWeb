@@ -62,8 +62,8 @@ const Signup = () => {
 
       if (data.user) {
         toast({
-          title: "Success",
-          description: "Account created successfully! You can now sign in.",
+          title: "Check your email",
+          description: "We've sent a verification link to your email. Please verify your account before signing in.",
         });
         navigate("/login");
       }
