@@ -97,6 +97,7 @@ const BlogManagement = () => {
   const [deletePostId, setDeletePostId] = useState<string | null>(null);
   const [inspectPost, setInspectPost] = useState<BlogPost | null>(null);
   const [filterTab, setFilterTab] = useState("all");
+  const [editingNotes, setEditingNotes] = useState<Record<string, string>>({});
 
   const [formData, setFormData] = useState({
     slug: "", title: "", excerpt: "", content: "", date: new Date().toISOString().split("T")[0],
