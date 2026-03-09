@@ -182,6 +182,13 @@ export type Database = {
             referencedRelation: "blog_posts"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "content_generation_runs_output_post_id_fkey"
+            columns: ["output_post_id"]
+            isOneToOne: false
+            referencedRelation: "blog_posts_public"
+            referencedColumns: ["id"]
+          },
         ]
       }
       download_leads: {
@@ -258,7 +265,72 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      blog_posts_public: {
+        Row: {
+          author: string | null
+          category: string | null
+          content: string | null
+          created_at: string | null
+          date: string | null
+          excerpt: string | null
+          faq_json: Json | null
+          id: string | null
+          image_url: string | null
+          meta_description: string | null
+          post_type: string | null
+          primary_keyword: string | null
+          published_at: string | null
+          schema_json: Json | null
+          secondary_keywords: string[] | null
+          seo_title: string | null
+          slug: string | null
+          tags: string[] | null
+          title: string | null
+        }
+        Insert: {
+          author?: string | null
+          category?: string | null
+          content?: string | null
+          created_at?: string | null
+          date?: string | null
+          excerpt?: string | null
+          faq_json?: Json | null
+          id?: string | null
+          image_url?: string | null
+          meta_description?: string | null
+          post_type?: string | null
+          primary_keyword?: string | null
+          published_at?: string | null
+          schema_json?: Json | null
+          secondary_keywords?: string[] | null
+          seo_title?: string | null
+          slug?: string | null
+          tags?: string[] | null
+          title?: string | null
+        }
+        Update: {
+          author?: string | null
+          category?: string | null
+          content?: string | null
+          created_at?: string | null
+          date?: string | null
+          excerpt?: string | null
+          faq_json?: Json | null
+          id?: string | null
+          image_url?: string | null
+          meta_description?: string | null
+          post_type?: string | null
+          primary_keyword?: string | null
+          published_at?: string | null
+          schema_json?: Json | null
+          secondary_keywords?: string[] | null
+          seo_title?: string | null
+          slug?: string | null
+          tags?: string[] | null
+          title?: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       cleanup_old_rate_limits: { Args: never; Returns: undefined }

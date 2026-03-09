@@ -72,7 +72,7 @@ export const DownloadLeadForm = ({
   const onSubmit = async (data: FormData) => {
     setIsSubmitting(true);
     try {
-      // Save lead data via rate-limited edge function
+      // Save lead data via rate-limited edge function (also sends confirmation email)
       const { data: leadResponse, error: leadError } = await supabase.functions.invoke(
         "submit-lead",
         {
@@ -82,6 +82,7 @@ export const DownloadLeadForm = ({
             email: data.email,
             phoneNumber: data.phoneNumber,
             downloadedResource: resourceTitle,
+            sendDownloadConfirmation: true,
           },
         }
       );
@@ -98,24 +99,6 @@ export const DownloadLeadForm = ({
         throw new Error(leadResponse?.error || "Failed to submit");
       }
 
-      // Send thank you email
-      const { error: emailError } = await supabase.functions.invoke(
-        "send-download-confirmation",
-        {
-          body: {
-            firstName: data.firstName,
-            lastName: data.lastName,
-            email: data.email,
-            resourceTitle: resourceTitle,
-          },
-        }
-      );
-
-      if (emailError) {
-        console.error("Email sending failed:", emailError);
-        // Don't block download if email fails
-      }
-
       // Trigger download
       const link = document.createElement("a");
       link.href = downloadUrl;
@@ -124,13 +107,16 @@ export const DownloadLeadForm = ({
       link.click();
       document.body.removeChild(link);
 
-      // Push conversion event to GTM dataLayer
+      // Push conversion event to GTM dataLayer (hashed PII for privacy)
+      const emailBytes = new TextEncoder().encode(data.email.toLowerCase().trim());
+      const hashBuffer = await crypto.subtle.digest('SHA-256', emailBytes);
+      const hashedEmail = Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
       (window as any).dataLayer = (window as any).dataLayer || [];
       (window as any).dataLayer.push({
         event: 'download_lead_submission',
         form_name: 'Download Lead Form',
         resource_title: resourceTitle,
-        lead_email: data.email
+        lead_email_hash: hashedEmail
       });
       
       toast({

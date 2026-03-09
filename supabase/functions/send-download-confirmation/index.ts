@@ -74,6 +74,16 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
+    // Require internal API key to prevent external abuse
+    const internalKey = req.headers.get("x-agent13-internal-key");
+    const expectedKey = Deno.env.get("AGENT13_INTERNAL_API_KEY");
+    if (!expectedKey || internalKey !== expectedKey) {
+      console.warn(`Unauthorized send-download-confirmation attempt from IP: ${clientIP}`);
+      return new Response(
+        JSON.stringify({ success: false, error: "Unauthorized" }),
+        { status: 401, headers: { "Content-Type": "application/json", ...corsHeaders } }
+      );
+    }
     // Rate limiting: 3 download requests per hour per IP
     const { data: rateLimit, error: rateLimitError } = await supabase
       .from("rate_limits")
