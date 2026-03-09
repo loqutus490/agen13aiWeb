@@ -107,7 +107,7 @@ const Navbar = () => {
 
       {/* Mobile menu overlay */}
       {mobileOpen && (
-        <div className="md:hidden fixed inset-0 top-16 z-40 bg-background/95 backdrop-blur-lg border-t border-primary/10 overflow-y-auto">
+        <div className="md:hidden fixed inset-0 top-16 z-[60] bg-background/95 backdrop-blur-lg border-t border-primary/10 overflow-y-auto">
           <div className="container mx-auto px-4 py-6 flex flex-col gap-2">
             {navLinks.map((link) => (
               <Link
