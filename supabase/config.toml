@@ -11,3 +11,7 @@ project_id = "upmiqdnbvojpodgucxmw"
     verify_jwt = false
   [functions.zapier-blog-webhook]
     verify_jwt = false
+  [functions.content-ingest]
+    verify_jwt = false
+  [functions.content-run-check]
+    verify_jwt = false
