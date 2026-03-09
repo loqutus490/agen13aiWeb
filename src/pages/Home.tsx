@@ -8,6 +8,7 @@ import {
   FileSearch, Shield, Users, Lock
 } from "lucide-react";
 import Navbar from "@/components/Navbar";
+import SEO from "@/components/SEO";
 import Footer from "@/components/Footer";
 
 const Home = () => {
