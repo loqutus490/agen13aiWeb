@@ -179,7 +179,7 @@ const ContentIngestionTest = () => {
       const res = await fetch(url, {
         headers: {
           "apikey": import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
-          "x-agent13-internal-key": import.meta.env.VITE_AGENT13_INTERNAL_KEY || "",
+          "x-agent13-internal-key": apiKey,
         },
       });
       const data = await res.json();
