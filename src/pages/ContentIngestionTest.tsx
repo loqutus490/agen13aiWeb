@@ -129,7 +129,7 @@ const ContentIngestionTest = () => {
       const { data, error } = await supabase.functions.invoke("content-ingest", {
         body: payload,
         headers: {
-          "x-agent13-internal-key": import.meta.env.VITE_AGENT13_INTERNAL_KEY || "",
+          "x-agent13-internal-key": apiKey,
         },
       });
 
