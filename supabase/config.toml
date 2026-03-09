@@ -1,13 +1,13 @@
 project_id = "upmiqdnbvojpodgucxmw"
 
-[functions.send-contact-email]
-verify_jwt = false
-
-[functions.send-download-confirmation]
-verify_jwt = false
-
-[functions.zapier-blog-webhook]
-verify_jwt = false
-
-[functions.chat]
-verify_jwt = false
+[functions]
+  [functions.auth-email-hook]
+    verify_jwt = false
+  [functions.chat]
+    verify_jwt = false
+  [functions.send-contact-email]
+    verify_jwt = false
+  [functions.send-download-confirmation]
+    verify_jwt = false
+  [functions.zapier-blog-webhook]
+    verify_jwt = false
