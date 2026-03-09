@@ -66,6 +66,7 @@ const ContentIngestionTest = () => {
   const [primaryKeyword, setPrimaryKeyword] = useState("");
   const [secondaryKeywords, setSecondaryKeywords] = useState("");
 
+  const [apiKey, setApiKey] = useState("");
   const [sending, setSending] = useState(false);
   const [result, setResult] = useState<{ success: boolean; postId?: string; status?: string; error?: string } | null>(null);
 
