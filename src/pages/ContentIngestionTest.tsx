@@ -98,6 +98,9 @@ const ContentIngestionTest = () => {
   };
 
   const sendDraft = async () => {
+    if (!apiKey.trim()) {
+      return toast({ title: "Missing API key", description: "Paste your internal API key above.", variant: "destructive" });
+    }
     if (!title || !slug || !excerpt || !contentHtml) {
       return toast({ title: "Missing fields", description: "Title, slug, excerpt, and content are required.", variant: "destructive" });
     }
