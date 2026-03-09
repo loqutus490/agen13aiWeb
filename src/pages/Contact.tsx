@@ -258,7 +258,7 @@ const Contact = () => {
                 </p>
                 <div className="space-y-1 text-sm text-muted-foreground">
                   <p>📧 Email: roybernales@agent13.ai</p>
-                  <p>📺 YouTube: <a href="https://youtube.com/@agent13ai" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">@agent13ai</a></p>
+                  <p>📺 YouTube: <span className="text-muted-foreground">Coming Soon</span></p>
                 </div>
               </div>
             </div>
