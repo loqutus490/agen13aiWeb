@@ -1,10 +1,8 @@
-import { loadSync } from "https://deno.land/std@0.224.0/dotenv/mod.ts";
 import { assertEquals } from "https://deno.land/std@0.224.0/assert/mod.ts";
 
-loadSync({ export: true, allowEmptyValues: true });
-
-const SUPABASE_URL = Deno.env.get("VITE_SUPABASE_URL")!;
-const SUPABASE_ANON_KEY = Deno.env.get("VITE_SUPABASE_PUBLISHABLE_KEY")!;
+// These are publishable values from the project .env
+const SUPABASE_URL = "https://upmiqdnbvojpodgucxmw.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVwbWlxZG5idm9qcG9kZ3VjeG13Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI1MzQ2OTIsImV4cCI6MjA3ODExMDY5Mn0._m-iWpUm23Xo7abFx-UEhTLO3eAnMRKIQbd5QIlxUfg";
 const INTERNAL_KEY = Deno.env.get("AGENT13_INTERNAL_API_KEY");
 
 const BASE_URL = `${SUPABASE_URL}/functions/v1/content-ingest`;
