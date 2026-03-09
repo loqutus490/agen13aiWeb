@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { slugifyTopic, dedupeSources, canTransitionStatus, hasDailyDuplicate, extractJsonObject, wordCountFromHtml, shouldSkipRunForDay, canSendNewsletter } from './content-automation.helpers.js';
+import { slugifyTopic, dedupeSources, canTransitionStatus, hasDailyDuplicate, extractJsonObject, wordCountFromHtml } from './content-automation.helpers.js';
 
 test('slugifyTopic creates clean slugs', () => {
   assert.equal(slugifyTopic('AI for Law Firms: 2026!'), 'ai-for-law-firms-2026');
@@ -32,15 +32,4 @@ test('extractJsonObject handles markdown fenced JSON', () => {
 
 test('wordCountFromHtml strips tags', () => {
   assert.equal(wordCountFromHtml('<h1>Hello</h1><p>world of law firm AI</p>'), 6);
-});
-
-test('shouldSkipRunForDay enforces duplicate guard', () => {
-  assert.equal(shouldSkipRunForDay({ hasRunningRun: true, hasCompletedRunToday: false, force: false }), true);
-  assert.equal(shouldSkipRunForDay({ hasRunningRun: false, hasCompletedRunToday: true, force: false }), true);
-  assert.equal(shouldSkipRunForDay({ hasRunningRun: false, hasCompletedRunToday: true, force: true }), false);
-});
-
-test('canSendNewsletter only allows approved status', () => {
-  assert.equal(canSendNewsletter('newsletter_approved'), true);
-  assert.equal(canSendNewsletter('newsletter_draft_ready'), false);
 });

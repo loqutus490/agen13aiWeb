@@ -2,7 +2,7 @@ import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.80.0";
 import { PROMPTS } from "./prompts.ts";
 import { RESEARCH_SOURCES } from "./sources.ts";
-import { dedupeBy, extractJsonObject, parseRssItems, safeJson, shouldSkipRunForDay, slugify, wordCountFromHtml } from "./utils.ts";
+import { dedupeBy, extractJsonObject, parseRssItems, safeJson, slugify, wordCountFromHtml } from "./utils.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -10,21 +10,6 @@ const corsHeaders = {
 };
 
 const supabase = createClient(Deno.env.get("SUPABASE_URL")!, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!);
-const RUN_TIMEOUT_MINUTES = Number(Deno.env.get("CONTENT_AUTOMATION_RUN_TIMEOUT_MINUTES") || "120");
-const ALERT_WEBHOOK_URL = Deno.env.get("CONTENT_AUTOMATION_ALERT_WEBHOOK_URL");
-
-const notifyFailure = async (message: string) => {
-  if (!ALERT_WEBHOOK_URL) return;
-  try {
-    await fetch(ALERT_WEBHOOK_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ text: `[content-automation] ${message}` }),
-    });
-  } catch {
-    // Do not fail run when alert webhook fails
-  }
-};
 
 const llm = async (prompt: string) => {
   const key = Deno.env.get("OPENAI_API_KEY");
@@ -52,58 +37,43 @@ serve(async (req) => {
     const authHeader = req.headers.get("authorization");
     const runSecret = req.headers.get("x-run-secret");
     const expected = Deno.env.get("CONTENT_AUTOMATION_RUN_SECRET");
-    const hasBearerToken = Boolean(authHeader?.toLowerCase().startsWith("bearer "));
     const hasValidSecret = Boolean(expected && runSecret === expected);
 
-    if (!hasBearerToken && !hasValidSecret) {
+    let authorized = hasValidSecret;
+
+    if (!authorized && authHeader?.toLowerCase().startsWith("bearer ")) {
+      // Verify the bearer token belongs to an admin user
+      const token = authHeader.replace(/^bearer\s+/i, "");
+      const { data: userData, error: userErr } = await supabase.auth.getUser(token);
+      if (!userErr && userData?.user?.id) {
+        const { data: role } = await supabase
+          .from("user_roles")
+          .select("role")
+          .eq("user_id", userData.user.id)
+          .eq("role", "admin")
+          .maybeSingle();
+        authorized = !!role;
+      }
+    }
+
+    if (!authorized) {
       return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } });
     }
 
     const body = await req.json().catch(() => ({}));
     const mode = body.mode === "roundup" ? "roundup" : "deep-dive";
     const triggerType = body.triggerType || "manual";
-    const force = Boolean(body.force);
 
     const today = new Date().toISOString().slice(0, 10);
-    const startOfDay = `${today}T00:00:00.000Z`;
-    const timeoutCutoff = new Date(Date.now() - RUN_TIMEOUT_MINUTES * 60_000).toISOString();
-
-    // Mark stale running jobs failed
-    await supabase
-      .from("content_generation_runs")
-      .update({
-        status: "failed",
-        completed_at: new Date().toISOString(),
-        error_message: `Run timed out after ${RUN_TIMEOUT_MINUTES} minutes`,
-      })
-      .eq("status", "running")
-      .lt("started_at", timeoutCutoff);
-
     const { data: existingRun } = await supabase
       .from("content_generation_runs")
       .select("id")
       .eq("status", "running")
-      .gte("started_at", startOfDay)
+      .gte("started_at", `${today}T00:00:00.000Z`)
       .maybeSingle();
 
-    if (shouldSkipRunForDay({ hasRunningRun: Boolean(existingRun), hasCompletedRunToday: false, force })) {
+    if (existingRun) {
       return new Response(JSON.stringify({ skipped: true, reason: "run_already_in_progress", runId: existingRun.id }), { headers: { ...corsHeaders, "Content-Type": "application/json" } });
-    }
-
-    if (!force) {
-      const { data: completedToday } = await supabase
-        .from("content_generation_runs")
-        .select("id")
-        .eq("status", "completed")
-        .eq("mode", mode)
-        .gte("started_at", startOfDay)
-        .maybeSingle();
-
-      if (shouldSkipRunForDay({ hasRunningRun: false, hasCompletedRunToday: Boolean(completedToday), force })) {
-        return new Response(JSON.stringify({ skipped: true, reason: "run_already_completed_today", runId: completedToday.id }), {
-          headers: { ...corsHeaders, "Content-Type": "application/json" },
-        });
-      }
     }
 
     const { data: run, error: runErr } = await supabase.from("content_generation_runs").insert({ mode, trigger_type: triggerType, status: "running", logs_json: [] }).select().single();
@@ -139,7 +109,7 @@ serve(async (req) => {
       const baseSlug = slugify(suggestedTitle);
 
       const { data: existingPost } = await supabase.from("blog_posts").select("id").eq("slug", baseSlug).maybeSingle();
-      if (existingPost && !force) throw new Error("Duplicate topic/slug detected for today; use force to override");
+      if (existingPost && !body.force) throw new Error("Duplicate topic/slug detected for today; use force to override");
 
       const seoFallback = {
         seo_title: suggestedTitle,
@@ -273,7 +243,6 @@ serve(async (req) => {
 
       return new Response(JSON.stringify({ success: true, runId: run.id, postId: post.id }), { headers: { ...corsHeaders, "Content-Type": "application/json" } });
     } catch (err) {
-      await notifyFailure(err instanceof Error ? err.message : "Unknown automation error");
       await supabase.from("content_generation_runs").update({
         completed_at: new Date().toISOString(),
         status: "failed",

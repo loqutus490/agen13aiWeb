@@ -1,9 +1,15 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2.80.0";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
+
+const supabase = createClient(
+  Deno.env.get("SUPABASE_URL")!,
+  Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
+);
 
 const SYSTEM_PROMPT = `You are the AI assistant for agent13 ai, a company that helps businesses implement secure, document-grounded AI assistants.
 
@@ -196,6 +202,10 @@ Naturally guide toward contact: "I'd love to have one of our specialists reach o
 - YouTube channel: youtube.com/@agent13ai for tutorials and AI insights
 - We do NOT provide legal advice - only technology and workflow support`;
 
+const MAX_MESSAGES = 20;
+const MAX_MESSAGE_LENGTH = 4000;
+const RATE_LIMIT_MAX = 30;
+
 serve(async (req) => {
   // Handle CORS preflight
   if (req.method === "OPTIONS") {
@@ -203,6 +213,40 @@ serve(async (req) => {
   }
 
   try {
+    // --- Rate limiting: 30 chat requests per hour per IP ---
+    const clientIP = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || 
+                     req.headers.get("x-real-ip") || 
+                     "unknown";
+
+    const now = new Date();
+    const oneHourAgo = new Date(now.getTime() - 60 * 60 * 1000);
+    const rateLimitKey = `chat_${clientIP}`;
+
+    const { data: rateLimit } = await supabase
+      .from("rate_limits")
+      .select("*")
+      .eq("ip_address", rateLimitKey)
+      .maybeSingle();
+
+    if (rateLimit) {
+      const windowStart = new Date(rateLimit.window_start);
+      if (windowStart > oneHourAgo) {
+        if (rateLimit.request_count >= RATE_LIMIT_MAX) {
+          console.warn(`RATE LIMIT: IP ${clientIP} exceeded chat limit (${rateLimit.request_count}/${RATE_LIMIT_MAX})`);
+          return new Response(
+            JSON.stringify({ error: "Too many requests. Please try again later." }),
+            { status: 429, headers: { ...corsHeaders, "Content-Type": "application/json", "Retry-After": "3600" } }
+          );
+        }
+        await supabase.from("rate_limits").update({ request_count: rateLimit.request_count + 1, updated_at: now.toISOString() }).eq("ip_address", rateLimitKey);
+      } else {
+        await supabase.from("rate_limits").update({ request_count: 1, window_start: now.toISOString(), updated_at: now.toISOString() }).eq("ip_address", rateLimitKey);
+      }
+    } else {
+      await supabase.from("rate_limits").insert({ ip_address: rateLimitKey, request_count: 1, window_start: now.toISOString(), updated_at: now.toISOString() });
+    }
+
+    // --- Input validation ---
     const { messages } = await req.json();
     
     if (!messages || !Array.isArray(messages)) {
@@ -211,6 +255,19 @@ serve(async (req) => {
         { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
+
+    if (messages.length > MAX_MESSAGES) {
+      return new Response(
+        JSON.stringify({ error: `Too many messages. Maximum is ${MAX_MESSAGES}.` }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    // Validate and truncate individual messages
+    const sanitizedMessages = messages.map((m: any) => ({
+      role: m.role === "assistant" ? "assistant" : "user",
+      content: typeof m.content === "string" ? m.content.slice(0, MAX_MESSAGE_LENGTH) : "",
+    }));
 
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (!LOVABLE_API_KEY) {
@@ -221,7 +278,7 @@ serve(async (req) => {
       );
     }
 
-    console.log(`Chat request with ${messages.length} messages`);
+    console.log(`Chat request with ${sanitizedMessages.length} messages from IP: ${clientIP}`);
 
     const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
@@ -233,7 +290,7 @@ serve(async (req) => {
         model: "google/gemini-3-flash-preview",
         messages: [
           { role: "system", content: SYSTEM_PROMPT },
-          ...messages,
+          ...sanitizedMessages,
         ],
         stream: true,
       }),
@@ -271,7 +328,7 @@ serve(async (req) => {
   } catch (error) {
     console.error("Chat function error:", error);
     return new Response(
-      JSON.stringify({ error: error instanceof Error ? error.message : "Unknown error" }),
+      JSON.stringify({ error: "An unexpected error occurred" }),
       { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
   }

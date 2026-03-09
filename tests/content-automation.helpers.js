@@ -32,7 +32,3 @@ export const extractJsonObject = (value) => {
 };
 
 export const wordCountFromHtml = (html) => html.replace(/<[^>]*>/g, ' ').split(/\s+/).filter(Boolean).length;
-
-export const shouldSkipRunForDay = ({ hasRunningRun, hasCompletedRunToday, force }) => hasRunningRun || (!force && hasCompletedRunToday);
-
-export const canSendNewsletter = (newsletterStatus) => newsletterStatus === 'newsletter_approved';

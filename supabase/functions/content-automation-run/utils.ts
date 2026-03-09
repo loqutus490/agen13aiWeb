@@ -72,9 +72,3 @@ export const wordCountFromHtml = (html: string): number =>
     .replace(/<[^>]*>/g, " ")
     .split(/\s+/)
     .filter(Boolean).length;
-
-export const shouldSkipRunForDay = (params: {
-  hasRunningRun: boolean;
-  hasCompletedRunToday: boolean;
-  force: boolean;
-}) => params.hasRunningRun || (!params.force && params.hasCompletedRunToday);

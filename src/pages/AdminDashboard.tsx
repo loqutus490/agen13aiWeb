@@ -9,6 +9,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { 
   Table, TableBody, TableCell, TableHead, 
   TableHeader, TableRow 
@@ -20,8 +21,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Download, Search, Filter, TrendingUp } from "lucide-react";
+import { Download, Search, Filter, TrendingUp, FileText, FlaskConical, MessageSquare, Trash2 } from "lucide-react";
 import { toast } from "sonner";
+import { Checkbox } from "@/components/ui/checkbox";
+import ContactSubmissionsTab from "@/components/admin/ContactSubmissionsTab";
 
 interface Lead {
   id: string;
@@ -47,6 +50,8 @@ const AdminDashboard = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [resourceFilter, setResourceFilter] = useState("all");
   const [stats, setStats] = useState<ResourceStats[]>([]);
+  const [selectedLeadIds, setSelectedLeadIds] = useState<Set<string>>(new Set());
+  const [deletingLeads, setDeletingLeads] = useState(false);
 
   useEffect(() => {
     if (!adminLoading && !isAdmin) {
@@ -146,6 +151,47 @@ const AdminDashboard = () => {
     toast.success("CSV exported successfully");
   };
 
+  const toggleLeadSelect = (id: string) => {
+    setSelectedLeadIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
+
+  const toggleSelectAllLeads = () => {
+    if (selectedLeadIds.size === filteredLeads.length) {
+      setSelectedLeadIds(new Set());
+    } else {
+      setSelectedLeadIds(new Set(filteredLeads.map((l) => l.id)));
+    }
+  };
+
+  const deleteSelectedLeads = async () => {
+    if (selectedLeadIds.size === 0) return;
+    if (!confirm(`Delete ${selectedLeadIds.size} lead(s)? This cannot be undone.`)) return;
+
+    setDeletingLeads(true);
+    try {
+      const { error } = await supabase
+        .from("download_leads")
+        .delete()
+        .in("id", Array.from(selectedLeadIds));
+
+      if (error) throw error;
+
+      setLeads((prev) => prev.filter((l) => !selectedLeadIds.has(l.id)));
+      setSelectedLeadIds(new Set());
+      toast.success(`Deleted ${selectedLeadIds.size} lead(s)`);
+    } catch (error) {
+      console.error("Error deleting leads:", error);
+      toast.error("Failed to delete leads");
+    } finally {
+      setDeletingLeads(false);
+    }
+  };
+
   const uniqueResources = [...new Set(leads.map(lead => lead.downloaded_resource))];
 
   if (adminLoading || loading) {
@@ -167,142 +213,187 @@ const AdminDashboard = () => {
       
       <section className="pt-32 pb-20 px-4">
         <div className="container mx-auto max-w-7xl">
-          <div className="mb-8">
-            <h1 className="text-4xl font-bold mb-2">Admin Dashboard</h1>
-            <p className="text-muted-foreground">Manage download leads and view analytics</p>
-          </div>
-
-          {/* Analytics Cards */}
-          <div className="grid md:grid-cols-3 gap-6 mb-8">
-            <Card className="p-6">
-              <div className="flex items-center justify-between mb-2">
-                <h3 className="text-sm font-medium text-muted-foreground">Total Leads</h3>
-                <TrendingUp className="w-4 h-4 text-primary" />
-              </div>
-              <p className="text-3xl font-bold">{leads.length}</p>
-            </Card>
-
-            {stats.slice(0, 2).map((stat, index) => (
-              <Card key={index} className="p-6">
-                <div className="flex items-center justify-between mb-2">
-                  <h3 className="text-sm font-medium text-muted-foreground">
-                    {index === 0 ? 'Most Popular' : '2nd Most Popular'}
-                  </h3>
-                  <Badge variant="secondary">{stat.count} downloads</Badge>
-                </div>
-                <p className="text-lg font-semibold truncate">{stat.resource}</p>
-              </Card>
-            ))}
-          </div>
-
-          {/* Filters and Export */}
-          <Card className="p-6 mb-6">
-            <div className="flex flex-col md:flex-row gap-4">
-              <div className="flex-1 relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                <Input
-                  placeholder="Search by name, email, or phone..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10"
-                />
-              </div>
-              
-              <Select value={resourceFilter} onValueChange={setResourceFilter}>
-                <SelectTrigger className="w-full md:w-[250px]">
-                  <Filter className="w-4 h-4 mr-2" />
-                  <SelectValue placeholder="Filter by resource" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All Resources</SelectItem>
-                  {uniqueResources.map((resource, index) => (
-                    <SelectItem key={index} value={resource}>
-                      {resource}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-
-              <Button onClick={exportToCSV} variant="outline">
-                <Download className="w-4 h-4 mr-2" />
-                Export CSV
+          <div className="flex flex-wrap justify-between items-start gap-4 mb-8">
+            <div>
+              <h1 className="text-4xl font-bold mb-2">Admin Dashboard</h1>
+              <p className="text-muted-foreground">Manage download leads and view analytics</p>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              <Button variant="outline" onClick={() => navigate("/blog-management")}>
+                <FileText className="w-4 h-4 mr-2" />Blog Management
+              </Button>
+              <Button variant="outline" onClick={() => navigate("/admin/internal-tests/content-ingestion")}>
+                <FlaskConical className="w-4 h-4 mr-2" />Content Ingestion Test
               </Button>
             </div>
+          </div>
 
-            <div className="mt-4 text-sm text-muted-foreground">
-              Showing {filteredLeads.length} of {leads.length} leads
-            </div>
-          </Card>
+          <Tabs defaultValue="leads" className="space-y-6">
+            <TabsList>
+              <TabsTrigger value="leads">Download Leads</TabsTrigger>
+              <TabsTrigger value="contact">
+                <MessageSquare className="w-4 h-4 mr-2" />
+                Contact Submissions
+              </TabsTrigger>
+            </TabsList>
 
-          {/* Leads Table */}
-          <Card className="overflow-hidden">
-            <div className="overflow-x-auto">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Name</TableHead>
-                    <TableHead>Email</TableHead>
-                    <TableHead>Phone</TableHead>
-                    <TableHead>Resource</TableHead>
-                    <TableHead>Date</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {filteredLeads.length === 0 ? (
-                    <TableRow>
-                      <TableCell colSpan={5} className="text-center py-8 text-muted-foreground">
-                        No leads found
-                      </TableCell>
-                    </TableRow>
-                  ) : (
-                    filteredLeads.map((lead) => (
-                      <TableRow key={lead.id}>
-                        <TableCell className="font-medium">
-                          {lead.first_name} {lead.last_name}
-                        </TableCell>
-                        <TableCell>{lead.email}</TableCell>
-                        <TableCell>{lead.phone_number}</TableCell>
-                        <TableCell>
-                          <span className="text-sm">{lead.downloaded_resource}</span>
-                        </TableCell>
-                        <TableCell className="text-muted-foreground">
-                          {new Date(lead.created_at).toLocaleDateString()}
-                        </TableCell>
-                      </TableRow>
-                    ))
-                  )}
-                </TableBody>
-              </Table>
-            </div>
-          </Card>
-
-          {/* Resource Analytics */}
-          <Card className="mt-6 p-6">
-            <h2 className="text-xl font-bold mb-4">Download Analytics</h2>
-            <div className="space-y-4">
-              {stats.map((stat, index) => (
-                <div key={index} className="flex items-center gap-4">
-                  <div className="flex-1">
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="text-sm font-medium">{stat.resource}</span>
-                      <span className="text-sm text-muted-foreground">{stat.count} downloads</span>
-                    </div>
-                    <div className="h-2 bg-muted rounded-full overflow-hidden">
-                      <div 
-                        className="h-full bg-primary transition-all duration-500"
-                        style={{ 
-                          width: `${(stat.count / leads.length) * 100}%` 
-                        }}
-                      />
-                    </div>
+            <TabsContent value="leads">
+              {/* Analytics Cards */}
+              <div className="grid md:grid-cols-3 gap-6 mb-8">
+                <Card className="p-6">
+                  <div className="flex items-center justify-between mb-2">
+                    <h3 className="text-sm font-medium text-muted-foreground">Total Leads</h3>
+                    <TrendingUp className="w-4 h-4 text-primary" />
                   </div>
-                  <Badge variant="outline">
-                    {Math.round((stat.count / leads.length) * 100)}%
-                  </Badge>
+                  <p className="text-3xl font-bold">{leads.length}</p>
+                </Card>
+
+                {stats.slice(0, 2).map((stat, index) => (
+                  <Card key={index} className="p-6">
+                    <div className="flex items-center justify-between mb-2">
+                      <h3 className="text-sm font-medium text-muted-foreground">
+                        {index === 0 ? 'Most Popular' : '2nd Most Popular'}
+                      </h3>
+                      <Badge variant="secondary">{stat.count} downloads</Badge>
+                    </div>
+                    <p className="text-lg font-semibold truncate">{stat.resource}</p>
+                  </Card>
+                ))}
+              </div>
+
+              {/* Filters and Export */}
+              <Card className="p-6 mb-6">
+                <div className="flex flex-col md:flex-row gap-4">
+                  <div className="flex-1 relative">
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                    <Input
+                      placeholder="Search by name, email, or phone..."
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      className="pl-10"
+                    />
+                  </div>
+                  
+                  <Select value={resourceFilter} onValueChange={setResourceFilter}>
+                    <SelectTrigger className="w-full md:w-[250px]">
+                      <Filter className="w-4 h-4 mr-2" />
+                      <SelectValue placeholder="Filter by resource" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">All Resources</SelectItem>
+                      {uniqueResources.map((resource, index) => (
+                        <SelectItem key={index} value={resource}>
+                          {resource}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+
+                  {selectedLeadIds.size > 0 && (
+                    <Button onClick={deleteSelectedLeads} variant="destructive" disabled={deletingLeads}>
+                      <Trash2 className="w-4 h-4 mr-2" />
+                      Delete ({selectedLeadIds.size})
+                    </Button>
+                  )}
+
+                  <Button onClick={exportToCSV} variant="outline">
+                    <Download className="w-4 h-4 mr-2" />
+                    Export CSV
+                  </Button>
                 </div>
-              ))}
-            </div>
-          </Card>
+
+                <div className="mt-4 text-sm text-muted-foreground">
+                  Showing {filteredLeads.length} of {leads.length} leads
+                </div>
+              </Card>
+
+              {/* Leads Table */}
+              <Card className="overflow-hidden">
+                <div className="overflow-x-auto">
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead className="w-[50px]">
+                          <Checkbox
+                            checked={filteredLeads.length > 0 && selectedLeadIds.size === filteredLeads.length}
+                            onCheckedChange={toggleSelectAllLeads}
+                          />
+                        </TableHead>
+                        <TableHead>Name</TableHead>
+                        <TableHead>Email</TableHead>
+                        <TableHead>Phone</TableHead>
+                        <TableHead>Resource</TableHead>
+                        <TableHead>Date</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {filteredLeads.length === 0 ? (
+                        <TableRow>
+                          <TableCell colSpan={6} className="text-center py-8 text-muted-foreground">
+                            No leads found
+                          </TableCell>
+                        </TableRow>
+                      ) : (
+                        filteredLeads.map((lead) => (
+                          <TableRow key={lead.id} data-state={selectedLeadIds.has(lead.id) ? "selected" : undefined}>
+                            <TableCell>
+                              <Checkbox
+                                checked={selectedLeadIds.has(lead.id)}
+                                onCheckedChange={() => toggleLeadSelect(lead.id)}
+                              />
+                            </TableCell>
+                            <TableCell className="font-medium">
+                              {lead.first_name} {lead.last_name}
+                            </TableCell>
+                            <TableCell>{lead.email}</TableCell>
+                            <TableCell>{lead.phone_number}</TableCell>
+                            <TableCell>
+                              <span className="text-sm">{lead.downloaded_resource}</span>
+                            </TableCell>
+                            <TableCell className="text-muted-foreground">
+                              {new Date(lead.created_at).toLocaleDateString()}
+                            </TableCell>
+                          </TableRow>
+                        ))
+                      )}
+                    </TableBody>
+                  </Table>
+                </div>
+              </Card>
+
+              {/* Resource Analytics */}
+              <Card className="mt-6 p-6">
+                <h2 className="text-xl font-bold mb-4">Download Analytics</h2>
+                <div className="space-y-4">
+                  {stats.map((stat, index) => (
+                    <div key={index} className="flex items-center gap-4">
+                      <div className="flex-1">
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="text-sm font-medium">{stat.resource}</span>
+                          <span className="text-sm text-muted-foreground">{stat.count} downloads</span>
+                        </div>
+                        <div className="h-2 bg-muted rounded-full overflow-hidden">
+                          <div 
+                            className="h-full bg-primary transition-all duration-500"
+                            style={{ 
+                              width: `${(stat.count / leads.length) * 100}%` 
+                            }}
+                          />
+                        </div>
+                      </div>
+                      <Badge variant="outline">
+                        {Math.round((stat.count / leads.length) * 100)}%
+                      </Badge>
+                    </div>
+                  ))}
+                </div>
+              </Card>
+            </TabsContent>
+
+            <TabsContent value="contact">
+              <ContactSubmissionsTab />
+            </TabsContent>
+          </Tabs>
         </div>
       </section>
 

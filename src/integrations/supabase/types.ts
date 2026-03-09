@@ -29,7 +29,7 @@ export type Database = {
           id: string
           image_options_json: Json | null
           image_url: string | null
-          internal_link_suggestions: Json | null
+          internal_link_suggestions: string[] | null
           meta_description: string | null
           newsletter_body: string | null
           newsletter_preview_text: string | null
@@ -65,7 +65,7 @@ export type Database = {
           id?: string
           image_options_json?: Json | null
           image_url?: string | null
-          internal_link_suggestions?: Json | null
+          internal_link_suggestions?: string[] | null
           meta_description?: string | null
           newsletter_body?: string | null
           newsletter_preview_text?: string | null
@@ -101,7 +101,7 @@ export type Database = {
           id?: string
           image_options_json?: Json | null
           image_url?: string | null
-          internal_link_suggestions?: Json | null
+          internal_link_suggestions?: string[] | null
           meta_description?: string | null
           newsletter_body?: string | null
           newsletter_preview_text?: string | null
@@ -125,57 +125,84 @@ export type Database = {
         }
         Relationships: []
       }
+      contact_submissions: {
+        Row: {
+          company: string
+          created_at: string
+          email: string
+          id: string
+          message: string
+          name: string
+          phone: string
+        }
+        Insert: {
+          company: string
+          created_at?: string
+          email: string
+          id?: string
+          message: string
+          name: string
+          phone: string
+        }
+        Update: {
+          company?: string
+          created_at?: string
+          email?: string
+          id?: string
+          message?: string
+          name?: string
+          phone?: string
+        }
+        Relationships: []
+      }
       content_generation_runs: {
         Row: {
           completed_at: string | null
           created_at: string
           error_message: string | null
           id: string
-          logs_json: Json
+          logs_json: Json | null
           mode: string
-          newsletter_generated: boolean
+          newsletter_generated: boolean | null
           output_post_id: string | null
           selected_keyword: string | null
           selected_topic: string | null
-          source_count: number
+          source_count: number | null
           started_at: string
           status: string
           trigger_type: string
-          updated_at: string
         }
         Insert: {
           completed_at?: string | null
           created_at?: string
           error_message?: string | null
           id?: string
-          logs_json?: Json
+          logs_json?: Json | null
           mode?: string
-          newsletter_generated?: boolean
+          newsletter_generated?: boolean | null
           output_post_id?: string | null
           selected_keyword?: string | null
           selected_topic?: string | null
-          source_count?: number
+          source_count?: number | null
           started_at?: string
           status?: string
           trigger_type?: string
-          updated_at?: string
         }
         Update: {
           completed_at?: string | null
           created_at?: string
           error_message?: string | null
           id?: string
-          logs_json?: Json
+          logs_json?: Json | null
           mode?: string
-          newsletter_generated?: boolean
+          newsletter_generated?: boolean | null
           output_post_id?: string | null
           selected_keyword?: string | null
           selected_topic?: string | null
-          source_count?: number
+          source_count?: number | null
           started_at?: string
           status?: string
           trigger_type?: string
-          updated_at?: string
         }
         Relationships: [
           {
@@ -183,6 +210,13 @@ export type Database = {
             columns: ["output_post_id"]
             isOneToOne: false
             referencedRelation: "blog_posts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "content_generation_runs_output_post_id_fkey"
+            columns: ["output_post_id"]
+            isOneToOne: false
+            referencedRelation: "blog_posts_public"
             referencedColumns: ["id"]
           },
         ]
@@ -261,7 +295,72 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      blog_posts_public: {
+        Row: {
+          author: string | null
+          category: string | null
+          content: string | null
+          created_at: string | null
+          date: string | null
+          excerpt: string | null
+          faq_json: Json | null
+          id: string | null
+          image_url: string | null
+          meta_description: string | null
+          post_type: string | null
+          primary_keyword: string | null
+          published_at: string | null
+          schema_json: Json | null
+          secondary_keywords: string[] | null
+          seo_title: string | null
+          slug: string | null
+          tags: string[] | null
+          title: string | null
+        }
+        Insert: {
+          author?: string | null
+          category?: string | null
+          content?: string | null
+          created_at?: string | null
+          date?: string | null
+          excerpt?: string | null
+          faq_json?: Json | null
+          id?: string | null
+          image_url?: string | null
+          meta_description?: string | null
+          post_type?: string | null
+          primary_keyword?: string | null
+          published_at?: string | null
+          schema_json?: Json | null
+          secondary_keywords?: string[] | null
+          seo_title?: string | null
+          slug?: string | null
+          tags?: string[] | null
+          title?: string | null
+        }
+        Update: {
+          author?: string | null
+          category?: string | null
+          content?: string | null
+          created_at?: string | null
+          date?: string | null
+          excerpt?: string | null
+          faq_json?: Json | null
+          id?: string | null
+          image_url?: string | null
+          meta_description?: string | null
+          post_type?: string | null
+          primary_keyword?: string | null
+          published_at?: string | null
+          schema_json?: Json | null
+          secondary_keywords?: string[] | null
+          seo_title?: string | null
+          slug?: string | null
+          tags?: string[] | null
+          title?: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       cleanup_old_rate_limits: { Args: never; Returns: undefined }

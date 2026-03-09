@@ -15,7 +15,7 @@ export const dedupeSources = (items: ScoredSourceItem[]): ScoredSourceItem[] => 
 
 export const canTransitionStatus = (from: string, to: string): boolean => {
   const graph: Record<string, string[]> = {
-    draft_generated: ["pending_review", "failed"],
+    draft_generated: ["pending_review", "approved", "failed"],
     pending_review: ["approved", "failed"],
     approved: ["published", "failed"],
     published: [],
@@ -55,12 +55,3 @@ export const wordCountFromHtml = (html: string): number =>
     .replace(/<[^>]*>/g, " ")
     .split(/\s+/)
     .filter(Boolean).length;
-
-export const shouldSkipRunForDay = (params: {
-  hasRunningRun: boolean;
-  hasCompletedRunToday: boolean;
-  force: boolean;
-}): boolean => params.hasRunningRun || (!params.force && params.hasCompletedRunToday);
-
-export const canSendNewsletter = (newsletterStatus: string | null | undefined): boolean =>
-  newsletterStatus === "newsletter_approved";

@@ -35,10 +35,9 @@ const Blog = () => {
 
   const fetchPosts = async () => {
     try {
-      const { data, error } = await supabase
-        .from('blog_posts')
+      const { data, error } = await (supabase
+        .from('blog_posts_public' as any) as any)
         .select('id, slug, title, excerpt, date, category, tags, image_url')
-        .eq('published', true)
         .order('date', { ascending: false});
       
       if (error) throw error;

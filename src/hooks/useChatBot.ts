@@ -235,12 +235,15 @@ export const useChatBot = () => {
         throw new Error(leadResponse?.error || "Failed to submit lead");
       }
 
-      // Fire GTM event
+      // Fire GTM event (hashed PII for privacy)
+      const emailBytes = new TextEncoder().encode(data.email.toLowerCase().trim());
+      const hashBuffer = await crypto.subtle.digest('SHA-256', emailBytes);
+      const hashedEmail = Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
       (window as any).dataLayer = (window as any).dataLayer || [];
       (window as any).dataLayer.push({
         event: "chat_lead_captured",
         lead_source: "AI Chatbot",
-        lead_email: data.email,
+        lead_email_hash: hashedEmail,
       });
 
       setLeadCaptured(true);
