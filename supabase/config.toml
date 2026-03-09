@@ -15,3 +15,5 @@ project_id = "upmiqdnbvojpodgucxmw"
     verify_jwt = false
   [functions.content-run-check]
     verify_jwt = false
+  [functions.content-health]
+    verify_jwt = false
