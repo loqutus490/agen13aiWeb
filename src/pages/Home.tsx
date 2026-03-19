@@ -225,6 +225,9 @@ const Home = () => {
         </div>
       </section>
 
+      {/* Lead Magnet */}
+      <LeadMagnetSection />
+
       {/* CTA */}
       <section className="py-20 px-4">
         <div className="container mx-auto max-w-4xl text-center">
