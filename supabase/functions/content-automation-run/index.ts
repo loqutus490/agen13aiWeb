@@ -257,16 +257,20 @@ serve(async (req) => {
 
       return new Response(JSON.stringify({ success: true, runId: run.id, postId: post.id }), { headers: { ...corsHeaders, "Content-Type": "application/json" } });
     } catch (err) {
+      const errMsg = err instanceof Error ? err.message : typeof err === "object" ? JSON.stringify(err) : String(err);
+      log(`FATAL: ${errMsg}`);
       await supabase.from("content_generation_runs").update({
         completed_at: new Date().toISOString(),
         status: "failed",
-        error_message: err instanceof Error ? err.message : "Unknown",
+        error_message: errMsg,
         logs_json: logs,
       }).eq("id", run.id);
       throw err;
     }
   } catch (error) {
-    return new Response(JSON.stringify({ error: error instanceof Error ? error.message : "Unknown error" }), {
+    const errorMsg = error instanceof Error ? error.message : typeof error === "object" ? JSON.stringify(error) : String(error);
+    console.error("content-automation-run error:", errorMsg);
+    return new Response(JSON.stringify({ error: errorMsg }), {
       status: 500,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
