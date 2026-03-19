@@ -15,14 +15,12 @@ export const RESEARCH_SOURCES: ResearchSource[] = [
   { id: "above-the-law", name: "Above the Law - Legal Tech", type: "rss", url: "https://abovethelaw.com/legal-innovation-center/feed/", weight: 0.9, tags: ["legal", "legal-tech", "practice-management"] },
   { id: "ilta-net", name: "ILTA (Int'l Legal Tech Assoc)", type: "rss", url: "https://www.iltanet.org/blogs/blogs-all?format=rss", weight: 0.9, tags: ["legal", "enterprise", "legal-tech"] },
 
-  // AI enterprise sources (moderate weight — filtered for legal relevance by scoring)
+  // AI enterprise sources (moderate weight)
   { id: "openai-blog", name: "OpenAI Blog", type: "rss", url: "https://openai.com/news/rss.xml", weight: 0.6, tags: ["ai", "enterprise"] },
   { id: "google-cloud-ai", name: "Google Cloud AI", type: "rss", url: "https://cloudblog.withgoogle.com/rss/", weight: 0.5, tags: ["ai", "enterprise"] },
   { id: "microsoft-ai", name: "Microsoft AI Blog", type: "rss", url: "https://blogs.microsoft.com/ai/feed/", weight: 0.5, tags: ["ai", "enterprise"] },
-  { id: "anthropic-news", name: "Anthropic News", type: "rss", url: "https://www.anthropic.com/news/rss.xml", weight: 0.5, tags: ["ai", "safety"] },
 
   // Practical SMB / workflow automation sources
   { id: "clio-blog", name: "Clio Blog", type: "rss", url: "https://www.clio.com/blog/feed/", weight: 0.9, tags: ["legal", "practice-management", "law-firm-ops"] },
   { id: "lawyerist", name: "Lawyerist", type: "rss", url: "https://lawyerist.com/feed/", weight: 0.85, tags: ["legal", "small-firm", "practice-management"] },
-  { id: "smokeball-blog", name: "Smokeball Blog", type: "rss", url: "https://www.smokeball.com/blog/feed/", weight: 0.8, tags: ["legal", "practice-management", "automation"] },
 ];
