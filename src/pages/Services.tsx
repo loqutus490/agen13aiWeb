@@ -6,74 +6,61 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { 
-  Workflow, BrainCircuit, Bot, CircuitBoard, 
-  Cpu, Network, CheckCircle, ArrowRight, FileSearch, Shield, Lock 
+  Workflow, BrainCircuit, Bot, Scale,
+  CheckCircle, ArrowRight, FileSearch, Shield, Lock, Gavel, BookOpen
 } from "lucide-react";
 
 const Services = () => {
   const additionalServices = [
     {
-      icon: Workflow,
-      title: "Process Automation",
-      description: "Transform repetitive manual tasks into automated workflows that save time and reduce errors.",
-      features: [
-        "Data entry automation",
-        "Email and communication automation",
-        "Document processing",
-        "Workflow optimization",
-        "Integration with existing tools"
-      ],
-      pricing: "Starting at $499/month"
-    },
-    {
       icon: Bot,
-      title: "AI Chatbot Implementation",
-      description: "Deploy intelligent chatbots that handle customer inquiries 24/7, improving satisfaction and reducing workload.",
+      title: "Client Intake AI",
+      description: "Automate client intake with an AI-powered questionnaire that collects case details, generates conflict checks, and routes to the right attorney.",
       features: [
-        "Custom chatbot development",
-        "Multi-channel support",
-        "Natural language processing",
-        "Lead qualification",
-        "Integration with CRM systems"
+        "Automated intake questionnaires",
+        "Conflict check integration",
+        "Attorney routing logic",
+        "Client portal integration",
+        "Follow-up automation"
       ],
       pricing: "Starting at $799/month"
     },
     {
       icon: BrainCircuit,
-      title: "Customer Analytics & Insights",
-      description: "Harness AI to understand customer behavior, predict trends, and make data-driven decisions.",
+      title: "Matter Analytics & Insights",
+      description: "AI-powered analytics across your caseload to identify trends, predict timelines, and optimize resource allocation.",
       features: [
-        "Behavior pattern analysis",
-        "Predictive analytics",
-        "Customer segmentation",
-        "Personalization recommendations",
+        "Case outcome pattern analysis",
+        "Timeline predictions",
+        "Workload balancing",
+        "Billing optimization insights",
         "Custom dashboards"
       ],
       pricing: "Starting at $699/month"
     },
     {
-      icon: Cpu,
-      title: "Content Generation",
-      description: "AI-powered content creation for marketing, social media, emails, and more to scale your output.",
+      icon: Workflow,
+      title: "Legal Workflow Automation",
+      description: "Automate routine legal processes — from deadline tracking to court filing preparation — so your team focuses on substantive work.",
       features: [
-        "Marketing copy generation",
-        "Social media content",
-        "Email campaigns",
-        "Blog post assistance",
-        "Brand voice training"
+        "Deadline and calendar automation",
+        "Court filing preparation",
+        "Document assembly workflows",
+        "Task delegation & tracking",
+        "Practice management integration"
       ],
-      pricing: "Starting at $399/month"
+      pricing: "Starting at $499/month"
     },
     {
-      icon: CircuitBoard,
-      title: "AI Strategy Consulting",
-      description: "Expert guidance on implementing AI across your business for maximum ROI and competitive advantage.",
+      icon: Scale,
+      title: "AI Strategy for Law Firms",
+      description: "Expert guidance on implementing AI at your firm for maximum ROI while maintaining ethical compliance and client trust.",
       features: [
-        "AI readiness assessment",
-        "Custom implementation roadmap",
-        "Technology selection",
-        "ROI analysis",
-        "Ongoing optimization support"
+        "Firm AI readiness assessment",
+        "Ethics & compliance review",
+        "Implementation roadmap",
+        "ROI analysis by practice area",
+        "Change management support"
       ],
       pricing: "Custom pricing"
     }
@@ -81,7 +68,7 @@ const Services = () => {
 
   return (
     <div className="min-h-screen">
-      <SEO title="Services" description="Explore agent13 ai services including Secure Document AI, process automation, custom AI development, and workflow integration for professional firms." />
+      <SEO title="Services for Law Firms" description="Document AI, client intake automation, matter analytics, and AI strategy consulting — purpose-built services for law firms from agent13 ai." />
       <Navbar />
       
       <section className="pt-32 pb-20 px-4 relative overflow-hidden animated-gradient-bg">
@@ -93,11 +80,11 @@ const Services = () => {
             Our Services
           </Badge>
           <h1 className="text-5xl md:text-6xl font-bold mb-6 tracking-tight">
-            Secure Document AI
-            <span className="block text-primary">for Professional Services</span>
+            AI Services
+            <span className="block text-primary">Built for Law Firms</span>
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            We help law firms and professional services reduce repetitive work with secure, document-grounded AI.
+            From document drafting to client intake — we help law firms reduce repetitive work with secure, privilege-safe AI.
           </p>
         </div>
       </section>
@@ -116,9 +103,9 @@ const Services = () => {
                 <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-primary/20 to-primary-glow/30 flex items-center justify-center mb-6">
                   <FileSearch className="w-8 h-8 text-primary" />
                 </div>
-                <h2 className="text-3xl md:text-4xl font-bold mb-4">Secure Document AI</h2>
+                <h2 className="text-3xl md:text-4xl font-bold mb-4">Document AI & RAG</h2>
                 <p className="text-lg text-muted-foreground mb-6">
-                  We help law firms reduce repetitive email and document work by implementing secure, document-grounded AI assistants that use existing firm materials to improve efficiency, consistency, and response times—without replacing staff or disrupting current workflows.
+                  We help law firms reduce repetitive drafting and research by implementing RAG-powered AI assistants trained on your firm's own briefs, memos, contracts, and templates — improving speed, consistency, and accuracy without replacing attorney judgment.
                 </p>
                 <div className="text-3xl font-bold text-primary mb-6">Starting at $999/month</div>
                 <Link to="/contact">
@@ -131,7 +118,7 @@ const Services = () => {
                         event: 'cta_click',
                         cta_name: 'Schedule Discovery Call - Flagship',
                         cta_location: 'services_flagship',
-                        service_type: 'Secure Document AI',
+                        service_type: 'Document AI & RAG',
                         destination: '/contact'
                       });
                     }}
@@ -146,12 +133,12 @@ const Services = () => {
               <div className="space-y-4">
                 <h3 className="text-xl font-semibold mb-4">What's Included</h3>
                 {[
-                  { icon: FileSearch, text: "Document indexing using your existing templates" },
-                  { icon: Shield, text: "Enterprise-grade security and data protection" },
-                  { icon: Lock, text: "Your data never used for training — you stay in control" },
-                  { icon: CheckCircle, text: "Human oversight on all AI outputs" },
-                  { icon: Workflow, text: "Seamless integration with current workflows" },
-                  { icon: Bot, text: "Simple chat interface for staff" }
+                  { icon: FileSearch, text: "RAG indexing of your firm's precedent library and templates" },
+                  { icon: BookOpen, text: "AI-assisted memo, brief, and correspondence drafting" },
+                  { icon: Shield, text: "Privilege-safe architecture with data isolation" },
+                  { icon: Lock, text: "Your documents never used for model training" },
+                  { icon: Gavel, text: "Attorney review workflow with approval gates" },
+                  { icon: Workflow, text: "Integration with your DMS and practice management tools" }
                 ].map((item, i) => (
                   <div key={i} className="flex items-start gap-3">
                     <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
@@ -171,13 +158,13 @@ const Services = () => {
         <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-12">
             <Badge className="mb-4 bg-primary/10 text-primary border-primary/20">Additional Services</Badge>
-            <h2 className="text-3xl font-bold mb-4">More AI Solutions</h2>
+            <h2 className="text-3xl font-bold mb-4">More AI Solutions for Your Firm</h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Comprehensive AI services to complement your document automation needs
+              Complement your Document AI with these legal-specific services
             </p>
           </div>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 gap-8">
             {additionalServices.map((service, index) => (
               <Card 
                 key={index} 
@@ -189,39 +176,27 @@ const Services = () => {
                     <service.icon className="w-6 h-6 text-primary" />
                   </div>
                 
-                <h3 className="text-2xl font-bold mb-3">{service.title}</h3>
-                <p className="text-muted-foreground mb-6 flex-grow">{service.description}</p>
+                  <h3 className="text-2xl font-bold mb-3">{service.title}</h3>
+                  <p className="text-muted-foreground mb-6 flex-grow">{service.description}</p>
                 
-                <ul className="space-y-3 mb-6">
-                  {service.features.slice(0, 3).map((feature, i) => (
-                    <li key={i} className="flex items-start gap-2 text-sm">
-                      <CheckCircle className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
-                      <span>{feature}</span>
-                    </li>
-                  ))}
-                </ul>
+                  <ul className="space-y-3 mb-6">
+                    {service.features.slice(0, 3).map((feature, i) => (
+                      <li key={i} className="flex items-start gap-2 text-sm">
+                        <CheckCircle className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                        <span>{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
                 
-                <div className="mt-auto">
-                  <div className="text-xl font-bold text-primary mb-4">{service.pricing}</div>
-                  <Link to="/contact">
-                    <Button 
-                      className="w-full bg-primary hover:bg-primary-dark transition-all"
-                      onClick={() => {
-                        (window as any).dataLayer = (window as any).dataLayer || [];
-                        (window as any).dataLayer.push({
-                          event: 'cta_click',
-                          cta_name: `Get Started - ${service.title}`,
-                          cta_location: 'services_card',
-                          service_type: service.title,
-                          destination: '/contact'
-                        });
-                      }}
-                    >
-                      Learn More
-                      <ArrowRight className="ml-2 w-4 h-4" />
-                    </Button>
-                  </Link>
-                </div>
+                  <div className="mt-auto">
+                    <div className="text-xl font-bold text-primary mb-4">{service.pricing}</div>
+                    <Link to="/contact">
+                      <Button className="w-full bg-primary hover:bg-primary-dark transition-all">
+                        Learn More
+                        <ArrowRight className="ml-2 w-4 h-4" />
+                      </Button>
+                    </Link>
+                  </div>
                 </div>
               </Card>
             ))}
@@ -234,17 +209,17 @@ const Services = () => {
           <Card className="p-12 text-center border-primary/10 bg-card/50 backdrop-blur-sm scan-line-effect holographic-border relative overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-t from-primary/8 via-primary-glow/3 to-transparent pointer-events-none" />
             <div className="relative z-10">
-              <h2 className="text-3xl font-bold mb-4">Ready to Get Started?</h2>
-            <p className="text-xl text-muted-foreground mb-8">
-              Book a free discovery call to discuss how Secure Document AI can help your firm.
-            </p>
-            <Link to="/contact">
-              <Button size="lg" className="bg-primary hover:bg-primary-dark shadow-glow hover:shadow-tech-lg transition-all relative overflow-hidden group">
-                <span className="relative z-10">Schedule Discovery Call</span>
-                <ArrowRight className="ml-2 w-5 h-5 relative z-10" />
-                <div className="absolute inset-0 bg-gradient-to-r from-primary-glow to-primary opacity-0 group-hover:opacity-100 transition-opacity" />
-              </Button>
-            </Link>
+              <h2 className="text-3xl font-bold mb-4">Ready to Modernize Your Firm?</h2>
+              <p className="text-xl text-muted-foreground mb-8">
+                Book a free discovery call to discuss how Document AI can help your attorneys work smarter.
+              </p>
+              <Link to="/contact">
+                <Button size="lg" className="bg-primary hover:bg-primary-dark shadow-glow hover:shadow-tech-lg transition-all relative overflow-hidden group">
+                  <span className="relative z-10">Schedule Discovery Call</span>
+                  <ArrowRight className="ml-2 w-5 h-5 relative z-10" />
+                  <div className="absolute inset-0 bg-gradient-to-r from-primary-glow to-primary opacity-0 group-hover:opacity-100 transition-opacity" />
+                </Button>
+              </Link>
             </div>
           </Card>
         </div>

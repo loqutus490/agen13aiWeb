@@ -3,9 +3,8 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
 import { 
-  Sparkles, Zap, Target, TrendingUp, 
-  CheckCircle, Youtube, RefreshCw, Cpu, BrainCircuit, Workflow,
-  FileSearch, Shield, Users, Lock
+  Sparkles, CheckCircle, Youtube, RefreshCw,
+  FileSearch, Shield, Users, Lock, Scale, Gavel, BookOpen
 } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import SEO from "@/components/SEO";
@@ -14,31 +13,28 @@ import Footer from "@/components/Footer";
 const Home = () => {
   return (
     <div className="min-h-screen">
-      <SEO title="AI Solutions for Business" description="agent13 ai helps businesses automate workflows, reduce repetitive work, and scale with secure AI solutions built for professional services." />
+      <SEO title="AI Solutions for Law Firms" description="agent13 ai helps law firms automate document review, reduce repetitive drafting, and scale with secure AI solutions built specifically for legal professionals." />
       <Navbar />
       
       {/* Hero Section */}
       <section className="pt-32 pb-20 px-4 relative overflow-hidden animated-gradient-bg">
-        {/* Animated Grid Background */}
         <div className="absolute inset-0 grid-background opacity-40" />
         <div className="absolute inset-0 grid-background-dots opacity-20" />
-        
-        {/* Glow Effects */}
         <div className="absolute top-20 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-3xl glow-pulse" />
         <div className="absolute bottom-20 right-1/4 w-96 h-96 bg-primary-glow/20 rounded-full blur-3xl glow-pulse" style={{ animationDelay: '1.5s' }} />
         
         <div className="container mx-auto text-center max-w-4xl relative z-10">
           <Badge className="mb-6 bg-primary/10 text-primary border-primary/20 backdrop-blur-sm text-sm">
-            <FileSearch className="w-4 h-4 mr-1 inline animate-pulse" />
-            Secure Document AI
+            <Scale className="w-4 h-4 mr-1 inline animate-pulse" />
+            Built Exclusively for Law Firms
           </Badge>
           <h1 className="text-5xl md:text-7xl font-bold mb-6 tracking-tight">
-            Secure Document AI
-            <span className="block text-primary">for Professional Services</span>
+            Document AI
+            <span className="block text-primary">for Law Firms</span>
           </h1>
           <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Reduce repetitive email and document work with secure, document-grounded AI assistants. 
-            Built for law firms and professional services.
+            Stop drowning in repetitive drafting and document review. Our secure, RAG-powered AI assistants 
+            use your firm's own precedents and templates to deliver faster, more consistent legal work.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link to="/contact">
@@ -70,7 +66,7 @@ const Home = () => {
             </Button>
           </div>
           <p className="text-sm text-muted-foreground mt-4">
-            Your data, your control — never used for training
+            Attorney-client privilege preserved — your data is never used for model training
           </p>
         </div>
       </section>
@@ -82,14 +78,14 @@ const Home = () => {
             <div>
               <Badge className="mb-4 bg-destructive/10 text-destructive border-destructive/20 text-base font-semibold">The Challenge</Badge>
               <h2 className="text-4xl font-bold mb-6">
-                Drowning in Repetitive Work?
+                Your Attorneys Are Drowning in Repetitive Work
               </h2>
               <ul className="space-y-4">
                 {[
-                  "Repetitive email and document drafting consuming staff time",
-                  "Inconsistent responses across team members",
-                  "Time lost searching for procedures and templates",
-                  "Need to maintain strict data security and compliance"
+                  "Associates spending hours drafting routine correspondence and memos",
+                  "Inconsistent work product across attorneys and practice groups",
+                  "Time wasted searching for precedents, templates, and firm procedures",
+                  "Client data security and attorney-client privilege must be maintained"
                 ].map((item) => (
                   <li key={item} className="flex items-start gap-3">
                     <div className="w-6 h-6 rounded-full bg-destructive/10 flex items-center justify-center flex-shrink-0 mt-0.5">
@@ -104,42 +100,42 @@ const Home = () => {
               <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary-glow/5 pointer-events-none" />
               <div className="relative z-10">
                 <Badge className="mb-4 bg-primary/10 text-primary border-primary/20 backdrop-blur-sm">The Solution</Badge>
-                <h3 className="text-2xl font-bold mb-6">Secure Document AI</h3>
-              <div className="space-y-6">
-                <div className="flex items-start gap-3">
-                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-                    <FileSearch className="w-5 h-5 text-primary" />
+                <h3 className="text-2xl font-bold mb-6">RAG-Powered Legal AI</h3>
+                <div className="space-y-6">
+                  <div className="flex items-start gap-3">
+                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                      <FileSearch className="w-5 h-5 text-primary" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold mb-2">Precedent-Grounded Drafting</h3>
+                      <p className="text-sm text-muted-foreground">
+                        AI trained on your firm's own briefs, memos, contracts, and templates
+                      </p>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="font-semibold mb-2">Document-Grounded AI</h3>
-                    <p className="text-sm text-muted-foreground">
-                      Uses your existing templates and internal documents
-                    </p>
+                  <div className="flex items-start gap-3">
+                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                      <Gavel className="w-5 h-5 text-primary" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold mb-2">Consistent Legal Work Product</h3>
+                      <p className="text-sm text-muted-foreground">
+                        Uniform quality across all attorneys and practice groups
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                      <Lock className="w-5 h-5 text-primary" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold mb-2">Privilege-Safe Architecture</h3>
+                      <p className="text-sm text-muted-foreground">
+                        Data isolation, encryption at rest, and zero model training on your documents
+                      </p>
+                    </div>
                   </div>
                 </div>
-                <div className="flex items-start gap-3">
-                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-                    <Users className="w-5 h-5 text-primary" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold mb-2">Improved Consistency</h3>
-                    <p className="text-sm text-muted-foreground">
-                      Better response speed and consistency across staff
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-                    <Lock className="w-5 h-5 text-primary" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold mb-2">Your Data, Your Control</h3>
-                    <p className="text-sm text-muted-foreground">
-                      Strict data control with human oversight — never used for training
-                    </p>
-                  </div>
-                </div>
-              </div>
               </div>
             </Card>
           </div>
@@ -150,44 +146,44 @@ const Home = () => {
       <section className="py-20 px-4">
         <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-16">
-            <Badge className="mb-4 bg-primary/10 text-primary border-primary/20">Why Choose Us</Badge>
-            <h2 className="text-4xl font-bold mb-4">Built for Professional Services</h2>
+            <Badge className="mb-4 bg-primary/10 text-primary border-primary/20">Why Law Firms Choose Us</Badge>
+            <h2 className="text-4xl font-bold mb-4">Built Specifically for Legal Practice</h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Secure, document-grounded AI that supports your team without disrupting workflows
+              Secure, RAG-powered AI that understands legal workflows and protects attorney-client privilege
             </p>
           </div>
           
           <div className="grid md:grid-cols-3 gap-8">
             {[
               {
-                icon: FileSearch,
-                title: "Document Indexing",
-                description: "AI trained on your existing templates and documents"
+                icon: BookOpen,
+                title: "Knowledge Base RAG",
+                description: "Your firm's precedents, templates, and procedures become a searchable AI knowledge base"
               },
               {
                 icon: Shield,
-                title: "Security First",
-                description: "Strict data control with enterprise-grade security"
+                title: "Privilege-Safe Security",
+                description: "SOC 2-ready infrastructure with data isolation between matters and clients"
               },
               {
-                icon: Users,
-                title: "Human Oversight",
-                description: "AI supports staff, never replaces human judgment"
+                icon: Scale,
+                title: "Legal-Specific AI",
+                description: "Purpose-built for legal document review, drafting, and research workflows"
               },
               {
                 icon: Sparkles,
-                title: "Email Drafting",
-                description: "Generate consistent, professional responses faster"
+                title: "Memo & Brief Drafting",
+                description: "Generate first drafts of memos, briefs, and correspondence grounded in your precedents"
               },
               {
                 icon: RefreshCw,
-                title: "Managed Service",
-                description: "Low-risk deployment with ongoing support"
+                title: "Managed Deployment",
+                description: "White-glove setup with ongoing support — no IT burden on your firm"
               },
               {
                 icon: CheckCircle,
-                title: "Workflow Integration",
-                description: "Works with your existing tools and processes"
+                title: "Practice Management Integration",
+                description: "Works alongside your existing DMS, case management, and billing tools"
               }
             ].map((feature) => (
               <Card key={feature.title} className="p-6 hover:shadow-glow transition-all duration-300 border-primary/10 bg-card/50 backdrop-blur-sm group scan-line-effect holographic-border relative overflow-hidden">
@@ -205,33 +201,25 @@ const Home = () => {
         </div>
       </section>
 
-      {/* YouTube/Blog Section */}
+      {/* Social Proof / Stats */}
       <section className="py-20 px-4 bg-muted/30">
         <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-16">
-            <Badge className="mb-4 bg-primary/10 text-primary border-primary/20">Learn More</Badge>
-            <h2 className="text-4xl font-bold mb-4">Stay Updated with AI Insights</h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Our YouTube channel is coming soon — stay tuned for AI news and business tips
-            </p>
+            <Badge className="mb-4 bg-primary/10 text-primary border-primary/20">Results</Badge>
+            <h2 className="text-4xl font-bold mb-4">What Firms Experience</h2>
           </div>
 
-          <div className="max-w-3xl mx-auto">
-            <Card className="p-12 text-center scan-line-effect holographic-border relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-t from-primary/5 to-transparent pointer-events-none" />
-              <div className="relative z-10">
-                <Youtube className="w-16 h-16 text-primary mx-auto mb-6" />
-              <h3 className="text-2xl font-bold mb-4">agent13 ai on YouTube</h3>
-              <p className="text-muted-foreground mb-8">
-                We're preparing weekly updates on AI innovations, practical tutorials, and strategies to grow your 
-                business using artificial intelligence. Coming soon!
-              </p>
-                <Button size="lg" className="bg-primary hover:bg-primary-dark text-primary-foreground shadow-glow opacity-70" disabled>
-                  <Youtube className="mr-2 w-5 h-5" />
-                  Coming Soon
-                </Button>
-              </div>
-            </Card>
+          <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+            {[
+              { stat: "60%", label: "Reduction in routine drafting time" },
+              { stat: "3x", label: "Faster internal document search" },
+              { stat: "100%", label: "Data stays within your control" },
+            ].map((item) => (
+              <Card key={item.label} className="p-8 text-center border-primary/10 bg-card/50">
+                <div className="text-4xl font-bold text-primary mb-2">{item.stat}</div>
+                <p className="text-muted-foreground">{item.label}</p>
+              </Card>
+            ))}
           </div>
         </div>
       </section>
@@ -240,10 +228,10 @@ const Home = () => {
       <section className="py-20 px-4">
         <div className="container mx-auto max-w-4xl text-center">
           <h2 className="text-4xl font-bold mb-6">
-            Ready to Reduce Repetitive Work?
+            Ready to Modernize Your Firm's Workflows?
           </h2>
           <p className="text-xl text-muted-foreground mb-8">
-            Schedule a discovery call to see how Secure Document AI can help your firm
+            Schedule a discovery call to see how RAG-powered Document AI can help your attorneys work smarter
           </p>
           <Link to="/contact">
             <Button size="lg" className="bg-primary hover:bg-primary-dark text-primary-foreground text-lg px-8 shadow-glow">
