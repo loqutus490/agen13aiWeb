@@ -189,7 +189,7 @@ const UsersTab = () => {
                         {user.email_confirmed_at ? "Verified" : "Unverified"}
                       </Badge>
                     </TableCell>
-                    <TableCell className="text-right">
+                    <TableCell className="text-right space-x-2">
                       <Button
                         variant="outline"
                         size="sm"
@@ -197,6 +197,14 @@ const UsersTab = () => {
                       >
                         <KeyRound className="w-3 h-3 mr-1" />
                         Reset Password
+                      </Button>
+                      <Button
+                        variant="destructive"
+                        size="sm"
+                        onClick={() => handleDeleteUser(user)}
+                      >
+                        <Trash2 className="w-3 h-3 mr-1" />
+                        Delete
                       </Button>
                     </TableCell>
                   </TableRow>
