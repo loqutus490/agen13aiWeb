@@ -11,23 +11,32 @@ const corsHeaders = {
 
 const supabase = createClient(Deno.env.get("SUPABASE_URL")!, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!);
 
-const llm = async (prompt: string) => {
-  const key = Deno.env.get("OPENAI_API_KEY");
-  if (!key) return null;
+const llm = async (prompt: string): Promise<string | null> => {
+  const key = Deno.env.get("LOVABLE_API_KEY");
+  if (!key) {
+    console.error("LOVABLE_API_KEY not set – falling back to stub content");
+    return null;
+  }
 
-  const res = await fetch("https://api.openai.com/v1/chat/completions", {
+  const res = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
     method: "POST",
-    headers: { "Content-Type": "application/json", Authorization: `Bearer ${key}` },
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${key}`,
+    },
     body: JSON.stringify({
-      model: Deno.env.get("CONTENT_AUTOMATION_OPENAI_MODEL") || "gpt-4o-mini",
+      model: "google/gemini-3-flash-preview",
       messages: [{ role: "user", content: prompt }],
       temperature: 0.6,
     }),
   });
 
-  if (!res.ok) return null;
+  if (!res.ok) {
+    console.error("Lovable AI gateway error:", res.status, await res.text().catch(() => ""));
+    return null;
+  }
   const json = await res.json();
-  return json.choices?.[0]?.message?.content as string | undefined;
+  return json.choices?.[0]?.message?.content as string | undefined ?? null;
 };
 
 serve(async (req) => {
