@@ -13,7 +13,7 @@ import {
   DialogHeader, DialogTitle,
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
-import { Users, KeyRound, Search } from "lucide-react";
+import { Users, KeyRound, Search, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 
 interface User {
