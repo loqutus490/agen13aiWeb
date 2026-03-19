@@ -5,7 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
 import { Link, useNavigate } from "react-router-dom";
 import { Sparkles } from "lucide-react";
-import { toast } from "sonner";
+import { toast as _unused } from "sonner";
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
