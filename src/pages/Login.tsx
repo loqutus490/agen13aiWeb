@@ -83,6 +83,27 @@ const Login = () => {
     }
   };
 
+  const handleForgotPassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!forgotEmail) {
+      toast.error("Please enter your email address");
+      return;
+    }
+    setSendingReset(true);
+    try {
+      const { error } = await supabase.auth.resetPasswordForEmail(forgotEmail, {
+        redirectTo: `${window.location.origin}/reset-password`,
+      });
+      if (error) throw error;
+      toast.success("Password reset link sent! Check your email.");
+      setShowForgot(false);
+    } catch (error: any) {
+      toast.error(error.message || "Failed to send reset email");
+    } finally {
+      setSendingReset(false);
+    }
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center px-4 animated-gradient-bg">
       <SEO title="Login" description="Sign in to your agent13 ai account to access your dashboard and AI tools." />
