@@ -5,135 +5,145 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { Check, ArrowRight, FileSearch, Workflow, Bot, BrainCircuit, Cpu } from "lucide-react";
+import { Check, ArrowRight, FileSearch, Workflow, Bot, BrainCircuit, Scale } from "lucide-react";
+
+const services = [
+  {
+    icon: Bot,
+    title: "Client Intake AI",
+    description: "Automated intake and conflict checks",
+    price: "$799",
+    period: "/month",
+    features: [
+      "AI-powered intake questionnaires",
+      "Conflict check integration",
+      "Attorney routing logic",
+      "Client portal integration",
+      "Follow-up automation"
+    ],
+  },
+  {
+    icon: BrainCircuit,
+    title: "Matter Analytics",
+    description: "AI-powered caseload insights",
+    price: "$699",
+    period: "/month",
+    features: [
+      "Case outcome pattern analysis",
+      "Timeline predictions",
+      "Workload balancing",
+      "Billing optimization insights",
+      "Custom dashboards"
+    ],
+  },
+  {
+    icon: Workflow,
+    title: "Legal Workflow Automation",
+    description: "Automate routine legal processes",
+    price: "$499",
+    period: "/month",
+    features: [
+      "Deadline & calendar automation",
+      "Court filing preparation",
+      "Document assembly workflows",
+      "Task delegation & tracking",
+      "Practice management integration"
+    ],
+  },
+  {
+    icon: Scale,
+    title: "AI Strategy Consulting",
+    description: "Expert guidance for your firm",
+    price: "Custom",
+    period: "",
+    features: [
+      "Firm AI readiness assessment",
+      "Ethics & compliance review",
+      "Implementation roadmap",
+      "ROI analysis by practice area",
+      "Change management support"
+    ],
+  },
+];
+
+const faqs = [
+  {
+    q: "What's included in the monthly price?",
+    a: "All services include initial setup, staff training, managed hosting, ongoing support, and regular optimization. No hidden fees."
+  },
+  {
+    q: "Is there a setup fee?",
+    a: "Setup fees depend on complexity and customization needs. We'll provide a clear quote during your discovery call."
+  },
+  {
+    q: "Can I cancel anytime?",
+    a: "Yes. Our services are month-to-month with 30 days notice. We believe in earning your business through results."
+  },
+  {
+    q: "How long does implementation take?",
+    a: "Most implementations are completed within 2-4 weeks, depending on scope and document complexity."
+  },
+  {
+    q: "Is my client data secure?",
+    a: "Absolutely. We use enterprise-grade encryption, isolated environments per firm, and your data is never used for model training. We're built for attorney-client privilege."
+  },
+];
+
+const flagshipFeatures = [
+  "RAG indexing of your firm's precedent library and templates",
+  "AI-assisted memo, brief, and correspondence drafting",
+  "Privilege-safe architecture with data isolation",
+  "Your documents never used for model training",
+  "Attorney review workflow with approval gates",
+  "Integration with your DMS (iManage, NetDocuments)",
+  "Staff training included"
+];
 
 const Pricing = () => {
-  const services = [
-    {
-      icon: FileSearch,
-      title: "Secure Document AI",
-      description: "Document-grounded AI for law firms and professional services",
-      price: "$999",
-      period: "/month",
-      features: [
-        "Document indexing using your templates",
-        "Email and document drafting assistance",
-        "Enterprise-grade security",
-        "Your data never used for training",
-        "Human oversight on all outputs",
-        "Managed service with ongoing support",
-        "Staff training included"
-      ],
-      popular: true
-    },
-    {
-      icon: Bot,
-      title: "AI Chatbot",
-      description: "24/7 customer support automation",
-      price: "$799",
-      period: "/month",
-      features: [
-        "Custom chatbot development",
-        "Multi-channel support",
-        "Lead qualification",
-        "CRM integration",
-        "Monthly optimization"
-      ],
-      popular: false
-    },
-    {
-      icon: BrainCircuit,
-      title: "Customer Analytics",
-      description: "AI-powered insights and predictions",
-      price: "$699",
-      period: "/month",
-      features: [
-        "Behavior pattern analysis",
-        "Predictive analytics",
-        "Customer segmentation",
-        "Custom dashboards",
-        "Monthly reporting"
-      ],
-      popular: false
-    },
-    {
-      icon: Workflow,
-      title: "Process Automation",
-      description: "Automate repetitive business tasks",
-      price: "$499",
-      period: "/month",
-      features: [
-        "Workflow automation",
-        "Data entry automation",
-        "Document processing",
-        "Integration support",
-        "Ongoing maintenance"
-      ],
-      popular: false
-    },
-    {
-      icon: Cpu,
-      title: "Content Generation",
-      description: "AI-powered marketing content",
-      price: "$399",
-      period: "/month",
-      features: [
-        "Marketing copy generation",
-        "Social media content",
-        "Email campaigns",
-        "Brand voice training",
-        "Monthly content planning"
-      ],
-      popular: false
-    }
-  ];
-
   return (
     <div className="min-h-screen">
-      <SEO title="Pricing" description="Transparent pricing for agent13 ai services. Secure Document AI, process automation, and custom AI solutions tailored for your business." />
+      <SEO title="Pricing — AI for Law Firms" description="Transparent pricing for agent13 ai legal services. Secure Document AI, client intake automation, matter analytics, and workflow automation for law firms." />
       <Navbar />
-      
+
       <section className="pt-32 pb-20 px-4 animated-gradient-bg relative overflow-hidden">
         <div className="absolute inset-0 grid-background-dots opacity-20" />
         <div className="container mx-auto text-center max-w-4xl relative z-10">
-          <Badge className="mb-6 bg-primary/10 text-primary border-primary/20">
-            Pricing
-          </Badge>
+          <Badge className="mb-6 bg-primary/10 text-primary border-primary/20">Pricing</Badge>
           <h1 className="text-5xl md:text-6xl font-bold mb-6 tracking-tight">
             Service-Based
-            <span className="block text-primary">Pricing</span>
+            <span className="block text-primary">Pricing for Law Firms</span>
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Transparent pricing for managed AI services. All plans include setup, training, and ongoing support.
+            Transparent pricing for managed AI services — purpose-built for legal professionals. All plans include setup, training, and ongoing support.
           </p>
         </div>
       </section>
 
       <section className="py-20 px-4">
         <div className="container mx-auto max-w-6xl">
-          {/* Flagship Service */}
+          {/* Flagship */}
           <div className="max-w-4xl mx-auto mb-16">
             <Card className="p-10 border-2 border-primary shadow-2xl relative overflow-hidden">
               <div className="absolute top-0 right-0 bg-gradient-to-r from-primary to-primary-glow text-primary-foreground px-6 py-2 text-sm font-semibold rounded-bl-lg">
                 Most Popular
               </div>
               <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary-glow/5 pointer-events-none" />
-              
+
               <div className="relative z-10 grid md:grid-cols-2 gap-10 items-center mt-4">
                 <div>
                   <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-primary/20 to-primary-glow/30 flex items-center justify-center mb-4">
                     <FileSearch className="w-7 h-7 text-primary" />
                   </div>
-                  <h2 className="text-3xl font-bold mb-2">Secure Document AI</h2>
+                  <h2 className="text-3xl font-bold mb-2">Document AI & RAG</h2>
                   <p className="text-muted-foreground mb-6">
-                    Document-grounded AI for law firms and professional services. Reduce repetitive email and document work while maintaining security and control.
+                    Reduce repetitive drafting and research with RAG-powered AI trained on your firm's own briefs, memos, contracts, and templates.
                   </p>
                   <div className="mb-6">
                     <span className="text-5xl font-bold">$999</span>
                     <span className="text-xl text-muted-foreground">/month</span>
                   </div>
                   <Link to="/contact">
-                    <Button 
+                    <Button
                       size="lg"
                       className="bg-primary hover:bg-primary-dark shadow-glow hover:shadow-tech-lg transition-all relative overflow-hidden group"
                       onClick={() => {
@@ -142,7 +152,7 @@ const Pricing = () => {
                           event: 'cta_click',
                           cta_name: 'Schedule Discovery Call - Pricing',
                           cta_location: 'pricing_flagship',
-                          service_type: 'Secure Document AI',
+                          service_type: 'Document AI & RAG',
                           destination: '/contact'
                         });
                       }}
@@ -153,11 +163,11 @@ const Pricing = () => {
                     </Button>
                   </Link>
                 </div>
-                
+
                 <div>
                   <h3 className="font-semibold mb-4">What's Included</h3>
                   <ul className="space-y-3">
-                    {services[0].features.map((feature, i) => (
+                    {flagshipFeatures.map((feature, i) => (
                       <li key={i} className="flex items-start gap-3">
                         <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
                         <span>{feature}</span>
@@ -169,14 +179,14 @@ const Pricing = () => {
             </Card>
           </div>
 
-          {/* Other Services */}
+          {/* Additional Services */}
           <div className="text-center mb-12">
-            <h2 className="text-2xl font-bold mb-2">Additional Services</h2>
-            <p className="text-muted-foreground">Complement your AI implementation with these services</p>
+            <h2 className="text-2xl font-bold mb-2">Additional Legal AI Services</h2>
+            <p className="text-muted-foreground">Complement your Document AI with these law-firm-specific solutions</p>
           </div>
-          
+
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {services.slice(1).map((service, index) => (
+            {services.map((service, index) => (
               <Card key={index} className="p-6 border-primary/10 hover:shadow-glow transition-all duration-300">
                 <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
                   <service.icon className="w-5 h-5 text-primary" />
@@ -196,9 +206,7 @@ const Pricing = () => {
                   ))}
                 </ul>
                 <Link to="/contact">
-                  <Button variant="outline" className="w-full" size="sm">
-                    Learn More
-                  </Button>
+                  <Button variant="outline" className="w-full" size="sm">Learn More</Button>
                 </Link>
               </Card>
             ))}
@@ -208,41 +216,22 @@ const Pricing = () => {
           <div className="mt-20 max-w-2xl mx-auto">
             <h2 className="text-2xl font-bold mb-8 text-center">Frequently Asked Questions</h2>
             <div className="space-y-6">
-              <div>
-                <h3 className="font-semibold mb-2">What's included in the monthly price?</h3>
-                <p className="text-muted-foreground">
-                  All services include initial setup, staff training, managed hosting, ongoing support, and regular optimization. No hidden fees.
-                </p>
-              </div>
-              <div>
-                <h3 className="font-semibold mb-2">Is there a setup fee?</h3>
-                <p className="text-muted-foreground">
-                  Setup fees depend on complexity and customization needs. We'll provide a clear quote during your discovery call.
-                </p>
-              </div>
-              <div>
-                <h3 className="font-semibold mb-2">Can I cancel anytime?</h3>
-                <p className="text-muted-foreground">
-                  Yes. Our services are month-to-month with 30 days notice. We believe in earning your business through results.
-                </p>
-              </div>
-              <div>
-                <h3 className="font-semibold mb-2">How long does implementation take?</h3>
-                <p className="text-muted-foreground">
-                  Most implementations are completed within 2-4 weeks, depending on scope and document complexity.
-                </p>
-              </div>
+              {faqs.map((faq, i) => (
+                <div key={i}>
+                  <h3 className="font-semibold mb-2">{faq.q}</h3>
+                  <p className="text-muted-foreground">{faq.a}</p>
+                </div>
+              ))}
             </div>
           </div>
         </div>
       </section>
 
-      {/* CTA */}
       <section className="py-20 px-4 bg-muted/30">
         <div className="container mx-auto max-w-4xl text-center">
-          <h2 className="text-3xl font-bold mb-4">Ready to Get Started?</h2>
+          <h2 className="text-3xl font-bold mb-4">Ready to Modernize Your Firm?</h2>
           <p className="text-xl text-muted-foreground mb-8">
-            Schedule a free discovery call to discuss your needs and get a custom quote.
+            Schedule a free discovery call to discuss how AI can reduce repetitive work at your firm.
           </p>
           <Link to="/contact">
             <Button size="lg" className="bg-primary hover:bg-primary-dark">
