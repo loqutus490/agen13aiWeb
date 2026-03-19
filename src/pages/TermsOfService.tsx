@@ -94,9 +94,22 @@ const TermsOfService = () => {
               We may terminate or suspend your account and access to our services immediately, without prior notice or liability, for any reason, including breach of these Terms. Upon termination, your right to use the services will immediately cease.
             </p>
 
+            <h2 className="text-3xl font-bold mb-4 mt-12">Website Accuracy Disclaimer</h2>
+            <p className="text-muted-foreground mb-4">
+              While we strive to keep the information on this website accurate and up to date, agent13 ai makes no representations or warranties of any kind, express or implied, about the completeness, accuracy, reliability, suitability, or availability of the information, products, services, or related graphics contained on this website. The content on this website may contain errors, inaccuracies, or omissions, and we are not responsible or liable for any such errors or omissions or for any results obtained from the use of this information.
+            </p>
+            <p className="text-muted-foreground mb-8">
+              Any reliance you place on information from this website is strictly at your own risk. Nothing on this website constitutes legal advice, and the information provided should not be used as a substitute for professional legal counsel.
+            </p>
+
+            <h2 className="text-3xl font-bold mb-4 mt-12">Right to Modify</h2>
+            <p className="text-muted-foreground mb-8">
+              agent13 ai reserves the right to modify, update, or remove any content on this website at any time, for any reason, without prior notice. This includes but is not limited to pricing, service descriptions, features, and any other information presented on this website. We are under no obligation to update information on this website.
+            </p>
+
             <h2 className="text-3xl font-bold mb-4 mt-12">Disclaimer of Warranties</h2>
             <p className="text-muted-foreground mb-8">
-              Our services are provided "as is" and "as available" without warranties of any kind, either express or implied. We do not warrant that the services will be uninterrupted, secure, or error-free, or that any defects will be corrected.
+              Our services and this website are provided "as is" and "as available" without warranties of any kind, either express or implied. We do not warrant that the services or website will be uninterrupted, secure, or error-free, or that any defects will be corrected.
             </p>
 
             <h2 className="text-3xl font-bold mb-4 mt-12">Limitation of Liability</h2>
