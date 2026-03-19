@@ -24,6 +24,9 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [forgotEmail, setForgotEmail] = useState("");
+  const [showForgot, setShowForgot] = useState(false);
+  const [sendingReset, setSendingReset] = useState(false);
 
   useEffect(() => {
     if (user) {
