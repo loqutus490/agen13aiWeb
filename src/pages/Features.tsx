@@ -16,7 +16,7 @@ const Features = () => {
       icon: FileSearch,
       title: "RAG-Powered Knowledge Base",
       description: "Your firm's briefs, memos, contracts, and templates are indexed into a secure knowledge base. The AI retrieves relevant precedents and language to generate accurate, firm-specific outputs — not generic boilerplate.",
-      benefits: ["Trained on your firm's own documents", "Retrieves relevant precedents automatically", "Improves with your document library over time"]
+      benefits: ["Grounded in your firm's own documents", "Retrieves relevant precedents automatically", "Improves with your document library over time"]
     },
     {
       icon: Mail,

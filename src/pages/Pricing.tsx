@@ -136,7 +136,7 @@ const Pricing = () => {
                   </div>
                   <h2 className="text-3xl font-bold mb-2">Document AI & RAG</h2>
                   <p className="text-muted-foreground mb-6">
-                    Reduce repetitive drafting and research with RAG-powered AI trained on your firm's own briefs, memos, contracts, and templates.
+                    Reduce repetitive drafting and research with RAG-powered AI that only uses your firm's own briefs, memos, contracts, and templates.
                   </p>
                   <div className="mb-6">
                     <span className="text-5xl font-bold">$999</span>

@@ -13,7 +13,7 @@ const CaseStudies = () => {
       company: "Mid-Size Litigation Firm",
       industry: "Litigation — 25 Attorneys",
       challenge: "Associates spending 10+ hours per week drafting routine discovery responses, demand letters, and client correspondence using outdated templates scattered across shared drives.",
-      solution: "Deployed RAG-powered Document AI trained on the firm's existing brief bank, template library, and internal procedures. Attorneys now draft from a chat interface that pulls relevant precedents automatically.",
+      solution: "Deployed RAG-powered Document AI grounded in the firm's existing brief bank, template library, and internal procedures. Attorneys now draft from a chat interface that pulls relevant precedents automatically.",
       results: [
         { icon: Clock, label: "Drafting Time Saved", value: "12 hrs/week" },
         { icon: DollarSign, label: "Recovered Billable Hours", value: "$18K/mo" },

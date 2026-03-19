@@ -109,7 +109,7 @@ const Home = () => {
                     <div>
                       <h3 className="font-semibold mb-2">Precedent-Grounded Drafting</h3>
                       <p className="text-sm text-muted-foreground">
-                        AI trained on your firm's own briefs, memos, contracts, and templates
+                        AI that only uses your firm's own briefs, memos, contracts, and templates
                       </p>
                     </div>
                   </div>
