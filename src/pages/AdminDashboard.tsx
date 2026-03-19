@@ -21,10 +21,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Download, Search, Filter, TrendingUp, FileText, FlaskConical, MessageSquare, Trash2 } from "lucide-react";
+import { Download, Search, Filter, TrendingUp, FileText, FlaskConical, MessageSquare, Trash2, Users } from "lucide-react";
 import { toast } from "sonner";
 import { Checkbox } from "@/components/ui/checkbox";
 import ContactSubmissionsTab from "@/components/admin/ContactSubmissionsTab";
+import UsersTab from "@/components/admin/UsersTab";
 
 interface Lead {
   id: string;
@@ -235,6 +236,10 @@ const AdminDashboard = () => {
                 <MessageSquare className="w-4 h-4 mr-2" />
                 Contact Submissions
               </TabsTrigger>
+              <TabsTrigger value="users">
+                <Users className="w-4 h-4 mr-2" />
+                Users
+              </TabsTrigger>
             </TabsList>
 
             <TabsContent value="leads">
@@ -392,6 +397,10 @@ const AdminDashboard = () => {
 
             <TabsContent value="contact">
               <ContactSubmissionsTab />
+            </TabsContent>
+
+            <TabsContent value="users">
+              <UsersTab />
             </TabsContent>
           </Tabs>
         </div>
