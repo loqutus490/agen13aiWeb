@@ -105,6 +105,26 @@ const UsersTab = () => {
     }
   };
 
+  const handleDeleteUser = async (user: User) => {
+    if (!confirm(`Delete user ${user.email}? This cannot be undone.`)) return;
+
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      const res = await supabase.functions.invoke("admin-users", {
+        body: { action: "delete_user", userId: user.id },
+        headers: { Authorization: `Bearer ${session?.access_token}` },
+      });
+      if (res.error) throw res.error;
+      if (res.data?.error) throw new Error(res.data.error);
+
+      setUsers((prev) => prev.filter((u) => u.id !== user.id));
+      toast.success(`Deleted user ${user.email}`);
+    } catch (error: any) {
+      console.error("Error deleting user:", error);
+      toast.error(error.message || "Failed to delete user");
+    }
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center py-12">
