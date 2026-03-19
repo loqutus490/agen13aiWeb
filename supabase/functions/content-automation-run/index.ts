@@ -100,8 +100,13 @@ serve(async (req) => {
           const items = parseRssItems(xml).slice(0, 5).map((i) => ({ ...i, source: src.name }));
           items.forEach((item) => {
             const lc = `${item.title} ${item.link}`.toLowerCase();
-            const relevance = ["legal", "law firm", "compliance", "document", "rag", "enterprise"].filter((t) => lc.includes(t)).length;
-            sourceItems.push({ title: item.title, link: item.link, source: src.name, score: src.weight * 5 + relevance });
+            const relevance = [
+              "law firm", "legal", "attorney", "lawyer", "practice management",
+              "client intake", "document automation", "case management", "billing",
+              "compliance", "rag", "knowledge management", "drafting", "workflow",
+              "small firm", "solo practitioner",
+            ].filter((t) => lc.includes(t)).length;
+            sourceItems.push({ title: item.title, link: item.link, source: src.name, score: src.weight * 5 + relevance * 1.5 });
           });
         } catch {
           log(`Source fetch failed: ${src.name}`);
