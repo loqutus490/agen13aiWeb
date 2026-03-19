@@ -6,53 +6,53 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { 
-  Sparkles, FileSearch, Shield, Lock, Users, 
-  CheckCircle, Workflow, Bot, RefreshCw, Mail
+  Sparkles, FileSearch, Shield, Lock, Scale, 
+  CheckCircle, Workflow, Gavel, BookOpen, Mail
 } from "lucide-react";
 
 const Features = () => {
   const features = [
     {
       icon: FileSearch,
-      title: "Document Indexing",
-      description: "AI trained on your existing templates, procedures, and internal documents. The assistant uses your firm's own materials to generate accurate, consistent responses.",
-      benefits: ["Uses your existing templates", "Learns your firm's procedures", "Maintains your document standards"]
+      title: "RAG-Powered Knowledge Base",
+      description: "Your firm's briefs, memos, contracts, and templates are indexed into a secure knowledge base. The AI retrieves relevant precedents and language to generate accurate, firm-specific outputs — not generic boilerplate.",
+      benefits: ["Trained on your firm's own documents", "Retrieves relevant precedents automatically", "Improves with your document library over time"]
     },
     {
       icon: Mail,
-      title: "Email & Document Drafting",
-      description: "Generate consistent, professional email responses and documents faster. Staff can draft replies in seconds while maintaining your firm's voice and standards.",
-      benefits: ["Faster email responses", "Consistent messaging", "Professional tone maintained"]
+      title: "Legal Drafting Assistant",
+      description: "Generate first drafts of memos, briefs, correspondence, and contract clauses grounded in your precedent library. Attorneys review and refine — the AI handles the repetitive heavy lifting.",
+      benefits: ["First drafts in minutes, not hours", "Consistent voice across all attorneys", "Grounded in your firm's proven language"]
     },
     {
       icon: Shield,
-      title: "Enterprise-Grade Security",
-      description: "Your data stays secure with strict access controls and enterprise-grade encryption. Built for industries that demand the highest security standards.",
-      benefits: ["Strict data control", "Enterprise encryption", "Compliance-ready infrastructure"]
+      title: "Privilege-Safe Architecture",
+      description: "Built from the ground up for law firms. Data is isolated per client matter, encrypted at rest and in transit, and never leaves your designated environment. Attorney-client privilege is architecturally protected.",
+      benefits: ["Per-matter data isolation", "Zero model training on your data", "SOC 2-ready infrastructure"]
     },
     {
       icon: Lock,
-      title: "Your Data, Your Control",
-      description: "Your documents and data are never used to train external AI models. You maintain full ownership and control over all your firm's information.",
-      benefits: ["Never used for training", "Full data ownership", "Complete privacy control"]
+      title: "Ethical AI Compliance",
+      description: "Our system is designed around ABA Model Rules and state bar ethical guidelines. Full audit trails, citation to source documents, and mandatory human review ensure compliance with professional responsibility standards.",
+      benefits: ["ABA Model Rules aligned", "Full audit trail on every output", "Source citations for verification"]
     },
     {
-      icon: Users,
-      title: "Human Oversight",
-      description: "AI supports your staff—it never replaces human judgment. All outputs can be reviewed and approved before use, ensuring quality and accuracy.",
-      benefits: ["Supports staff, not replaces", "Review before sending", "Quality assurance built-in"]
+      icon: Gavel,
+      title: "Attorney Review Workflow",
+      description: "AI never acts autonomously — every output goes through an attorney approval workflow. Lawyers review, edit, and approve before anything goes to a client or a court.",
+      benefits: ["Mandatory human review gates", "Edit and approve before use", "Maintains attorney oversight"]
     },
     {
       icon: Workflow,
-      title: "Workflow Integration",
-      description: "Works seamlessly with your existing tools and processes. No need to overhaul your current systems—we integrate with what you already use.",
-      benefits: ["Works with existing tools", "No workflow disruption", "Simple adoption process"]
+      title: "Practice Management Integration",
+      description: "Works alongside your existing DMS (iManage, NetDocuments), case management (Clio, PracticePanther), and billing systems without disrupting your current workflows.",
+      benefits: ["DMS integration (iManage, NetDocuments)", "Case management compatibility", "No workflow disruption"]
     }
   ];
 
   return (
     <div className="min-h-screen">
-      <SEO title="Features" description="Discover agent13 ai features: document indexing, email drafting, enterprise security, workflow integration, and human oversight for professional services." />
+      <SEO title="Features" description="RAG-powered knowledge base, legal drafting assistant, privilege-safe architecture, and practice management integration — built for law firms by agent13 ai." />
       <Navbar />
       
       <section className="pt-32 pb-20 px-4 relative overflow-hidden animated-gradient-bg">
@@ -62,11 +62,11 @@ const Features = () => {
             Features
           </Badge>
           <h1 className="text-5xl md:text-6xl font-bold mb-6 tracking-tight">
-            Secure Document AI
-            <span className="block text-primary">Built for Professional Services</span>
+            Document AI
+            <span className="block text-primary">Built for Legal Practice</span>
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Document-grounded AI that uses your existing materials to reduce repetitive work while maintaining security and control.
+            RAG-powered AI that uses your firm's own precedents to accelerate drafting, improve consistency, and protect privilege.
           </p>
         </div>
       </section>
@@ -82,21 +82,21 @@ const Features = () => {
                     <div className="p-3 bg-gradient-to-br from-primary/10 to-primary-glow/20 rounded-lg group-hover:from-primary/20 group-hover:to-primary-glow/30 transition-all">
                       <feature.icon className="w-6 h-6 text-primary group-hover:scale-110 transition-transform" />
                     </div>
-                  <div className="flex-1">
-                    <h3 className="text-2xl font-semibold mb-2">{feature.title}</h3>
+                    <div className="flex-1">
+                      <h3 className="text-2xl font-semibold mb-2">{feature.title}</h3>
+                    </div>
                   </div>
-                </div>
-                <p className="text-muted-foreground mb-6">
-                  {feature.description}
-                </p>
-                <ul className="space-y-2">
-                  {feature.benefits.map((benefit) => (
-                    <li key={benefit} className="flex items-center gap-2 text-sm">
-                      <div className="w-1.5 h-1.5 rounded-full bg-primary"></div>
-                      <span>{benefit}</span>
-                    </li>
-                  ))}
-                </ul>
+                  <p className="text-muted-foreground mb-6">
+                    {feature.description}
+                  </p>
+                  <ul className="space-y-2">
+                    {feature.benefits.map((benefit) => (
+                      <li key={benefit} className="flex items-center gap-2 text-sm">
+                        <div className="w-1.5 h-1.5 rounded-full bg-primary"></div>
+                        <span>{benefit}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               </Card>
             ))}
@@ -109,15 +109,15 @@ const Features = () => {
         <div className="container mx-auto max-w-4xl">
           <div className="text-center mb-12">
             <Badge className="mb-4 bg-primary/10 text-primary border-primary/20">How It Works</Badge>
-            <h2 className="text-3xl font-bold mb-4">Simple, Managed Deployment</h2>
+            <h2 className="text-3xl font-bold mb-4">White-Glove Deployment for Your Firm</h2>
           </div>
           
           <div className="space-y-8">
             {[
-              { step: "1", title: "Discovery Call", description: "We learn about your firm's workflows, documents, and specific needs" },
-              { step: "2", title: "Document Setup", description: "We securely index your existing templates and internal materials" },
-              { step: "3", title: "Staff Training", description: "Your team learns to use the simple chat interface" },
-              { step: "4", title: "Ongoing Support", description: "Managed service with continuous optimization and support" }
+              { step: "1", title: "Discovery Call", description: "We learn about your practice areas, document workflows, and specific pain points" },
+              { step: "2", title: "Document Indexing", description: "We securely ingest your firm's precedent library, templates, and internal procedures into the RAG knowledge base" },
+              { step: "3", title: "Attorney Training", description: "Your team learns to use the AI drafting assistant and review workflows" },
+              { step: "4", title: "Ongoing Optimization", description: "Managed service with continuous tuning as your document library grows" }
             ].map((item) => (
               <div key={item.step} className="flex items-start gap-6">
                 <div className="w-12 h-12 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold text-lg flex-shrink-0">
@@ -136,10 +136,10 @@ const Features = () => {
       <section className="py-20 px-4">
         <div className="container mx-auto max-w-4xl text-center">
           <h2 className="text-4xl font-bold mb-6">
-            Ready to Reduce Repetitive Work?
+            Ready to Modernize Your Firm's Workflows?
           </h2>
           <p className="text-xl text-muted-foreground mb-8">
-            Schedule a discovery call to see how Secure Document AI can help your firm.
+            Schedule a discovery call to see how Document AI can help your attorneys draft faster and more consistently.
           </p>
           <Link to="/contact">
             <Button size="lg" className="bg-primary hover:bg-primary-dark text-primary-foreground text-lg px-8 shadow-glow">
