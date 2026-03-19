@@ -41,6 +41,7 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <CookieConsent />
+          <LeadCapturePopup />
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/features" element={<Features />} />
