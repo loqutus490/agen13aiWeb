@@ -172,7 +172,7 @@ const Blog = () => {
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-muted-foreground mb-4">{post.excerpt}</p>
+                    <p className="text-muted-foreground mb-4 line-clamp-3">{stripMarkdown(post.excerpt)}</p>
                     {post.tags && post.tags.length > 0 && (
                       <div className="flex flex-wrap gap-1 mb-4">
                         {post.tags.map((tag) => (
