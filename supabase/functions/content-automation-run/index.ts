@@ -152,7 +152,7 @@ serve(async (req) => {
 
       const seoRaw = await llm(`${PROMPTS.seoPackage}\n\nTopic: ${selected.title}\nReturn strict JSON with keys: seo_title,primary_keyword,secondary_keywords,meta_description,faq_json,schema_json,internal_links,slug.`);
       const seo = seoRaw ? safeJson(extractJsonObject(seoRaw), seoFallback) : seoFallback;
-      const finalSlug = slugify(seo.slug || baseSlug);
+      const finalSlug = await ensureUniqueSlug(slugify(seo.slug || baseSlug));
 
       if (!seo.meta_description || !seo.primary_keyword || !(seo.secondary_keywords || []).length) {
         throw new Error("SEO package missing required fields");
