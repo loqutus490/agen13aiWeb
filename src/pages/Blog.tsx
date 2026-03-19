@@ -20,6 +20,21 @@ interface BlogPost {
   image_url?: string | null;
 }
 
+const stripMarkdown = (text: string): string =>
+  text
+    .replace(/^#{1,6}\s+/gm, '')       // headings
+    .replace(/\*\*(.*?)\*\*/g, '$1')   // bold
+    .replace(/\*(.*?)\*/g, '$1')       // italic
+    .replace(/`{1,3}[^`]*`{1,3}/g, '') // code
+    .replace(/\[([^\]]*)\]\([^)]*\)/g, '$1') // links
+    .replace(/^[-*]\s+/gm, '')         // unordered lists
+    .replace(/^\d+\.\s+/gm, '')        // ordered lists
+    .replace(/^>\s+/gm, '')            // blockquotes
+    .replace(/---+/g, '')              // horizontal rules
+    .replace(/\n{2,}/g, ' ')           // collapse newlines
+    .replace(/\s+/g, ' ')             // normalize whitespace
+    .trim();
+
 const Blog = () => {
   const location = useLocation();
   const [posts, setPosts] = useState<BlogPost[]>([]);
