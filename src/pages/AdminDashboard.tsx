@@ -398,6 +398,10 @@ const AdminDashboard = () => {
             <TabsContent value="contact">
               <ContactSubmissionsTab />
             </TabsContent>
+
+            <TabsContent value="users">
+              <UsersTab />
+            </TabsContent>
           </Tabs>
         </div>
       </section>
