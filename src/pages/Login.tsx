@@ -123,9 +123,19 @@ const Login = () => {
               required
               disabled={isLoading}
             />
-          </div>
+           </div>
 
-          <Button 
+           <div className="flex justify-end">
+             <button
+               type="button"
+               onClick={() => { setShowForgot(true); setForgotEmail(email); }}
+               className="text-sm text-primary hover:underline"
+             >
+               Forgot password?
+             </button>
+           </div>
+
+           <Button
             type="submit" 
             className="w-full bg-primary hover:bg-primary/90" 
             size="lg"
