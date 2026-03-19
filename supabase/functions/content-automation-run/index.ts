@@ -122,8 +122,21 @@ serve(async (req) => {
         : `${selected.title}: What Law Firms Should Do Next`;
       const baseSlug = slugify(suggestedTitle);
 
-      const { data: existingPost } = await supabase.from("blog_posts").select("id").eq("slug", baseSlug).maybeSingle();
-      if (existingPost && !body.force) throw new Error("Duplicate topic/slug detected for today; use force to override");
+      // Check for duplicate slug and auto-append suffix if needed
+      const ensureUniqueSlug = async (slug: string): Promise<string> => {
+        const { data } = await supabase.from("blog_posts").select("id").eq("slug", slug).maybeSingle();
+        if (!data) return slug;
+        // Try appending date, then incrementing counter
+        const dated = `${slug}-${today}`;
+        const { data: d2 } = await supabase.from("blog_posts").select("id").eq("slug", dated).maybeSingle();
+        if (!d2) return dated;
+        for (let i = 2; i <= 10; i++) {
+          const candidate = `${slug}-${today}-${i}`;
+          const { data: d3 } = await supabase.from("blog_posts").select("id").eq("slug", candidate).maybeSingle();
+          if (!d3) return candidate;
+        }
+        return `${slug}-${Date.now()}`;
+      };
 
       const seoFallback = {
         seo_title: suggestedTitle,
