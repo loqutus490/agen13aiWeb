@@ -13,7 +13,7 @@ import {
   DialogHeader, DialogTitle,
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
-import { Users, KeyRound, Search } from "lucide-react";
+import { Users, KeyRound, Search, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 
 interface User {
@@ -105,6 +105,26 @@ const UsersTab = () => {
     }
   };
 
+  const handleDeleteUser = async (user: User) => {
+    if (!confirm(`Delete user ${user.email}? This cannot be undone.`)) return;
+
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      const res = await supabase.functions.invoke("admin-users", {
+        body: { action: "delete_user", userId: user.id },
+        headers: { Authorization: `Bearer ${session?.access_token}` },
+      });
+      if (res.error) throw res.error;
+      if (res.data?.error) throw new Error(res.data.error);
+
+      setUsers((prev) => prev.filter((u) => u.id !== user.id));
+      toast.success(`Deleted user ${user.email}`);
+    } catch (error: any) {
+      console.error("Error deleting user:", error);
+      toast.error(error.message || "Failed to delete user");
+    }
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center py-12">
@@ -169,7 +189,7 @@ const UsersTab = () => {
                         {user.email_confirmed_at ? "Verified" : "Unverified"}
                       </Badge>
                     </TableCell>
-                    <TableCell className="text-right">
+                    <TableCell className="text-right space-x-2">
                       <Button
                         variant="outline"
                         size="sm"
@@ -177,6 +197,14 @@ const UsersTab = () => {
                       >
                         <KeyRound className="w-3 h-3 mr-1" />
                         Reset Password
+                      </Button>
+                      <Button
+                        variant="destructive"
+                        size="sm"
+                        onClick={() => handleDeleteUser(user)}
+                      >
+                        <Trash2 className="w-3 h-3 mr-1" />
+                        Delete
                       </Button>
                     </TableCell>
                   </TableRow>
