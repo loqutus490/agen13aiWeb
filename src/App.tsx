@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ChatWidget } from "@/components/ChatWidget";
 import { AuthProvider } from "@/contexts/AuthContext";
 import CookieConsent from "@/components/CookieConsent";
+import LeadCapturePopup from "@/components/LeadCapturePopup";
 import Home from "./pages/Home";
 import Features from "./pages/Features";
 import Pricing from "./pages/Pricing";
@@ -28,6 +29,7 @@ import AdminDashboard from "./pages/AdminDashboard";
 import AITools from "./pages/AITools";
 import ContentIngestionTest from "./pages/ContentIngestionTest";
 import ResetPassword from "./pages/ResetPassword";
+import AIReadinessGuide from "./pages/AIReadinessGuide";
 
 const queryClient = new QueryClient();
 
@@ -39,6 +41,7 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <CookieConsent />
+          <LeadCapturePopup />
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/features" element={<Features />} />
@@ -53,6 +56,7 @@ const App = () => (
             <Route path="/services" element={<Services />} />
             <Route path="/resources" element={<Resources />} />
             <Route path="/ai-tools" element={<AITools />} />
+            <Route path="/ai-readiness-guide" element={<AIReadinessGuide />} />
             <Route path="/faq" element={<FAQ />} />
             <Route path="/privacy" element={<PrivacyPolicy />} />
             <Route path="/terms" element={<TermsOfService />} />

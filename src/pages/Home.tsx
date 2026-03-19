@@ -9,6 +9,7 @@ import {
 import Navbar from "@/components/Navbar";
 import SEO from "@/components/SEO";
 import Footer from "@/components/Footer";
+import LeadMagnetSection from "@/components/home/LeadMagnetSection";
 
 const Home = () => {
   return (
@@ -223,6 +224,9 @@ const Home = () => {
           </div>
         </div>
       </section>
+
+      {/* Lead Magnet */}
+      <LeadMagnetSection />
 
       {/* CTA */}
       <section className="py-20 px-4">
