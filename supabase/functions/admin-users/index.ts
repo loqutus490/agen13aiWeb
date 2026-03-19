@@ -60,12 +60,24 @@ Deno.serve(async (req) => {
       });
       if (error) throw error;
 
+      // Fetch all roles
+      const { data: rolesData } = await supabase
+        .from("user_roles")
+        .select("user_id, role");
+
+      const rolesByUser: Record<string, string[]> = {};
+      (rolesData || []).forEach((r: any) => {
+        if (!rolesByUser[r.user_id]) rolesByUser[r.user_id] = [];
+        rolesByUser[r.user_id].push(r.role);
+      });
+
       const users = data.users.map((u) => ({
         id: u.id,
         email: u.email,
         created_at: u.created_at,
         last_sign_in_at: u.last_sign_in_at,
         email_confirmed_at: u.email_confirmed_at,
+        roles: rolesByUser[u.id] || [],
       }));
 
       return new Response(JSON.stringify({ users, total: data.users.length }), {
