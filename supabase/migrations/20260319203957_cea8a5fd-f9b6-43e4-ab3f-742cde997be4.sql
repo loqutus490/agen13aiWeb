@@ -1,0 +1,1 @@
+UPDATE blog_posts SET published = true, published_at = now(), status = 'published' WHERE id = '31d03dd8-281e-46ea-94d6-66460f978260';
