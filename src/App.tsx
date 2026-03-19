@@ -29,6 +29,7 @@ import AdminDashboard from "./pages/AdminDashboard";
 import AITools from "./pages/AITools";
 import ContentIngestionTest from "./pages/ContentIngestionTest";
 import ResetPassword from "./pages/ResetPassword";
+import AIReadinessGuide from "./pages/AIReadinessGuide";
 
 const queryClient = new QueryClient();
 
