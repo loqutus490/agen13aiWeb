@@ -103,8 +103,14 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="mt-12 pt-8 border-t border-border/40 text-center text-sm text-muted-foreground">
-          © {new Date().getFullYear()} agent13 ai. All rights reserved.
+        <div className="mt-12 pt-8 border-t border-border/40 text-center space-y-2">
+          <p className="text-sm text-muted-foreground">
+            © {new Date().getFullYear()} agent13 ai. All rights reserved.
+          </p>
+          <p className="text-xs text-muted-foreground/60 max-w-2xl mx-auto">
+            Disclaimer: The information on this website is for general informational purposes only and does not constitute legal advice. While we strive for accuracy, we make no guarantees about the completeness or reliability of any content. agent13 ai reserves the right to modify any content at any time without notice. See our{" "}
+            <Link to="/terms" className="underline hover:text-primary transition-colors">Terms of Service</Link> for full details.
+          </p>
         </div>
       </div>
     </footer>
