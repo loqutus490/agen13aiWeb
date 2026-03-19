@@ -2,6 +2,7 @@ import { useParams, useNavigate, Link } from "react-router-dom";
 import { useState, useEffect, useMemo } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import DOMPurify from "dompurify";
+import ReactMarkdown from "react-markdown";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
@@ -20,6 +21,11 @@ interface BlogPost {
   tags: string[];
   image_url: string | null;
 }
+
+const isMarkdown = (content: string): boolean => {
+  // Detect markdown patterns: headings, bold, lists, links, code blocks
+  return /^#{1,6}\s|^\*\s|^-\s|^\d+\.\s|\*\*.*\*\*|```|\[.*\]\(.*\)/m.test(content);
+};
 
 const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -67,9 +73,11 @@ const BlogPost = () => {
     return null;
   }
 
+  const contentIsMarkdown = isMarkdown(post.content);
+
   return (
     <div className="min-h-screen">
-      <SEO title={post.title} description={post.content.replace(/<[^>]*>/g, '').slice(0, 155)} type="article" />
+      <SEO title={post.title} description={post.content.replace(/<[^>]*>/g, '').replace(/[#*_`]/g, '').slice(0, 155)} type="article" />
       <Navbar />
       
       <article className="pt-32 pb-20 px-4">
@@ -141,16 +149,22 @@ const BlogPost = () => {
             </div>
           )}
 
-          <div 
-            className="prose prose-lg max-w-none" 
-            dangerouslySetInnerHTML={{ 
-              __html: DOMPurify.sanitize(post.content, {
-                ALLOWED_TAGS: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'br', 'strong', 'em', 'u', 's', 'a', 'ul', 'ol', 'li', 'blockquote', 'code', 'pre', 'img', 'hr', 'span', 'div'],
-                ALLOWED_ATTR: ['href', 'src', 'alt', 'title', 'class', 'id', 'target', 'rel'],
-                ALLOW_DATA_ATTR: false,
-              })
-            }} 
-          />
+          {contentIsMarkdown ? (
+            <div className="prose prose-lg max-w-none dark:prose-invert prose-headings:tracking-tight prose-h2:text-2xl prose-h2:mt-10 prose-h2:mb-4 prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-3 prose-p:leading-relaxed prose-p:mb-4 prose-li:leading-relaxed prose-blockquote:border-l-primary prose-blockquote:bg-muted/50 prose-blockquote:py-2 prose-blockquote:px-4 prose-blockquote:rounded-r-lg prose-strong:text-foreground prose-a:text-primary prose-a:no-underline hover:prose-a:underline">
+              <ReactMarkdown>{post.content}</ReactMarkdown>
+            </div>
+          ) : (
+            <div 
+              className="prose prose-lg max-w-none dark:prose-invert prose-headings:tracking-tight prose-h2:text-2xl prose-h2:mt-10 prose-h2:mb-4 prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-3 prose-p:leading-relaxed prose-p:mb-4 prose-li:leading-relaxed prose-blockquote:border-l-primary prose-blockquote:bg-muted/50 prose-blockquote:py-2 prose-blockquote:px-4 prose-blockquote:rounded-r-lg prose-strong:text-foreground prose-a:text-primary prose-a:no-underline hover:prose-a:underline" 
+              dangerouslySetInnerHTML={{ 
+                __html: DOMPurify.sanitize(post.content, {
+                  ALLOWED_TAGS: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'br', 'strong', 'em', 'u', 's', 'a', 'ul', 'ol', 'li', 'blockquote', 'code', 'pre', 'img', 'hr', 'span', 'div'],
+                  ALLOWED_ATTR: ['href', 'src', 'alt', 'title', 'class', 'id', 'target', 'rel'],
+                  ALLOW_DATA_ATTR: false,
+                })
+              }} 
+            />
+          )}
 
           <div className="mt-12 pt-8 border-t">
             <Button onClick={() => navigate("/blog")} variant="outline">
