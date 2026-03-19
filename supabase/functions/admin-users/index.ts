@@ -133,6 +133,53 @@ Deno.serve(async (req) => {
       });
     }
 
+    if (action === "assign_role") {
+      const { userId, role } = params;
+      const validRoles = ["admin", "moderator", "user"];
+      if (!userId || !role || !validRoles.includes(role)) {
+        return new Response(JSON.stringify({ error: "Valid userId and role required" }), {
+          status: 400,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+
+      const { error } = await supabase
+        .from("user_roles")
+        .upsert({ user_id: userId, role }, { onConflict: "user_id,role" });
+      if (error) throw error;
+
+      return new Response(JSON.stringify({ success: true }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    if (action === "remove_role") {
+      const { userId, role } = params;
+      if (!userId || !role) {
+        return new Response(JSON.stringify({ error: "userId and role required" }), {
+          status: 400,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      if (userId === caller.id && role === "admin") {
+        return new Response(JSON.stringify({ error: "Cannot remove your own admin role" }), {
+          status: 400,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+
+      const { error } = await supabase
+        .from("user_roles")
+        .delete()
+        .eq("user_id", userId)
+        .eq("role", role);
+      if (error) throw error;
+
+      return new Response(JSON.stringify({ success: true }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
     return new Response(JSON.stringify({ error: "Unknown action" }), {
       status: 400,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
