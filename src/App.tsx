@@ -27,6 +27,7 @@ import TermsOfService from "./pages/TermsOfService";
 import AdminDashboard from "./pages/AdminDashboard";
 import AITools from "./pages/AITools";
 import ContentIngestionTest from "./pages/ContentIngestionTest";
+import ResetPassword from "./pages/ResetPassword";
 
 const queryClient = new QueryClient();
 
