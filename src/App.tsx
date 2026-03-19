@@ -27,6 +27,7 @@ import TermsOfService from "./pages/TermsOfService";
 import AdminDashboard from "./pages/AdminDashboard";
 import AITools from "./pages/AITools";
 import ContentIngestionTest from "./pages/ContentIngestionTest";
+import ResetPassword from "./pages/ResetPassword";
 
 const queryClient = new QueryClient();
 
@@ -57,6 +58,7 @@ const App = () => (
             <Route path="/terms" element={<TermsOfService />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/admin" element={<AdminDashboard />} />
             <Route path="/admin/internal-tests/content-ingestion" element={<ContentIngestionTest />} />
             <Route path="/internal-tests/content-ingestion" element={<Navigate to="/admin/internal-tests/content-ingestion" replace />} />

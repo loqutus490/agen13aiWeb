@@ -5,6 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
 import { Link, useNavigate } from "react-router-dom";
 import { Sparkles } from "lucide-react";
+
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
@@ -23,6 +24,9 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [forgotEmail, setForgotEmail] = useState("");
+  const [showForgot, setShowForgot] = useState(false);
+  const [sendingReset, setSendingReset] = useState(false);
 
   useEffect(() => {
     if (user) {
@@ -79,6 +83,27 @@ const Login = () => {
     }
   };
 
+  const handleForgotPassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!forgotEmail) {
+      toast({ title: "Error", description: "Please enter your email address", variant: "destructive" });
+      return;
+    }
+    setSendingReset(true);
+    try {
+      const { error } = await supabase.auth.resetPasswordForEmail(forgotEmail, {
+        redirectTo: `${window.location.origin}/reset-password`,
+      });
+      if (error) throw error;
+      toast({ title: "Success", description: "Password reset link sent! Check your email." });
+      setShowForgot(false);
+    } catch (error: any) {
+      toast({ title: "Error", description: error.message || "Failed to send reset email", variant: "destructive" });
+    } finally {
+      setSendingReset(false);
+    }
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center px-4 animated-gradient-bg">
       <SEO title="Login" description="Sign in to your agent13 ai account to access your dashboard and AI tools." />
@@ -119,9 +144,19 @@ const Login = () => {
               required
               disabled={isLoading}
             />
-          </div>
+           </div>
 
-          <Button 
+           <div className="flex justify-end">
+             <button
+               type="button"
+               onClick={() => { setShowForgot(true); setForgotEmail(email); }}
+               className="text-sm text-primary hover:underline"
+             >
+               Forgot password?
+             </button>
+           </div>
+
+           <Button
             type="submit" 
             className="w-full bg-primary hover:bg-primary/90" 
             size="lg"
@@ -140,6 +175,46 @@ const Login = () => {
           </p>
         </div>
       </Card>
+
+      {/* Forgot Password Modal */}
+      {showForgot && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4">
+          <Card className="w-full max-w-md p-8">
+            <h2 className="text-2xl font-bold mb-2">Forgot Password</h2>
+            <p className="text-sm text-muted-foreground mb-4">
+              Enter your email and we'll send you a reset link.
+            </p>
+            <form onSubmit={handleForgotPassword} className="space-y-4">
+              <div>
+                <Label htmlFor="forgot-email">Email</Label>
+                <Input
+                  id="forgot-email"
+                  type="email"
+                  placeholder="your@email.com"
+                  className="mt-2"
+                  value={forgotEmail}
+                  onChange={(e) => setForgotEmail(e.target.value)}
+                  required
+                  disabled={sendingReset}
+                />
+              </div>
+              <div className="flex gap-2">
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="flex-1"
+                  onClick={() => setShowForgot(false)}
+                >
+                  Cancel
+                </Button>
+                <Button type="submit" className="flex-1" disabled={sendingReset}>
+                  {sendingReset ? "Sending..." : "Send Reset Link"}
+                </Button>
+              </div>
+            </form>
+          </Card>
+        </div>
+      )}
     </div>
   );
 };
