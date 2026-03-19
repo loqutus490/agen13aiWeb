@@ -12,9 +12,15 @@ import {
   Dialog, DialogContent, DialogDescription, DialogFooter,
   DialogHeader, DialogTitle,
 } from "@/components/ui/dialog";
+import {
+  DropdownMenu, DropdownMenuContent, DropdownMenuItem,
+  DropdownMenuTrigger, DropdownMenuSeparator, DropdownMenuLabel,
+} from "@/components/ui/dropdown-menu";
 import { Label } from "@/components/ui/label";
-import { Users, KeyRound, Search, Trash2 } from "lucide-react";
+import { Users, KeyRound, Search, Trash2, ShieldCheck, Shield, UserCog, Plus, X } from "lucide-react";
 import { toast } from "sonner";
+
+type AppRole = "admin" | "moderator" | "user";
 
 interface User {
   id: string;
@@ -22,7 +28,27 @@ interface User {
   created_at: string;
   last_sign_in_at: string | null;
   email_confirmed_at: string | null;
+  roles: AppRole[];
 }
+
+const ROLE_CONFIG: Record<AppRole, { label: string; variant: "default" | "secondary" | "outline" }> = {
+  admin: { label: "Admin", variant: "default" },
+  moderator: { label: "Moderator", variant: "secondary" },
+  user: { label: "User", variant: "outline" },
+};
+
+const ALL_ROLES: AppRole[] = ["admin", "moderator", "user"];
+
+const invokeAdmin = async (body: Record<string, unknown>) => {
+  const { data: { session } } = await supabase.auth.getSession();
+  const res = await supabase.functions.invoke("admin-users", {
+    body,
+    headers: { Authorization: `Bearer ${session?.access_token}` },
+  });
+  if (res.error) throw res.error;
+  if (res.data?.error) throw new Error(res.data.error);
+  return res.data;
+};
 
 const UsersTab = () => {
   const [users, setUsers] = useState<User[]>([]);
@@ -53,13 +79,8 @@ const UsersTab = () => {
 
   const fetchUsers = async () => {
     try {
-      const { data: { session } } = await supabase.auth.getSession();
-      const res = await supabase.functions.invoke("admin-users", {
-        body: { action: "list" },
-        headers: { Authorization: `Bearer ${session?.access_token}` },
-      });
-      if (res.error) throw res.error;
-      setUsers(res.data.users || []);
+      const data = await invokeAdmin({ action: "list" });
+      setUsers(data.users || []);
     } catch (error: any) {
       console.error("Error fetching users:", error);
       toast.error("Failed to load users");
@@ -81,18 +102,11 @@ const UsersTab = () => {
 
     setChangingPassword(true);
     try {
-      const { data: { session } } = await supabase.auth.getSession();
-      const res = await supabase.functions.invoke("admin-users", {
-        body: {
-          action: "change_password",
-          userId: passwordDialog.user.id,
-          newPassword,
-        },
-        headers: { Authorization: `Bearer ${session?.access_token}` },
+      await invokeAdmin({
+        action: "change_password",
+        userId: passwordDialog.user.id,
+        newPassword,
       });
-      if (res.error) throw res.error;
-      if (res.data?.error) throw new Error(res.data.error);
-
       toast.success(`Password updated for ${passwordDialog.user.email}`);
       setPasswordDialog({ open: false, user: null });
       setNewPassword("");
@@ -107,21 +121,42 @@ const UsersTab = () => {
 
   const handleDeleteUser = async (user: User) => {
     if (!confirm(`Delete user ${user.email}? This cannot be undone.`)) return;
-
     try {
-      const { data: { session } } = await supabase.auth.getSession();
-      const res = await supabase.functions.invoke("admin-users", {
-        body: { action: "delete_user", userId: user.id },
-        headers: { Authorization: `Bearer ${session?.access_token}` },
-      });
-      if (res.error) throw res.error;
-      if (res.data?.error) throw new Error(res.data.error);
-
+      await invokeAdmin({ action: "delete_user", userId: user.id });
       setUsers((prev) => prev.filter((u) => u.id !== user.id));
       toast.success(`Deleted user ${user.email}`);
     } catch (error: any) {
       console.error("Error deleting user:", error);
       toast.error(error.message || "Failed to delete user");
+    }
+  };
+
+  const handleAssignRole = async (userId: string, role: AppRole) => {
+    try {
+      await invokeAdmin({ action: "assign_role", userId, role });
+      setUsers((prev) =>
+        prev.map((u) =>
+          u.id === userId ? { ...u, roles: [...new Set([...u.roles, role])] } : u
+        )
+      );
+      toast.success(`Role "${role}" assigned`);
+    } catch (error: any) {
+      toast.error(error.message || "Failed to assign role");
+    }
+  };
+
+  const handleRemoveRole = async (userId: string, role: AppRole) => {
+    if (!confirm(`Remove "${role}" role from this user?`)) return;
+    try {
+      await invokeAdmin({ action: "remove_role", userId, role });
+      setUsers((prev) =>
+        prev.map((u) =>
+          u.id === userId ? { ...u, roles: u.roles.filter((r) => r !== role) } : u
+        )
+      );
+      toast.success(`Role "${role}" removed`);
+    } catch (error: any) {
+      toast.error(error.message || "Failed to remove role");
     }
   };
 
@@ -159,6 +194,7 @@ const UsersTab = () => {
             <TableHeader>
               <TableRow>
                 <TableHead>Email</TableHead>
+                <TableHead>Roles</TableHead>
                 <TableHead>Registered</TableHead>
                 <TableHead>Last Sign In</TableHead>
                 <TableHead>Status</TableHead>
@@ -168,47 +204,100 @@ const UsersTab = () => {
             <TableBody>
               {filteredUsers.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={5} className="text-center py-8 text-muted-foreground">
+                  <TableCell colSpan={6} className="text-center py-8 text-muted-foreground">
                     No users found
                   </TableCell>
                 </TableRow>
               ) : (
-                filteredUsers.map((user) => (
-                  <TableRow key={user.id}>
-                    <TableCell className="font-medium">{user.email}</TableCell>
-                    <TableCell className="text-muted-foreground">
-                      {new Date(user.created_at).toLocaleDateString()}
-                    </TableCell>
-                    <TableCell className="text-muted-foreground">
-                      {user.last_sign_in_at
-                        ? new Date(user.last_sign_in_at).toLocaleDateString()
-                        : "Never"}
-                    </TableCell>
-                    <TableCell>
-                      <Badge variant={user.email_confirmed_at ? "default" : "secondary"}>
-                        {user.email_confirmed_at ? "Verified" : "Unverified"}
-                      </Badge>
-                    </TableCell>
-                    <TableCell className="text-right space-x-2">
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => setPasswordDialog({ open: true, user })}
-                      >
-                        <KeyRound className="w-3 h-3 mr-1" />
-                        Reset Password
-                      </Button>
-                      <Button
-                        variant="destructive"
-                        size="sm"
-                        onClick={() => handleDeleteUser(user)}
-                      >
-                        <Trash2 className="w-3 h-3 mr-1" />
-                        Delete
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                ))
+                filteredUsers.map((user) => {
+                  const availableRoles = ALL_ROLES.filter((r) => !user.roles.includes(r));
+                  return (
+                    <TableRow key={user.id}>
+                      <TableCell className="font-medium">{user.email}</TableCell>
+                      <TableCell>
+                        <div className="flex flex-wrap items-center gap-1.5">
+                          {user.roles.length === 0 && (
+                            <span className="text-xs text-muted-foreground">No roles</span>
+                          )}
+                          {user.roles.map((role) => (
+                            <Badge
+                              key={role}
+                              variant={ROLE_CONFIG[role].variant}
+                              className="gap-1 pr-1"
+                            >
+                              {role === "admin" && <ShieldCheck className="w-3 h-3" />}
+                              {role === "moderator" && <Shield className="w-3 h-3" />}
+                              {role === "user" && <UserCog className="w-3 h-3" />}
+                              {ROLE_CONFIG[role].label}
+                              <button
+                                onClick={() => handleRemoveRole(user.id, role)}
+                                className="ml-0.5 rounded-full p-0.5 hover:bg-background/20"
+                                title={`Remove ${role} role`}
+                              >
+                                <X className="w-3 h-3" />
+                              </button>
+                            </Badge>
+                          ))}
+                          {availableRoles.length > 0 && (
+                            <DropdownMenu>
+                              <DropdownMenuTrigger asChild>
+                                <Button variant="ghost" size="sm" className="h-6 w-6 p-0">
+                                  <Plus className="w-3 h-3" />
+                                </Button>
+                              </DropdownMenuTrigger>
+                              <DropdownMenuContent align="start">
+                                <DropdownMenuLabel className="text-xs">Assign role</DropdownMenuLabel>
+                                <DropdownMenuSeparator />
+                                {availableRoles.map((role) => (
+                                  <DropdownMenuItem
+                                    key={role}
+                                    onClick={() => handleAssignRole(user.id, role)}
+                                  >
+                                    {role === "admin" && <ShieldCheck className="w-3 h-3 mr-2" />}
+                                    {role === "moderator" && <Shield className="w-3 h-3 mr-2" />}
+                                    {role === "user" && <UserCog className="w-3 h-3 mr-2" />}
+                                    {ROLE_CONFIG[role].label}
+                                  </DropdownMenuItem>
+                                ))}
+                              </DropdownMenuContent>
+                            </DropdownMenu>
+                          )}
+                        </div>
+                      </TableCell>
+                      <TableCell className="text-muted-foreground">
+                        {new Date(user.created_at).toLocaleDateString()}
+                      </TableCell>
+                      <TableCell className="text-muted-foreground">
+                        {user.last_sign_in_at
+                          ? new Date(user.last_sign_in_at).toLocaleDateString()
+                          : "Never"}
+                      </TableCell>
+                      <TableCell>
+                        <Badge variant={user.email_confirmed_at ? "default" : "secondary"}>
+                          {user.email_confirmed_at ? "Verified" : "Unverified"}
+                        </Badge>
+                      </TableCell>
+                      <TableCell className="text-right space-x-2">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => setPasswordDialog({ open: true, user })}
+                        >
+                          <KeyRound className="w-3 h-3 mr-1" />
+                          Reset Password
+                        </Button>
+                        <Button
+                          variant="destructive"
+                          size="sm"
+                          onClick={() => handleDeleteUser(user)}
+                        >
+                          <Trash2 className="w-3 h-3 mr-1" />
+                          Delete
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })
               )}
             </TableBody>
           </Table>
