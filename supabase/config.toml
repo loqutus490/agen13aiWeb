@@ -17,3 +17,9 @@ project_id = "upmiqdnbvojpodgucxmw"
     verify_jwt = false
   [functions.content-health]
     verify_jwt = false
+  [functions.content-automation-run]
+    verify_jwt = false
+  [functions.send-newsletter-draft]
+    verify_jwt = false
+  [functions.submit-lead]
+    verify_jwt = false
