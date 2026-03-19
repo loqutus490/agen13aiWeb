@@ -407,7 +407,20 @@ const BlogManagement = () => {
                 <AccordionItem value="content">
                   <AccordionTrigger>Article Content</AccordionTrigger>
                   <AccordionContent>
-                    <div className="prose prose-sm max-w-none" dangerouslySetInnerHTML={{ __html: inspectPost.content }} />
+                    {/^#{1,6}\s|^\*\s|^-\s|\*\*.*\*\*/m.test(inspectPost.content) ? (
+                      <div className="prose prose-sm max-w-none dark:prose-invert">
+                        <ReactMarkdown>{inspectPost.content}</ReactMarkdown>
+                      </div>
+                    ) : (
+                      <div className="prose prose-sm max-w-none" dangerouslySetInnerHTML={{ __html: inspectPost.content }} />
+                    )}
+                    <div className="mt-4 pt-4 border-t">
+                      <Button size="sm" variant="outline" asChild>
+                        <a href={`/blog/${inspectPost.slug}`} target="_blank" rel="noopener noreferrer">
+                          <ExternalLink className="w-4 h-4 mr-2" />Read Full Article
+                        </a>
+                      </Button>
+                    </div>
                   </AccordionContent>
                 </AccordionItem>
 
