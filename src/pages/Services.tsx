@@ -105,7 +105,7 @@ const Services = () => {
                 </div>
                 <h2 className="text-3xl md:text-4xl font-bold mb-4">Document AI & RAG</h2>
                 <p className="text-lg text-muted-foreground mb-6">
-                  We help law firms reduce repetitive drafting and research by implementing RAG-powered AI assistants trained on your firm's own briefs, memos, contracts, and templates — improving speed, consistency, and accuracy without replacing attorney judgment.
+                  We help law firms reduce repetitive drafting and research by implementing RAG-powered AI assistants that only use your firm's own briefs, memos, contracts, and templates — improving speed, consistency, and accuracy without replacing attorney judgment.
                 </p>
                 <div className="text-3xl font-bold text-primary mb-6">Starting at $999/month</div>
                 <Link to="/contact">
