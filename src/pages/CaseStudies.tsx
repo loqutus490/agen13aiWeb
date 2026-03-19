@@ -10,52 +10,52 @@ import { Link } from "react-router-dom";
 const CaseStudies = () => {
   const caseStudies = [
     {
-      company: "TechRetail Solutions",
-      industry: "E-commerce",
-      challenge: "Manual order processing consuming 15+ hours weekly, leading to delays and errors.",
-      solution: "Implemented AI-powered order automation and customer service chatbot.",
+      company: "Mid-Size Litigation Firm",
+      industry: "Litigation — 25 Attorneys",
+      challenge: "Associates spending 10+ hours per week drafting routine discovery responses, demand letters, and client correspondence using outdated templates scattered across shared drives.",
+      solution: "Deployed RAG-powered Document AI trained on the firm's existing brief bank, template library, and internal procedures. Attorneys now draft from a chat interface that pulls relevant precedents automatically.",
       results: [
-        { icon: Clock, label: "Time Saved", value: "18 hours/week" },
-        { icon: DollarSign, label: "Cost Reduction", value: "45%" },
-        { icon: TrendingUp, label: "Efficiency Gain", value: "3x faster" },
-        { icon: Users, label: "Customer Satisfaction", value: "+32%" }
+        { icon: Clock, label: "Drafting Time Saved", value: "12 hrs/week" },
+        { icon: DollarSign, label: "Recovered Billable Hours", value: "$18K/mo" },
+        { icon: TrendingUp, label: "First-Draft Accuracy", value: "90%+" },
+        { icon: Users, label: "Attorney Adoption", value: "100%" }
       ],
-      quote: "The AI automation paid for itself in the first month. We can now focus on growth instead of admin work.",
-      author: "Sarah Chen, CEO"
+      quote: "Our associates went from dreading routine drafting to generating solid first drafts in minutes. The AI pulls from our own precedents, so the quality is consistently on-brand.",
+      author: "Managing Partner, Litigation Practice"
     },
     {
-      company: "LocalHealth Clinic",
-      industry: "Healthcare",
-      challenge: "Appointment scheduling chaos and missed follow-ups affecting patient care.",
-      solution: "Deployed AI scheduling assistant and automated patient communication system.",
+      company: "Corporate & Real Estate Practice",
+      industry: "Transactional — 12 Attorneys",
+      challenge: "Paralegals and junior associates losing hours searching for clause precedents across thousands of past deals. Inconsistent contract language across practice groups causing client confusion.",
+      solution: "Implemented document knowledge base covering all executed agreements, clause libraries, and firm playbooks. Staff search and retrieve relevant clauses through natural language queries.",
       results: [
-        { icon: Clock, label: "Time Saved", value: "12 hours/week" },
-        { icon: Users, label: "Patient Retention", value: "+28%" },
-        { icon: TrendingUp, label: "No-Shows Reduced", value: "65%" },
-        { icon: DollarSign, label: "Revenue Increase", value: "$4.2K/month" }
+        { icon: Clock, label: "Research Time Cut", value: "70%" },
+        { icon: Users, label: "Consistency Improvement", value: "3x better" },
+        { icon: TrendingUp, label: "Deals Closed Faster", value: "40%" },
+        { icon: DollarSign, label: "Client Satisfaction", value: "+45%" }
       ],
-      quote: "Our patients love the instant responses, and our staff can finally focus on patient care instead of phone calls.",
-      author: "Dr. Michael Torres"
+      quote: "We used to have three different versions of the same indemnification clause floating around. Now everyone pulls from a single AI-powered source of truth.",
+      author: "Senior Partner, Corporate Practice"
     },
     {
-      company: "GreenSpace Marketing",
-      industry: "Marketing Agency",
-      challenge: "Content creation bottleneck limiting client capacity and growth.",
-      solution: "Integrated AI content generation tools for social media, emails, and blog posts.",
+      company: "Family Law Boutique",
+      industry: "Family Law — 6 Attorneys",
+      challenge: "Small team overwhelmed by volume of routine filings, client intake questionnaires, and correspondence. Staff turnover made institutional knowledge fragile.",
+      solution: "Built a firm-specific AI assistant covering intake procedures, court filing templates, standard correspondence, and internal SOPs. New hires onboard faster with AI-guided workflows.",
       results: [
-        { icon: TrendingUp, label: "Output Increased", value: "4x more" },
-        { icon: Users, label: "New Clients", value: "+12" },
-        { icon: DollarSign, label: "Revenue Growth", value: "85%" },
-        { icon: Clock, label: "Time Saved", value: "25 hours/week" }
+        { icon: TrendingUp, label: "Intake Processing", value: "4x faster" },
+        { icon: Users, label: "Onboarding Time", value: "Cut 60%" },
+        { icon: DollarSign, label: "Revenue Growth", value: "+35%" },
+        { icon: Clock, label: "Admin Hours Saved", value: "20 hrs/week" }
       ],
-      quote: "We went from serving 8 clients to 20 without hiring more writers. Game changer.",
-      author: "Jessica Park, Founder"
+      quote: "As a small firm, losing one paralegal used to mean losing months of institutional knowledge. Now it's all in the AI system.",
+      author: "Founding Partner, Family Law"
     }
   ];
 
   return (
     <div className="min-h-screen">
-      <SEO title="Case Studies" description="Real results from businesses using agent13 ai — see how AI automation drives revenue growth, saves time, and improves efficiency." />
+      <SEO title="Case Studies" description="See how law firms use agent13 ai Document AI to reduce drafting time, improve consistency, and recover billable hours." />
       <Navbar />
       
       <section className="pt-32 pb-20 px-4 relative overflow-hidden animated-gradient-bg">
@@ -68,10 +68,10 @@ const CaseStudies = () => {
           </Badge>
           <h1 className="text-5xl md:text-6xl font-bold mb-6 tracking-tight">
             Real Results from
-            <span className="block text-primary">Real Businesses</span>
+            <span className="block text-primary">Real Law Firms</span>
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            See how businesses transformed their operations and boosted profitability with AI solutions.
+            See how firms of all sizes are using Document AI to recover billable hours and improve work product consistency.
           </p>
         </div>
       </section>
@@ -92,7 +92,6 @@ const CaseStudies = () => {
                       <h3 className="text-sm font-semibold text-primary mb-2">THE CHALLENGE</h3>
                       <p className="text-muted-foreground">{study.challenge}</p>
                     </div>
-                    
                     <div>
                       <h3 className="text-sm font-semibold text-primary mb-2">THE SOLUTION</h3>
                       <p className="text-muted-foreground">{study.solution}</p>
@@ -123,10 +122,10 @@ const CaseStudies = () => {
       <section className="py-20 px-4 bg-muted/30">
         <div className="container mx-auto max-w-4xl text-center">
           <h2 className="text-4xl font-bold mb-6">
-            Ready to Write Your Success Story?
+            Ready to See These Results at Your Firm?
           </h2>
           <p className="text-xl text-muted-foreground mb-8">
-            Let's discuss how AI can transform your business operations
+            Schedule a discovery call to discuss how Document AI can transform your firm's workflows
           </p>
           <Link to="/contact">
             <Button 
@@ -142,7 +141,7 @@ const CaseStudies = () => {
                 });
               }}
             >
-              <span className="relative z-10">Get Started Today</span>
+              <span className="relative z-10">Schedule Discovery Call</span>
               <ArrowRight className="ml-2 w-5 h-5 relative z-10" />
               <div className="absolute inset-0 bg-gradient-to-r from-primary-glow to-primary opacity-0 group-hover:opacity-100 transition-opacity" />
             </Button>

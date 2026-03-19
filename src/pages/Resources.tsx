@@ -21,101 +21,101 @@ const Resources = () => {
   const guides = [
     {
       icon: FileText,
-      title: "AI Readiness Checklist",
-      description: "Assess if your business is ready to implement AI solutions with this comprehensive checklist.",
+      title: "AI Readiness Checklist for Law Firms",
+      description: "Assess whether your firm is ready to implement AI for document review, drafting, and internal knowledge management.",
       type: "PDF Download",
       size: "2.1 MB",
       downloadUrl: "/guides/ai-readiness-checklist.pdf",
-      fileName: "AI-Readiness-Checklist.pdf"
+      fileName: "AI-Readiness-Checklist-Law-Firms.pdf"
     },
     {
       icon: BookOpen,
-      title: "AI Implementation Guide for Business",
-      description: "Step-by-step guide to planning and executing your first AI project successfully.",
+      title: "Legal AI Implementation Guide",
+      description: "Step-by-step guide to planning and deploying document AI at your firm while maintaining compliance and privilege.",
       type: "PDF Download",
       size: "3.5 MB",
       downloadUrl: "/guides/ai-implementation-guide.pdf",
-      fileName: "AI-Implementation-Guide.pdf"
+      fileName: "Legal-AI-Implementation-Guide.pdf"
     },
     {
       icon: CheckSquare,
-      title: "Process Automation Template",
-      description: "Identify which tasks in your business are prime candidates for AI automation.",
+      title: "Document Automation Audit Template",
+      description: "Identify which legal workflows — drafting, research, intake — are the best candidates for AI automation at your firm.",
       type: "PDF Download",
       size: "0.8 MB",
       downloadUrl: "/guides/process-automation-template.pdf",
-      fileName: "Process-Automation-Template.pdf"
+      fileName: "Document-Automation-Audit.pdf"
     },
     {
       icon: TrendingUp,
-      title: "ROI Calculator for AI Projects",
-      description: "Calculate the potential return on investment before implementing AI solutions.",
+      title: "ROI Calculator: AI for Legal Practice",
+      description: "Calculate the potential billable hours recovered and cost savings before implementing Document AI.",
       type: "PDF Download",
       size: "1.2 MB",
       downloadUrl: "/guides/roi-calculator.pdf",
-      fileName: "ROI-Calculator.pdf"
+      fileName: "Legal-AI-ROI-Calculator.pdf"
     }
   ];
 
   const tutorials = [
     {
-      title: "Getting Started with AI in Your Business",
+      title: "Getting Started with AI at Your Law Firm",
       duration: "12 min",
-      topics: ["AI Basics", "Use Cases", "First Steps"]
+      topics: ["Legal AI Basics", "Use Cases", "First Steps"]
     },
     {
-      title: "Choosing the Right AI Tools",
+      title: "How RAG Works for Legal Document Search",
       duration: "18 min",
-      topics: ["Tool Selection", "Budget Planning", "Integration"]
+      topics: ["RAG Explained", "Knowledge Bases", "Legal Applications"]
     },
     {
-      title: "Measuring AI Success",
+      title: "Measuring AI ROI at a Law Firm",
       duration: "15 min",
-      topics: ["KPIs", "Analytics", "Optimization"]
+      topics: ["Billable Hours", "Efficiency Metrics", "Client Satisfaction"]
     },
     {
-      title: "AI Security & Privacy Best Practices",
+      title: "AI Security & Privilege Considerations",
       duration: "20 min",
-      topics: ["Data Protection", "Compliance", "Risk Management"]
+      topics: ["Data Protection", "Ethics Rules", "Compliance"]
     }
   ];
 
   const articles = [
     {
-      title: "5 Ways AI Can Transform Your Customer Service",
-      category: "Customer Experience",
+      title: "5 Ways Document AI Transforms Legal Drafting",
+      category: "Legal Technology",
       readTime: "8 min read"
     },
     {
-      title: "The Real Cost of NOT Using AI in 2025",
-      category: "Business Strategy",
+      title: "The Cost of NOT Using AI in Legal Practice",
+      category: "Firm Strategy",
       readTime: "10 min read"
     },
     {
-      title: "AI Implementation Mistakes to Avoid",
+      title: "AI Implementation Mistakes Law Firms Should Avoid",
       category: "Best Practices",
       readTime: "12 min read"
     },
     {
-      title: "From Manual to Automated: A Case Study",
+      title: "From Manual Research to AI-Powered Knowledge: A Case Study",
       category: "Success Stories",
       readTime: "15 min read"
     },
     {
-      title: "Essential AI Tools Every Business Should Know About",
-      category: "Technology",
+      title: "Essential AI Tools Every Law Firm Should Evaluate",
+      category: "Legal Tech",
       readTime: "6 min read"
     },
     {
-      title: "Building an AI Strategy on a Budget",
-      category: "Planning",
+      title: "Building an AI Strategy for a Small Law Firm",
+      category: "Firm Management",
       readTime: "11 min read"
     }
   ];
 
   return (
     <div className="min-h-screen">
-      <SEO title="Resources" description="Free AI guides, templates, and tools to help your business get started with automation and document AI." />
+      <SEO title="Resources for Law Firms" description="Free AI guides, templates, and tools to help law firms get started with document AI, automation, and legal knowledge management." />
       <Navbar />
       
       <section className="pt-32 pb-20 px-4 relative overflow-hidden animated-gradient-bg">
@@ -127,11 +127,11 @@ const Resources = () => {
             Knowledge Hub
           </Badge>
           <h1 className="text-5xl md:text-6xl font-bold mb-6 tracking-tight">
-            Learn Everything About
-            <span className="block text-primary">AI for Business</span>
+            AI Resources
+            <span className="block text-primary">for Legal Professionals</span>
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Free guides, templates, tutorials, and articles to help you succeed with AI implementation.
+            Free guides, templates, and tutorials to help your firm evaluate and implement AI for legal practice.
           </p>
         </div>
       </section>
@@ -142,7 +142,7 @@ const Resources = () => {
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold mb-4">Free Downloadable Resources</h2>
             <p className="text-xl text-muted-foreground">
-              Practical tools and guides to kickstart your AI journey
+              Practical tools designed specifically for law firms exploring AI
             </p>
           </div>
 
@@ -187,7 +187,7 @@ const Resources = () => {
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold mb-4">Video Tutorials</h2>
             <p className="text-xl text-muted-foreground">
-              Watch and learn at your own pace
+              Learn about AI for legal practice at your own pace
             </p>
           </div>
 
@@ -226,7 +226,7 @@ const Resources = () => {
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold mb-4">Latest Articles</h2>
             <p className="text-xl text-muted-foreground">
-              Insights, strategies, and best practices
+              Insights on AI adoption for legal professionals
             </p>
           </div>
 
