@@ -86,7 +86,7 @@ const Login = () => {
   const handleForgotPassword = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!forgotEmail) {
-      toast.error("Please enter your email address");
+      toast({ title: "Error", description: "Please enter your email address", variant: "destructive" });
       return;
     }
     setSendingReset(true);
@@ -95,10 +95,10 @@ const Login = () => {
         redirectTo: `${window.location.origin}/reset-password`,
       });
       if (error) throw error;
-      toast.success("Password reset link sent! Check your email.");
+      toast({ title: "Success", description: "Password reset link sent! Check your email." });
       setShowForgot(false);
     } catch (error: any) {
-      toast.error(error.message || "Failed to send reset email");
+      toast({ title: "Error", description: error.message || "Failed to send reset email", variant: "destructive" });
     } finally {
       setSendingReset(false);
     }
