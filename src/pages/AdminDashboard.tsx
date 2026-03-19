@@ -236,6 +236,10 @@ const AdminDashboard = () => {
                 <MessageSquare className="w-4 h-4 mr-2" />
                 Contact Submissions
               </TabsTrigger>
+              <TabsTrigger value="users">
+                <Users className="w-4 h-4 mr-2" />
+                Users
+              </TabsTrigger>
             </TabsList>
 
             <TabsContent value="leads">
