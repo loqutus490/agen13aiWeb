@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Youtube, Facebook, Instagram } from "lucide-react";
+import NewsletterSignup from "@/components/NewsletterSignup";
 
 const Footer = () => {
   return (
