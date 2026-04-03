@@ -27,11 +27,10 @@ Deno.serve(async () => {
     );
 
     const { data: posts, error } = await supabase
-      .from("blog_posts_public")
+      .from("blog_posts")
       .select("slug, created_at")
+      .eq("published", true)
       .order("created_at", { ascending: false });
-
-    console.log("Posts query result:", { count: posts?.length, error, firstPost: posts?.[0] });
 
     const today = new Date().toISOString().split("T")[0];
 
