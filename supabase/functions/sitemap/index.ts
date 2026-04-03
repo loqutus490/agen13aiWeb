@@ -47,7 +47,7 @@ Deno.serve(async () => {
 
     if (posts) {
       for (const post of posts) {
-        const lastmod = (post.updated_at || post.created_at || today).split("T")[0];
+        const lastmod = (post.created_at || today).split("T")[0];
         xml += `  <url>\n`;
         xml += `    <loc>${BASE_URL}/blog/${post.slug}</loc>\n`;
         xml += `    <lastmod>${lastmod}</lastmod>\n`;
