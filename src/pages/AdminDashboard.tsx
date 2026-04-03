@@ -241,6 +241,10 @@ const AdminDashboard = () => {
                 <Users className="w-4 h-4 mr-2" />
                 Users
               </TabsTrigger>
+              <TabsTrigger value="newsletter">
+                <Mail className="w-4 h-4 mr-2" />
+                Newsletter
+              </TabsTrigger>
             </TabsList>
 
             <TabsContent value="leads">
