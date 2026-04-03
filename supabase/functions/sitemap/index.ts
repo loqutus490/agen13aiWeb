@@ -23,12 +23,13 @@ Deno.serve(async () => {
   try {
     const supabase = createClient(
       Deno.env.get("SUPABASE_URL")!,
-      Deno.env.get("SUPABASE_ANON_KEY")!
+      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
     );
 
-    const { data: posts } = await supabase
-      .from("blog_posts_public")
-      .select("slug, created_at, updated_at")
+    const { data: posts, error } = await supabase
+      .from("blog_posts")
+      .select("slug, created_at")
+      .eq("published", true)
       .order("created_at", { ascending: false });
 
     const today = new Date().toISOString().split("T")[0];
@@ -47,7 +48,7 @@ Deno.serve(async () => {
 
     if (posts) {
       for (const post of posts) {
-        const lastmod = (post.updated_at || post.created_at || today).split("T")[0];
+        const lastmod = (post.created_at || today).split("T")[0];
         xml += `  <url>\n`;
         xml += `    <loc>${BASE_URL}/blog/${post.slug}</loc>\n`;
         xml += `    <lastmod>${lastmod}</lastmod>\n`;
