@@ -10,6 +10,7 @@ import Navbar from "@/components/Navbar";
 import SEO from "@/components/SEO";
 import Footer from "@/components/Footer";
 import LeadMagnetSection from "@/components/home/LeadMagnetSection";
+import TestimonialsSection from "@/components/home/TestimonialsSection";
 
 const Home = () => {
   return (
