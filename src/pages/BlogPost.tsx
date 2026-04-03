@@ -1,5 +1,5 @@
 import { useParams, useNavigate, Link } from "react-router-dom";
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import DOMPurify from "dompurify";
 import ReactMarkdown from "react-markdown";
@@ -77,7 +77,18 @@ const BlogPost = () => {
 
   return (
     <div className="min-h-screen">
-      <SEO title={post.title} description={post.content.replace(/<[^>]*>/g, '').replace(/[#*_`]/g, '').slice(0, 155)} type="article" />
+      <SEO
+        title={post.title}
+        description={post.content.replace(/<[^>]*>/g, '').replace(/[#*_`]/g, '').slice(0, 155)}
+        type="article"
+        article={{
+          headline: post.title,
+          datePublished: post.date,
+          author: post.author || undefined,
+          image: post.image_url || undefined,
+          description: post.content.replace(/<[^>]*>/g, '').replace(/[#*_`]/g, '').slice(0, 155),
+        }}
+      />
       <Navbar />
       
       <article className="pt-32 pb-20 px-4">
