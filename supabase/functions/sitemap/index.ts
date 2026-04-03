@@ -28,7 +28,7 @@ Deno.serve(async () => {
 
     const { data: posts } = await supabase
       .from("blog_posts_public")
-      .select("slug, created_at, updated_at")
+      .select("slug, created_at")
       .order("created_at", { ascending: false });
 
     const today = new Date().toISOString().split("T")[0];
