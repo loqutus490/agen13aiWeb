@@ -26,10 +26,12 @@ Deno.serve(async () => {
       Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
     );
 
-    const { data: posts } = await supabase
+    const { data: posts, error } = await supabase
       .from("blog_posts_public")
       .select("slug, created_at")
       .order("created_at", { ascending: false });
+
+    console.log("Posts query result:", { count: posts?.length, error, firstPost: posts?.[0] });
 
     const today = new Date().toISOString().split("T")[0];
 
