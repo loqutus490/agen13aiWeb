@@ -407,6 +407,10 @@ const AdminDashboard = () => {
             <TabsContent value="users">
               <UsersTab />
             </TabsContent>
+
+            <TabsContent value="newsletter">
+              <NewsletterSubscribersTab />
+            </TabsContent>
           </Tabs>
         </div>
       </section>
