@@ -257,6 +257,33 @@ serve(async (req) => {
       }).select().single();
       if (postErr) throw postErr;
 
+      // Regenerate static sitemap after new post creation
+      try {
+        log("Regenerating sitemap...");
+        const sitemapRes = await fetch(`${Deno.env.get("SUPABASE_URL")}/functions/v1/sitemap`);
+        if (sitemapRes.ok) {
+          const sitemapXml = await sitemapRes.text();
+          // Upload to public storage bucket for serving
+          const { error: uploadErr } = await supabase.storage
+            .from("blog-images")
+            .upload("sitemap.xml", new Blob([sitemapXml], { type: "application/xml" }), {
+              upsert: true,
+              contentType: "application/xml",
+              cacheControl: "3600",
+            });
+          if (uploadErr) {
+            log(`Sitemap upload error: ${uploadErr.message}`);
+          } else {
+            log("Sitemap regenerated and uploaded successfully");
+          }
+        } else {
+          log(`Sitemap fetch failed: ${sitemapRes.status}`);
+          await sitemapRes.text();
+        }
+      } catch (sitemapErr) {
+        log(`Sitemap regeneration error: ${sitemapErr instanceof Error ? sitemapErr.message : String(sitemapErr)}`);
+      }
+
       await supabase.from("content_generation_runs").update({
         completed_at: new Date().toISOString(),
         status: "completed",
