@@ -77,7 +77,18 @@ const BlogPost = () => {
 
   return (
     <div className="min-h-screen">
-      <SEO title={post.title} description={post.content.replace(/<[^>]*>/g, '').replace(/[#*_`]/g, '').slice(0, 155)} type="article" />
+      <SEO
+        title={post.title}
+        description={post.content.replace(/<[^>]*>/g, '').replace(/[#*_`]/g, '').slice(0, 155)}
+        type="article"
+        article={{
+          headline: post.title,
+          datePublished: post.date,
+          author: post.author || undefined,
+          image: post.image_url || undefined,
+          description: post.content.replace(/<[^>]*>/g, '').replace(/[#*_`]/g, '').slice(0, 155),
+        }}
+      />
       <Navbar />
       
       <article className="pt-32 pb-20 px-4">
