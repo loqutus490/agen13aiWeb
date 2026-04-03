@@ -26,6 +26,7 @@ import { toast } from "sonner";
 import { Checkbox } from "@/components/ui/checkbox";
 import ContactSubmissionsTab from "@/components/admin/ContactSubmissionsTab";
 import UsersTab from "@/components/admin/UsersTab";
+import NewsletterSubscribersTab from "@/components/admin/NewsletterSubscribersTab";
 
 interface Lead {
   id: string;
