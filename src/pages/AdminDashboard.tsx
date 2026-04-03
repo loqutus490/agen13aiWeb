@@ -21,7 +21,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Download, Search, Filter, TrendingUp, FileText, FlaskConical, MessageSquare, Trash2, Users } from "lucide-react";
+import { Download, Search, Filter, TrendingUp, FileText, FlaskConical, MessageSquare, Trash2, Users, Mail } from "lucide-react";
 import { toast } from "sonner";
 import { Checkbox } from "@/components/ui/checkbox";
 import ContactSubmissionsTab from "@/components/admin/ContactSubmissionsTab";
