@@ -1,67 +1,30 @@
 
-# Fix Contact Form CORS and Email Routing
 
-## Overview
-The Contact form fails with "Failed to send message" because the edge function's CORS configuration blocks requests from domains not in its whitelist. Additionally, the business notification email needs to be routed to the same destination as the lead capture form.
+## Add Testimonials / Social Proof Section to Homepage
 
-## Root Cause Analysis
-1. **CORS Whitelist Issue**: The `send-contact-email` function only allows specific origins, but the browser may be accessing from a different subdomain or preview URL variant
-2. **Email Routing Mismatch**: Contact form notifications still go to `RoyBernales@agent13.ai` instead of `agent13leads@theimoroip.resend.app`
+### What This Does
+Adds a new section to the homepage featuring client testimonials — quotes from law firm partners/attorneys about their experience with agent13 ai. This builds trust and credibility with prospective clients visiting the site.
 
-## Solution
+### Placement
+The testimonials section will go **between the existing "Results" stats section and the Lead Magnet section**, creating a natural flow: stats → real voices → download guide → final CTA.
 
-### Step 1: Update CORS Configuration
-Change the CORS headers to use the standard `'*'` wildcard, matching the pattern used successfully in other edge functions like `submit-lead` and `chat`.
+### Design
+- A carousel/slider showing 3-4 testimonial cards, each with:
+  - A quote from a legal professional
+  - Name, title, and firm type (e.g. "Managing Partner, Mid-Size Litigation Firm")
+  - A star rating or quote icon for visual emphasis
+- Auto-rotating with manual navigation dots
+- Uses the existing `Carousel` component already in the project
+- Matches the current dark theme with `holographic-border` and `scan-line-effect` styling
 
+### Content Note
+Since you're pre-launch, the testimonials will use **realistic but clearly placeholder quotes** attributed to anonymized roles (e.g. "Managing Partner, 50-Attorney Firm"). You can swap these for real testimonials once you have them.
+
+### Technical Changes
+- **Edit `src/pages/Home.tsx`** — Add a new testimonials section using the existing `Carousel`, `Card`, and `Badge` components. No new dependencies needed.
+
+### Page Flow After Change
 ```text
-File: supabase/functions/send-contact-email/index.ts
-
-Change from:
-- Restrictive origin whitelist
-
-Change to:
-- Standard corsHeaders with '*' allow-origin
+Hero → Problem/Solution → Features → Stats → Testimonials (NEW) → Lead Magnet → CTA → Footer
 ```
 
-### Step 2: Update Business Email Destination
-Route business notifications to `agent13leads@theimoroip.resend.app` for consistency with lead capture form.
-
-```text
-File: supabase/functions/send-contact-email/index.ts
-
-Line ~135: to: ["RoyBernales@agent13.ai"]
-Change to: to: ["agent13leads@theimoroip.resend.app"]
-```
-
-### Step 3: Deploy and Test
-- Deploy the updated edge function
-- Test the contact form end-to-end to verify emails are sent successfully
-
----
-
-## Technical Details
-
-### Files to Modify
-| File | Change |
-|------|--------|
-| `supabase/functions/send-contact-email/index.ts` | Update CORS headers and business email recipient |
-
-### CORS Headers Update
-```typescript
-// Replace restrictive origin whitelist with standard headers
-const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
-};
-```
-
-### Email Recipient Change
-```typescript
-// Line 135
-to: ["agent13leads@theimoroip.resend.app"],
-```
-
-## Expected Outcome
-- Contact form submissions will work from any domain
-- Business notifications will go to the consolidated leads inbox
-- User confirmations will still be sent to the submitter
