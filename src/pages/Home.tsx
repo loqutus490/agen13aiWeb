@@ -226,6 +226,9 @@ const Home = () => {
         </div>
       </section>
 
+      {/* Testimonials */}
+      <TestimonialsSection />
+
       {/* Lead Magnet */}
       <LeadMagnetSection />
 
