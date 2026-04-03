@@ -166,7 +166,26 @@ const BlogPost = () => {
             />
           )}
 
-          <div className="mt-12 pt-8 border-t">
+          {/* Contextual CTA */}
+          <div className="mt-12 p-8 rounded-2xl bg-primary/5 border border-primary/10">
+            <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
+              <div className="flex-1">
+                <h3 className="text-xl font-bold mb-2">Is Your Firm Ready for AI?</h3>
+                <p className="text-muted-foreground">
+                  Download our free AI Readiness Assessment — a 10-page guide with a 20-point scoring rubric, security checklist, and implementation worksheets built specifically for law firms.
+                </p>
+              </div>
+              <Button 
+                onClick={() => navigate("/ai-readiness-guide")}
+                className="shrink-0"
+                size="lg"
+              >
+                Get the Free Guide
+              </Button>
+            </div>
+          </div>
+
+          <div className="mt-8 pt-8 border-t">
             <Button onClick={() => navigate("/blog")} variant="outline">
               <ArrowLeft className="w-4 h-4 mr-2" />
               View All Posts
